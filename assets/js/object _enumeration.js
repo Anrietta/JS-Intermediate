@@ -12,7 +12,7 @@
 //     lastName: 'Testovich'
 // };
 
-// for(const key in user) {
+// for(const key in user) { 
 //     console.log(`user[${key}] = ${user[key]}`);
 // }
 // console.log(user);
