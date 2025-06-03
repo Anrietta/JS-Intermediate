@@ -135,37 +135,38 @@ switch (theme) {
 // Щоб перевірити чи можна якийсь обєкт проітерувати циклом fjr...of, можна ввсети його в консоль і глянути в Prototype чи має він властивість Symbol(Symbol.iterator). Якщо є то можна, якщо нема то неможна
 
 // Ось основні з них:
+
 // 1. Масиви (Array):
 
-// const arr = [1, 2, 3];
-// for (const item of arr) {
-//     console.log(item); // 1, 2, 3
-// }
+    // const arr = [1, 2, 3];
+    // for (const item of arr) {
+    //     console.log(item); // 1, 2, 3
+    // }
 
 // 2. Рядки (String): Перебирає символи рядка.
 
-// const str = "hello";
-// for (const char of str) {
-//     console.log(char); // h, e, l, l, o
-// }
+    // const str = "hello";
+    // for (const char of str) {
+    //     console.log(char); // h, e, l, l, o
+    // }
 
 // 3. Map (Map): Перебирає пари [ключ, значення].
 
-// const myMap = new Map([['a', 1], ['b', 2]]);
-// for (const entry of myMap) {
-//     console.log(entry); // ['a', 1], ['b', 2]
-// }
-// // Або деструктуризація:
-// for (const [key, value] of myMap) {
-//     console.log(key, value); // a 1, b 2
-// }
+    // const myMap = new Map([['a', 1], ['b', 2]]);
+    // for (const entry of myMap) {
+    //     console.log(entry); // ['a', 1], ['b', 2]
+    // }
+    // // Або деструктуризація:
+    // for (const [key, value] of myMap) {
+    //     console.log(key, value); // a 1, b 2
+    // }
 
 // 4. Set (Set): Перебирає унікальні значення.
 
-// const mySet = new Set([1, 2, 2, 3]);
-// for (const item of mySet) {
-//     console.log(item); // 1, 2, 3
-// }
+    // const mySet = new Set([1, 2, 2, 3]);
+    // for (const item of mySet) {
+    //     console.log(item); // 1, 2, 3
+    // }
 
 // 5. Типізовані масиви (Typed Arrays): Наприклад, Int8Array, Uint8Array, Float64Array тощо.
 
@@ -177,32 +178,171 @@ switch (theme) {
 
 // 6. Об'єкт arguments: Псевдомасив, доступний усередині функцій, який містить аргументи, передані функції.
 
-// function sum() {
-//     for (const arg of arguments) {
-//         console.log(arg);
-//     }
-// }
-// sum(1, 2, 3); // 1, 2, 3
+    // function sum() {
+    //     for (const arg of arguments) {
+    //         console.log(arg);
+    //     }
+    // }
+    // sum(1, 2, 3); // 1, 2, 3
 
 // 7. NodeList та інші колекції DOM: Об'єкти, повернуті такими методами, як document.querySelectorAll().
 
-// // У браузері
-// const paragraphs = document.querySelectorAll('p');
-// for (const p of paragraphs) {
-//     console.log(p.textContent);
-// }
+    // // У браузері
+    // const paragraphs = document.querySelectorAll('p');
+    // for (const p of paragraphs) {
+    //     console.log(p.textContent);
+    // }
 
 // 8. Об'єкти-генератори (Generator objects): Об'єкти, які повертаються генераторними функціями.
 
-// function* generateNumbers() {
-//     yield 1;
-//     yield 2;
-//     yield 3;
-// }
-// const generator = generateNumbers();
-// for (const num of generator) {
-//     console.log(num); // 1, 2, 3
-// }
+    // function* generateNumbers() {
+    //     yield 1;
+    //     yield 2;
+    //     yield 3;
+    // }
+    // const generator = generateNumbers();
+    // for (const num of generator) {
+    //     console.log(num); // 1, 2, 3
+    // }
 
 // Зверніть увагу: Звичайні об'єкти ({ key: 'value' }) НЕ є ітерабельними за замовчуванням і не можуть бути безпосередньо перебрані за допомогою for...of. 
 // Для їх перебору потрібно використовувати Object.keys(), Object.values() або Object.entries(), які повертають масиви (а масиви вже є ітерабельними).
+
+
+
+
+
+// ----------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+                    // Ітеровані колекції (Iterated collections)
+
+
+// Застосування Symbol.iterator (де він застосовується)
+
+// 1. for...of - для перебору колекцій
+
+// 2. деструктуризація колекції (деструктуроване присвоювання) - для розбору колекцій
+    // обєкти не містять в собі Symbol.iterator, при цьому існує плюшка в середині JS яка дозволяє розгорнути обєкт за допомогою spread оператора
+    // const [first, second] = [1, 2];
+
+// 3. spread operator (...) - для створення копї колекції і для конкатенації
+    // обєкти не містять в собі Symbol.iterator, при цьому існує плюшка в середині JS яка дозволяє розгорнути обєкт за допомогою spread оператора
+    // const arr = [1, 2, 3];
+    // const arrCopy = new Array[...arr];
+
+// 4. Arguments (spread and rest)- для опрацювання у фуннкції необмеженої кількості аргументів (отримаємо псевдомасив) і перетворення типів
+    //Застосовується до всіх типів даних що містить Symbol.iterator
+    // обєкти не містять в собі Symbol.iterator, при цьому існує плюшка в середині JS яка дозволяє розгорнути обєкт за допомогою spread оператора
+
+    // https://uk.javascript.info/rest-parameters-spread
+
+    function sum() {
+        console.log(arguments);  // Arguments(5) [1, 2, 3, 4, 5, callee: ƒ, Symbol(Symbol.iterator): ƒ]
+        const arrFromArgs = [...arguments]  // а тут ми засунем дані псевдомасива в справжній масив і зможем до нього застосовувати методи масивів (завдяки неявному Symbol.iterator)
+        console.log(arrFromArgs);
+        return arrFromArgs.reduce((accum, item) => accum + item); // 15  - перетворили псевдомасив в масив і застосували метод reduce
+    }
+    console.log(sum(1,2,3,4,5));
+
+    const arr1 = [1, 2, 3, 4]; // ми не можемо передати в функцію колекцію (наприклад масив чи обєкт)
+    console.log(sum(arr1));  // (4) [1, 2, 3, 4] - замість обчисленого результату ми отримаємо масив як 1 елемент
+
+    // але ми можемо розпакувати масив при виклоику фукції за домогою ...rest
+    const arr2 = [1, 2, 3, 4, 5, 6];
+    console.log(sum(...arr2));  // 21  - передаємо у функцію розпакований масив (кожен елемент масиву) і отримуємо результат обчислення
+    //це те саме що ми б передали вручну дані масива в функцію отак: sum(arr2[0], arr2[1], arr2[2]...arr2[5])
+
+    // можемо перетворити стрінг на масив за допомогою ...rest розпакувавши стрінг в масиві
+    const string = new String('qwerty'); // String {'qwerty'}  - створили стрінг
+    const strArr = [...string];  // (6) ['q', 'w', 'e', 'r', 't', 'y']  - перетворили його на масив, просто розпакувавшив масив за допомогою spread оператора, оскільки стрінг містить властивість Symbol.iterator
+    console.log(strArr);
+
+    // Rest parameters (...rest) - для опрацювання у функції необмеженої кількості аргументів (отримаємо масив)
+    // function sum(...rest) {
+    //     console.log(rest);  // (5) [1, 2, 3, 4, 5]
+    // }
+    // console.log(sum(1,2,3,4,5));
+
+
+    // злиття об'єктів разом - обєкти не містять в собі Symbol.iterator, при цьому існує плюшка в середині JS яка дозволяє розгорнути обєкт за допомогою spread оператора
+    /*
+    const obj1 = {
+        firstName: 'Ivo',
+        lastName: 'Ivovich'
+    }
+
+    const obj2 = {
+        isMale: true,
+        age: 20
+    }
+
+    let obj3 = {...obj1, ...obj2}
+    console.log(obj3);  // {firstName: 'Ivo', lastName: 'Ivovich', isMale: true, age: 20}
+
+    //можем лише частково змінити те що змінилось
+    const newName = 'Ivosik';
+    // ми могли б написати отак userName.firstName = newName;
+    // але більш часто і універсально ми зустрінем такий спосіб:
+    obj3={...obj3, firstName:newName};  // ми спершу розпакували наш обєкт в попередньому вигляді а потім перезаписали firstName
+    console.log(obj3);  // {firstName: 'Ivosik', lastName: 'Ivovich', isMale: true, age: 20}
+    */
+
+
+    // те саме тільки з використанням колеції юзерів а не одного:
+    /*
+    //отже маємо колекцію юзерів
+    const users = [
+        {id: 1, name: 'Test1', age: 20},
+        {id: 2, name: 'Test2', age: 30},
+        {id: 3, name: 'Test3', age: 40},
+        {id: 4, name: 'Test4', age: 50},
+    ]
+    //отримали з сервера оновлену інфу по одному з юзерів
+    user = {id: 2, name: 'Test2', age: 31};
+    //шукаємо співпадіння по id отриманого з сервера обєкта з нашою колекцією обєктів та його індекс
+    const foundIndex = users.findIndex(u=>u.id===user.id);
+    console.log(foundIndex);  // 1 - знайшли співпадіння та індекс в масиві юзера який змінився
+
+    // тепер за умови що нам дозволено змінювати колекцію зберігаємо нові дані юзера за індексом
+    users[foundIndex] = user;  // за знайденим індексом підставляємо новий обєкт юзер затираючи попередній обєкт
+    console.log(users[foundIndex]);  // {id: 2, name: 'Test2', age: 31} - змінені дані
+
+    // я акщо нам прийшов нне весь обєкт юзер а лише одна змінена властивість отак : user = {id: 2, age: 31};
+    user = {age: 32, phone: '+380501234587'};
+    users[foundIndex] = {...users[foundIndex], ...user};  // щоб замінти лиш частину всіх властивостей - розпаковуємо обєкт юзер за індексом і на нього розпаковуємо зміни отримані з сервера, таким чином замінюємо лише ту частину інфи яка змінилась
+    console.log(users[foundIndex]); // {id: 2, name: 'Test2', age: 32, phone: 380501234587} - маємо те ж саме лиш змінився вік і додалась нова властивість телефон
+
+    // ну а якщоскажімо дані зберігаються локально а не на сервері і нам тре замінити лиш одну властивість то використовуємо так як у прикладі вище для одного юзера
+    //obj3={...obj3, firstName:newName};  - розпаковуємо весь обєкт і замінюємо одну властивість
+    */
+
+
+
+    // отримання набору опцій з користувацьких та дефолтних 
+    /*
+// - інколи ми можемо дозволяи користувачу задавати певні опції самостійно
+// але якщо він їх не задав то мати заданими їх за дефолтним значенням (як параметри за умовчуванням)
+
+// маємо функцію що відправляє дані на сервер
+//передбачено, що якщо користувач не задав опцій то всеірвно по дефолту мають бути хост та порт
+function sendData(data, option) {
+    const defaultOptions = {host: 'localhost', port: 5000};
+    // тепер коли ми у функцію передаємо змінені опції (новий порт) нам потрібно злити ці два обєкта в правильному порядку
+    // спочатку розгорнем defaultOptions а потім option (тобто змінені що я передаю у функцію) таким чином змінивши порт
+    //  
+    const resultOptions = {...defaultOptions, ...option}; //  - в результаті маємо такий симбіоз дефолтних і користувацьких опцій
+    console.log(resultOptions); // {host: 'localhost', port: 5005};
+
+    // далі запит з даними за допомогою якоїсь бібліотеки на хост і порт
+}
+
+// тут 1 параметром вказую дані які потрібно відіслати на сервер, 2 параметр опції які відрізняються від дефолтних
+sendData({age: 32, phone: '+380501234587'}, {port: 5005})
+*/
+
+// 5. Array.from() - створює масив з псевдомасива або ітерованої колекції
+// Існує універсальний метод Array.from, який приймає ітерований об’єкт або псевдомасив і робить з нього “справжній” масив. Тоді ми можемо викликати на ньому методи масиву.
+
+    // https://uk.javascript.info/iterable#array-from
