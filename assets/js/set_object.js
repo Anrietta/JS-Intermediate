@@ -33,70 +33,175 @@
 
 // При створенні Set в нього потрібно передати ітеративний обєкт (тобто будь який обєкт який містить Symbol.iterator)
 
-const set1 = new Set();
-console.log(set1);   // Set (0)[[Entries]]No properties size: 0[[Prototype]]: Set add: ƒ add()clear: ƒ clear()constructor: ƒ Set()delete: ƒ delete()difference: ƒ difference()entries: ƒ entries()forEach: ƒ forEach()has: ƒ has()intersection: ƒ intersection()isDisjointFrom: ƒ isDisjointFrom()isSubsetOf: ƒ isSubsetOf()isSupersetOf: ƒ isSupersetOf()keys: ƒ values()size: (...)symmetricDifference: ƒ symmetricDifference()union: ƒ union()values: ƒ values()Symbol(Symbol.iterator): ƒ values()Symbol(Symbol.toStringTag): "Set"get size: ƒ size()[[Prototype]]: Object
+// const set1 = new Set();
+// console.log(set1);   // Set (0)[[Entries]]No properties size: 0[[Prototype]]: Set add: ƒ add()clear: ƒ clear()constructor: ƒ Set()delete: ƒ delete()difference: ƒ difference()entries: ƒ entries()forEach: ƒ forEach()has: ƒ has()intersection: ƒ intersection()isDisjointFrom: ƒ isDisjointFrom()isSubsetOf: ƒ isSubsetOf()isSupersetOf: ƒ isSupersetOf()keys: ƒ values()size: (...)symmetricDifference: ƒ symmetricDifference()union: ƒ union()values: ƒ values()Symbol(Symbol.iterator): ƒ values()Symbol(Symbol.toStringTag): "Set"get size: ƒ size()[[Prototype]]: Object
 
-const set2 = new Set ([1, 2, 3, 4, 5 ,6]);
-console.log(set2);  // Set(6) {1, 2, 3, 4, 5, …} - виводить як і має бути 6 значень
+// const set2 = new Set ([1, 2, 3, 4, 5 ,6]);
+// console.log(set2);  // Set(6) {1, 2, 3, 4, 5, …} - виводить як і має бути 6 значень
 
-// що буде якщо задати однакові значення :
-const set3 = new Set ([0, 2, 3 , 0 , 2, 3]);
-console.log(set3);  // Set(3) {0, 2, 3} - виводить лише унікальні, ті що повторні ігнорує і змінює сайз
-
-
-// Методи SET (основні - застосовуються до екземплярів) :
-
-// 1. метод add() - додати значення в  set - повертає set (множину)
-
-    set1.add(10);
-    console.log(set1);  // Set(1) {10} - в пустий set додали 10
-
-    // можна використовувати чейнінг
-    set1.add(11).add(12).add(13);
-    console.log(set1);  // Set(4) {10, 11, 12, 13}
-
-// 2. метод has() - перевірити, чи міститься значення в set - повертає boolean (true/false)
-
-    console.log(set1.has(13));  // true
-    console.log(set1.has(9));  // false
-
-// 3. Зчитувати елементи з set неможливо, тому в ньому й нема ні ключа ні індекса ні методу get. 
-//    Множина set потрібна якраз для того щоб відфільтровувати унікальні значення
-
-// 4. метод delete() - видалити значення з set - повертає множину без видаленого символу і зміниьться сайз
-
-    set1.delete(13);
-    console.log(set1);  // Set(3) {10, 11, 12} 
-
-// 5. метод clear() - очистити set повністю
-
-    // set1.clear();
-    // console.log(set1);  // Set(0) {size: 0}
+// // що буде якщо задати однакові значення :
+// const set3 = new Set ([0, 2, 3 , 0 , 2, 3]);
+// console.log(set3);  // Set(3) {0, 2, 3} - виводить лише унікальні, ті що повторні ігнорує і змінює сайз
 
 
+// // Методи SET (основні - застосовуються до екземплярів) :
 
-// Вбудовані методи set (застосовуються до самого set):
+// // 1. метод add() - додати значення в  set - повертає set (множину)
 
-// 1. forEach (for...of) - щоб перебрати set (set ітерабельний)
-// Функція в forEach у Set має 3 аргументи: значення ‘value’, потім знову те саме значення ‘valueAgain’, і тільки потім цільовий об’єкт. 
-// Значення з’являється в списку аргументів двічі для сумісності з map (ключ/значення)
+//     set1.add(10);
+//     console.log(set1);  // Set(1) {10} - в пустий set додали 10
 
-set1.forEach((s, s_again, set) => console.log(s, s_again, set));  // 10 10 Set(3) {10, 11, 12}  11 11 Set(3) {10, 11, 12}  12 12 Set(3) {10, 11, 12}
-set1.forEach((s) => console.log(s));  // 10 11 12
+//     // можна використовувати чейнінг
+//     set1.add(11).add(12).add(13);
+//     console.log(set1);  // Set(4) {10, 11, 12, 13}
 
-for (const item of set1) {
-    console.log(item);  // 10 11 12
-}
+// // 2. метод has() - перевірити, чи міститься значення в set - повертає boolean (true/false)
+
+//     console.log(set1.has(13));  // true
+//     console.log(set1.has(9));  // false
+
+// // 3. Зчитувати елементи з set неможливо, тому в ньому й нема ні ключа ні індекса ні методу get. 
+// //    Множина set потрібна якраз для того щоб відфільтровувати унікальні значення
+
+// // 4. метод delete() - видалити значення з set - повертає множину без видаленого символу і зміниьться сайз
+
+//     set1.delete(13);
+//     console.log(set1);  // Set(3) {10, 11, 12} 
+
+// // 5. метод clear() - очистити set повністю
+
+//     // set1.clear();
+//     // console.log(set1);  // Set(0) {size: 0}
 
 
-// 2. метод set.keys() - щоб отримати значення з set (для сумісності з map), повертає об`єкт SetIterator, який має властивість Symbol.iterator в ланцюжку прототипів і тому може ітеруватись/ перебиратись
-console.log(set1.keys());  // SetIterator {10, 11, 12}
 
-// 3. метод set.values() - також щоб отримати значення з set , повертає об`єкт SetIterator, який має властивість Symbol.iterator в ланцюжку прототипів і тому може ітеруватись/ перебиратись
-console.log(set1.values());  // SetIterator {10, 11, 12}
+// // Вбудовані методи set (застосовуються до самого set):
 
-// 4. метод set.entries() -  щоб отримати пару значення/значення з set (для сумісності з map), повертає об`єкт SetIterator, який має властивість Symbol.iterator в ланцюжку прототипів і тому може ітеруватись/ перебиратись
-console.log(set1.entries());  // SetIterator {10 => 10, 11 => 11, 12 => 12}
+// // 1. forEach (for...of) - щоб перебрати set (set ітерабельний)
+// // Функція в forEach у Set має 3 аргументи: значення ‘value’, потім знову те саме значення ‘valueAgain’, і тільки потім цільовий об’єкт. 
+// // Значення з’являється в списку аргументів двічі для сумісності з map (ключ/значення)
+
+// set1.forEach((s, s_again, set) => console.log(s, s_again, set));  // 10 10 Set(3) {10, 11, 12}  11 11 Set(3) {10, 11, 12}  12 12 Set(3) {10, 11, 12}
+// set1.forEach((s) => console.log(s));  // 10 11 12
+
+// for (const item of set1) {
+//     console.log(item);  // 10 11 12
+// }
+
+
+// // 2. метод set.keys() - щоб отримати значення з set (для сумісності з map), повертає об`єкт SetIterator, який має властивість Symbol.iterator в ланцюжку прототипів і тому може ітеруватись/ перебиратись
+// console.log(set1.keys());  // SetIterator {10, 11, 12}
+
+// // 3. метод set.values() - також щоб отримати значення з set , повертає об`єкт SetIterator, який має властивість Symbol.iterator в ланцюжку прототипів і тому може ітеруватись/ перебиратись
+// console.log(set1.values());  // SetIterator {10, 11, 12}
+
+// // 4. метод set.entries() -  щоб отримати пару значення/значення з set (для сумісності з map), повертає об`єкт SetIterator, який має властивість Symbol.iterator в ланцюжку прототипів і тому може ітеруватись/ перебиратись
+// console.log(set1.entries());  // SetIterator {10 => 10, 11 => 11, 12 => 12}
 
 
         
+
+// 1 Задачка
+// Отримати масив унікальних значень
+
+// const arr = [1, 5, 9 , 7 , 2 , 1 , 5 , 9 , 7 , 8 , 3, 4, 4, 7];  // =>[1, 5, 9, 7, 2, 8, 3, 4] - хочу отримати лише ті що не повтороюються
+
+// const set4 = new Set(arr);  // Set(8) {1, 5, 9, 7, 2, …} - тепер треба з set отримати масив елементів
+
+//перетворити сет знову на масив за допомогою spread оператора
+// const arr2 = [...set4];  // (8) [1, 5, 9, 7, 2, 8, 3, 4]
+
+// скорочений запис
+// const arr2 = [...new Set(arr)];  // (8) [1, 5, 9, 7, 2, 8, 3, 4]  - arr2 = розширюємо на місці створений set на основі arr
+
+
+// 2 Задачка
+// Отримати масив унікальних імен => ['Test', 'Grut', 'John Doe', 'Jane Doe']
+// Тобто з двох списків користувачів отримати масив тільки неповторюваних значень
+
+// const users1 = [
+//     'Test',
+//     'Grut',
+//     'John Doe',
+//     'Grut',
+//     'John Doe',
+//     'Grut',
+//     'John Doe'
+// ];
+
+// const users2 = [
+//     'Test',
+//     'Grut',
+//     'Jane Doe',
+//     'Grut',
+//     'Jane Doe',
+//     'Test',
+//     'Jane Doe'
+// ];
+
+// const names = [...new Set([...users1, ...users2])];  // тут ми спершу злили два масива користувачів в один єдиний масив, потім автоматом загорнули в set і відсіяли всі значення що повторються, далі цей set унікальних імен розпаковуємо в масив names
+// console.log(names);  // (4) ['Test', 'Grut', 'John Doe', 'Jane Doe']
+
+
+// 3 Задачка
+// Отримати масив тільки марок телефонів з масиву обєктів => ['Iphone', 'Samsung', 'Xiaomi'];
+// тобто спершу треба отримати масив марок телефонів з масива обєктів а потім set а потім знов масив
+
+// const users = [
+//     {name: 'Test0', brand: 'Iphone'},
+//     {name: 'Test1', brand: 'Samsung'},
+//     {name: 'Test2', brand: 'Iphone'},
+//     {name: 'Test3', brand: 'Xiaomi'},
+//     {name: 'Test4', brand: 'Samsung'},
+//     {name: 'Test5', brand: 'Xiaomi'},
+//     {name: 'Test6', brand: 'Iphone'},
+// ];
+
+// const brands = [...new Set(users.map(item => item.brand))]; // методом масивів map проходимся по кожному елементу масива (по обєкту) і дістаємо властивість brand, отриманий масив загортаємо в set, отриманий set одразу розпаковуємо в масив за допомогою spread оператора, та зберігаємо в змінну brands
+// console.log(brands);  // (3) ['Iphone', 'Samsung', 'Xiaomi']
+
+
+// 4 Задачка
+// Отримати об'єкт виду {Iphone: ['Test0', 'Test2', 'Test6'], Samsung: ['Test1', 'Test4'], Xiaomi: ['Test3', 'Test5']}
+// Тобто з попереднього масиву users отримати Марку телефона і до нього всіх користувачів які мають цю марку
+
+// 1 - отримати set унікальних значень брендів
+// const brands = [...new Set(users.map(item => item.brand))];
+
+// створити обєкт і в якості властивостей вказати значення з brands
+
+    //щоб подумати як це зробити, можна спершу літерально задати властивості, але це не зручно і не працюватиме при збільшенні об'ємів
+    // const brandOwners = {
+    //     [brands[0]]: [],
+    //     [brands[1]]: [],
+    //     [brands[2]]: [],
+    // }
+
+// 2 -  спочатку створимо пустий обєкт
+// const brandOwners = {}
+// далі за допомогою forEach() переберемо кожен елемент масиву brands(який ми отримали з set) і до нього створимовластивість в обєкті за допомгою [] значенням якого буде пустий масив
+// таким чином ми автоматизували наповнення обєкта, щоб не вводити вручну і щоб не залежат від кількості елементів
+// brands.forEach(b => (brandOwners[b] = []));  // {Iphone: []  Samsung: []  Xiaomi: []} - отримуєм такий обєкт
+
+    // тепер можемо для кожного елемента масиву brands отримати об'єкт та відфільтрувати за значенням, напр
+    // const IphoneOwners = users.filter(u => u.brand === 'Iphone') // -отримаємо масив тих обєктів користувачів в яких brand Iphone
+    // тепер треба з отриманого масиву обєктів отримати тільки імена користувачів
+    // const IphoneOwnersNames = IphoneOwners.map(u => u.name); // (3) ['Test0', 'Test2', 'Test6'] - отримали масив імен
+    // зараз у ас формується тіьки для Iphone, а треба по всім брендам. 
+    // тобто нам потрібно параметризувати ці операції, тому скорочуємо і параметризуємо нижче
+
+// 3 - далі за допомогою forEach() переберемо кожен елемент масиву brands(який ми отримали з set) і до нього створимовластивість в обєкті за допомгою [] значенням якого буде пустий масив
+// таким чином ми автоматизували наповнення обєкта, щоб не вводити вручну і щоб не залежат від кількості елементів
+// brands.forEach(
+//     b => (brandOwners[b] = users.filter(u => u.brand === b).map(u => u.name))
+// );
+// де b - це поточний brand з масиву brands по якому ми проходимся методом forEach
+// brandOwners[b] - це на кожній ітерації методу forEach створюємо в обєкті brandOwners властивість з назвою марки телефону на поточній ітерації
+// = users.filter(u => u.brand === b) - відфільтровуємо з масиву users елементи (обєкти) в яких brand дорівнює назві марки на поточній ітерації
+// .map(u => u.name)) - з проходимся по всіх користувачах в яких brand = маркі поточної ітерації (тобто властивості в новому обєкті) та заповнюємо імена користувачів в масив для кожного бренду 
+
+// console.log(brandOwners);
+//{Iphone: Array(3), Samsung: Array(2), Xiaomi: Array(2)}
+// Iphone: (3) ['Test0', 'Test2', 'Test6']
+// Samsung: (2) ['Test1', 'Test4']
+// Xiaomi: (2) ['Test3', 'Test5']
