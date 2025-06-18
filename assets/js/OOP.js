@@ -57,22 +57,22 @@
                 // https://medium.com/@smagid_allThings/uml-class-diagrams-tutorial-step-by-step-520fd83b300b
 
 
-        class User {
-            constructor (name, surname, age, isMale, email) {
-                    this._firstName = name;
-                    this._lastName = surname;
-                    this._age = age;
-                    this._isMale = isMale;
-                    this._email = email;
-                    this._isBanned = false;
-            }
-            getFullName () {
-                return `${this._firstName} ${this._lastName}`;
-            }
+        // class User {
+        //     constructor (name, surname, age, isMale, email) {
+        //             this._firstName = name;
+        //             this._lastName = surname;
+        //             this._age = age;
+        //             this._isMale = isMale;
+        //             this._email = email;
+        //             this._isBanned = false;
+        //     }
+        //     getFullName () {
+        //         return `${this._firstName} ${this._lastName}`;
+        //     }
 
-        } 
+        // } 
 
-        const user = new User('Test', 'Testovych', 23, true, 'test@mail.com' )
+        // const user = new User('Test', 'Testovych', 23, true, 'test@mail.com' )
 
         // уявімо, що в нас є клас користувачів в якомусь чаті
         // і крім корситувачів в нас є модераторо чату, який має ті ж параметри що й юзер + трохи більше  прав
@@ -117,32 +117,32 @@
         // В нашому випадку клас Moderator - дочірній клас, а клас User - батьківський або базовий клас
 
         // Щоб вказати що один клас успадковує/розширює інший треба написати extends "Назва батьківського класу"
-        class Moderator extends User {
-            constructor (name, surname, age, isMale, email, permissions) {
-                    // виклик конструктора батьківського класу (User) за кодовим словом super();
-                    super(name, surname, age, isMale, email); // це те саме що ми написали new User() і передали всі ті властивості User які нам потрібні в класі Moderator
-                    this._permissions = permissions;
-            }
-            //метод getFullName ми видалили щоб не повторюватись, бо він спадкується з User (в прототипах можна перевірити)
-            // а якщо ми хочемо щоб в модератора не було функції getFullName то можемо її перевизначити : getFullName() {}; - просто вписуєм пустим ніби в нього немає своєї реалізації
-            // getFullName() {};  // в такому разі при виклику ми просто отримаємо undefined
+        // class Moderator extends User {
+        //     constructor (name, surname, age, isMale, email, permissions) {
+        //             // виклик конструктора батьківського класу (User) за кодовим словом super();
+        //             super(name, surname, age, isMale, email); // це те саме що ми написали new User() і передали всі ті властивості User які нам потрібні в класі Moderator
+        //             this._permissions = permissions;
+        //     }
+        //     //метод getFullName ми видалили щоб не повторюватись, бо він спадкується з User (в прототипах можна перевірити)
+        //     // а якщо ми хочемо щоб в модератора не було функції getFullName то можемо її перевизначити : getFullName() {}; - просто вписуєм пустим ніби в нього немає своєї реалізації
+        //     // getFullName() {};  // в такому разі при виклику ми просто отримаємо undefined
 
-            // функція, щоб наш модератор міг надсилати повідомлення-попередження користувачу
-            sendMessage(user, message) {
-                // модератор "ім'я" відправив повідомлення "ми його отримуємо як параметр" користувачу "імя користувача обєкта який ми отримали як параметр"
-                console.log(`Moderator ${this._firstName} send message "${message}" to user ${user._firstName}`);
-            }
+        //     // функція, щоб наш модератор міг надсилати повідомлення-попередження користувачу
+        //     sendMessage(user, message) {
+        //         // модератор "ім'я" відправив повідомлення "ми його отримуємо як параметр" користувачу "імя користувача обєкта який ми отримали як параметр"
+        //         console.log(`Moderator ${this._firstName} send message "${message}" to user ${user._firstName}`);
+        //     }
 
-        } 
+        // } 
 
-        const moderator = new Moderator('Mod', 'Modovych', 28, false, 'mod@mail.com', {
-            bann: false,
-            readPrivate: false,
-            sendMessage: true
-        });
+        // const moderator = new Moderator('Mod', 'Modovych', 28, false, 'mod@mail.com', {
+        //     bann: false,
+        //     readPrivate: false,
+        //     sendMessage: true
+        // });
 
-        console.log(moderator.getFullName());  // Mod Modovych
-        moderator.sendMessage(user, 'You have a warning'); // Moderator Mod send message "You have a warning" to user Test
+        // console.log(moderator.getFullName());  // Mod Modovych
+        // moderator.sendMessage(user, 'You have a warning'); // Moderator Mod send message "You have a warning" to user Test
 
 
         // Не забуваємо що спакування ззовні - це є під капотом прототипи (в JS класи спадкування і наслідування реалізовано через прототипи)
@@ -157,40 +157,169 @@
 
         // Створити об'єкт класу Admin, протестувати роботу методів bann, unbann 
 
-        class Admin extends Moderator {
-            constructor (name, surname, age, isMale, email, permissions, category) {
-                super(name, surname, age, isMale, email, permissions);
-                this._category = 'middle';
-            }
-            getBanned(user) {
-                user._isBanned = true;
-                console.log(`Admin ${this._firstName} banned user ${user._firstName}!`);
+        // class Admin extends Moderator {
+        //     constructor (name, surname, age, isMale, email, permissions, category) {
+        //         super(name, surname, age, isMale, email, permissions);
+        //         this._category = 'middle';
+        //     }
+        //     getBanned(user) {
+        //         user._isBanned = true;
+        //         console.log(`Admin ${this._firstName} banned user ${user._firstName}!`);
 
-            }
-            getUnbanned(user) {
-                user._isBanned = false;
-                console.log(`Admin ${this._firstName} unbanned user ${user._firstName}!`);
-            }
+        //     }
+        //     getUnbanned(user) {
+        //         user._isBanned = false;
+        //         console.log(`Admin ${this._firstName} unbanned user ${user._firstName}!`);
+        //     }
+        // }
+
+        // const admin = new Admin('Admin', 'Adminovych', 32, false, 'admin@mail.com', {
+        //     bann: true,
+        //     readPrivate: false,
+        //     sendMessage: true
+        // })
+
+        // console.log(admin.getFullName());  // Admin Adminovych
+        // admin.getBanned(user);
+        // console.log(user._isBanned);  // true  // Admin Admin banned user Test!
+        // admin.getUnbanned(user);
+        // console.log(user._isBanned);  // true  // Admin Admin unbanned user Test!
+        // admin.sendMessage(user, 'Don"t do that'); // Moderator Admin send message "Don"t do that" to user Test
+
+
+// ---------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+            // Перевизначення методів
+
+// Перевизначення методв -  це коли ми в дочірньому класі змінюємо параметри(перевизначаємо) успадкованого методу від батьківського класу
+
+//Наприклад коли клас має певні методи, і класи які його наслідують мають ті ж самі методи
+// Але в тих класах що наслідують батьківські класи нам ннепотрібно взагалі деякі методи, а деякі потрібні але змінені 
+// Напр: є клас людина, і є класи чоловік та жінка що наслідують клас людина. То ми матимемо метод Привітання в класі людина, в класі Чоловік будем вітатись містер, а в класі жінка будем вітатись місіс
+
+
+// Для прикладу візьмемо задачу з юзерами і модератором і метод користувача getFullName
+
+        // class User {
+        //     constructor (name, surname, age, isMale, email) {
+        //             this._firstName = name;
+        //             this._lastName = surname;
+        //             this._age = age;
+        //             this._isMale = isMale;
+        //             this._email = email;
+        //             this._isBanned = false;
+        //     }
+        //     getFullName () {
+        //         return `${this._firstName} ${this._lastName}`;
+        //     }
+
+        // } 
+
+        // const user = new User('Test', 'Testovych', 23, true, 'test@mail.com' );
+
+
+        // class Moderator extends User {
+        //     constructor (name, surname, age, isMale, email, permissions) {
+        //             // виклик конструктора батьківського класу (User) за кодовим словом super();
+        //             super(name, surname, age, isMale, email); // це те саме що ми написали new User() і передали всі ті властивості User які нам потрібні в класі Moderator
+        //             this._permissions = permissions;
+        //     }
+        //     getFullName() {
+        //         // перевизначии метод для Модеатора, - дописали Містер
+        //         return `Mr.${this._firstName} ${this._lastName}`
+        //     }
+        //     sendMessage(user, message) {
+        //         console.log(`Moderator ${this._firstName} send message "${message}" to user ${user._firstName}`);
+        //     }
+        // } 
+
+        // const moderator = new Moderator('Mod', 'Modovych', 28, false, 'mod@mail.com', {
+        //     bann: false,
+        //     readPrivate: false,
+        //     sendMessage: true
+        // });
+
+
+        // class Admin extends Moderator {
+        //     constructor (name, surname, age, isMale, email, permissions, category) {
+        //         super(name, surname, age, isMale, email, permissions);
+        //         this._category = 'middle';
+        //     }
+        //     getBanned(user) {
+        //         user._isBanned = true;
+        //         console.log(`Admin ${this._firstName} banned user ${user._firstName}!`);
+
+        //     }
+        //     getUnbanned(user) {
+        //         user._isBanned = false;
+        //         console.log(`Admin ${this._firstName} unbanned user ${user._firstName}!`);
+        //     }
+        // }
+
+        // const admin = new Admin('Admin', 'Adminovych', 32, false, 'admin@mail.com', {
+        //     bann: true,
+        //     readPrivate: false,
+        //     sendMessage: true
+        // })
+
+        
+        // console.log(moderator.getFullName());  // Mr.Mod Modovych
+        // console.log(user.getFullName());  // Test Testovych
+        // console.log(admin.getFullName());  // Mr.Admin Adminovych
+
+
+        // тепер ось що виходить. в класі User (батьківський клас) є метод getFullName, який повертає ім'я та прізвище користувача
+        // в класі Moderator (дочірній від User) ми перевизначили метод getFullName, і він повертає Mr. ім'я та прізвище
+        // в класі Admin (дочірній від Moderator) наслідується перевизначений метод getFullName в Moderator і теж поверта Mr. ім'я та прізвище
+        // тобто якщо у нас є ланцюжок класів то всі наступні класи після того який ми перевизначили теж наслідуватимуть перевизачений метод
+
+        // Якщо ми хочемо щоб у Admin метод getFullName був іденитичний як у User а не як у Moderator, тобто без Mr. то в Admin нам просто треба знову перевизначити цей метод без Mr.
+
+
+
+
+        // Задачка
+        // squirrel -їсть що дадуть, вміє бігати, ім'я
+        // flyingSquirrel - ість тільки горіхи, вміє бігати, вміє літати, ім'я, довжина стрибка
+
+
+
+    class Squirrel {
+        constructor(name) {
+            this._name = name;
         }
+        eat(food) {
+            console.log(`Squirrel ${this._name} is eating ${food}!`);
+        }
+        run() {
+            console.log(`Squirrel ${this._name} is running!`);
+        }
+    }
 
-        const admin = new Admin('Admin', 'Adminovych', 32, false, 'admin@mail.com', {
-            bann: true,
-            readPrivate: false,
-            sendMessage: true
-        })
+    class FlyingSquirrel extends Squirrel {
+        constructor(name, jumpLength) {
+            super(name);
+            this._jumpLength = jumpLength;
+        }
+        eat() {
+            console.log(`Flying Squirrel ${this._name} is eating nuts.`);
+        }
+        jump() {
+            console.log(`Flying Squirrel ${this._name} is jumping ${this._jumpLength} meters.`);
+        }
+    }
 
-        console.log(admin.getFullName());  // Admin Adminovych
-        admin.getBanned(user);
-        console.log(user._isBanned);  // true  // Admin Admin banned user Test!
-        admin.getUnbanned(user);
-        console.log(user._isBanned);  // true  // Admin Admin unbanned user Test!
-        admin.sendMessage(user, 'Don"t do that'); // Moderator Admin send message "Don"t do that" to user Test
+    const sq = new Squirrel('Natasha');
+    sq.eat('potatoes');
+    sq.run();
 
+    const flSq = new FlyingSquirrel('Nastya', 3);
+    console.log(flSq);
+    flSq.eat();
+    flSq.jump();
 
-
-
-
-
+// --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
 // 3. Поліморфізм - можливість через однаковий інтерфейс
