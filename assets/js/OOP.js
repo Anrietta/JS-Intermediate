@@ -1,6 +1,7 @@
                 // Принципи ООП (OOP principles)
 
                 // https://uk.javascript.info/private-protected-properties-methods
+                // https://it-blog.in.ua/osnovni-pryntsypy-oop-z-prykladamy-na-javascript/
 
 // Повернись до класів JS - ці дві теми прямо повязані!
 
@@ -287,41 +288,137 @@
 
 
 
-    class Squirrel {
-        constructor(name) {
-            this._name = name;
-        }
-        eat(food) {
-            console.log(`Squirrel ${this._name} is eating ${food}!`);
-        }
-        run() {
-            console.log(`Squirrel ${this._name} is running!`);
-        }
-    }
+    // class Squirrel {
+    //     constructor(name) {
+    //         this._name = name;
+    //     }
+    //     eat(food) {
+    //         console.log(`Squirrel ${this._name} is eating ${food}!`);
+    //     }
+    //     run() {
+    //         console.log(`Squirrel ${this._name} is running!`);
+    //     }
+    // }
 
-    class FlyingSquirrel extends Squirrel {
-        constructor(name, jumpLength) {
-            super(name);
-            this._jumpLength = jumpLength;
-        }
-        eat() {
-            console.log(`Flying Squirrel ${this._name} is eating nuts.`);
-        }
-        jump() {
-            console.log(`Flying Squirrel ${this._name} is jumping ${this._jumpLength} meters.`);
-        }
-    }
+    // class FlyingSquirrel extends Squirrel {
+    //     constructor(name, jumpLength) {
+    //         super(name);
+    //         this._jumpLength = jumpLength;
+    //     }
+    //     eat() {
+    //         console.log(`Flying Squirrel ${this._name} is eating nuts.`);
+    //     }
+    //     jump() {
+    //         console.log(`Flying Squirrel ${this._name} is jumping ${this._jumpLength} meters.`);
+    //     }
+    // }
 
-    const sq = new Squirrel('Natasha');
-    sq.eat('potatoes');
-    sq.run();
+    // const sq = new Squirrel('Natasha');
+    // sq.eat('potatoes');
+    // sq.run();
 
-    const flSq = new FlyingSquirrel('Nastya', 3);
-    console.log(flSq);
-    flSq.eat();
-    flSq.jump();
+    // const flSq = new FlyingSquirrel('Nastya', 3);
+    // console.log(flSq);
+    // flSq.eat();
+    // flSq.jump();
 
 // --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
 // 3. Поліморфізм - можливість через однаковий інтерфейс
+
+    // https://developer.mozilla.org/ru/docs/Glossary/Polymorphism
+
+    // Поліморфізм - це концепція  в програмуванні, в оснві якої лежить використання єдиного інтерфейсу для маніпуляції над різними типами даних (в SJ поліморфізм підтипів)
+    // Тобто поліморфізм дозволяє працювати з різними типами даних з однаковим ітерфейсом
+    // на практиці це типу назва метода в класі називається однаково для двох класів, але кожен метод в класі рацює по різному
+    // ми маємо клас Admin і клас Moderator, обидва мають метод sendMessage()б але в кожного з класів метод відрізняється (тіло методу). 
+    // Тож ми викликаємо admin.sendMessage() або Moderator.sendMessage() , викликається однаково але виконується воно по різному
+    // Отже маємо однаковий інтерфейс але різні типи даних - це і є поліморфізм
+
+
+    // Наприклад. У нас є різні фігури : трикутник, квадрат, прямокутник
+    // У них у всіх є спільні риси: вони мають назву, вони мають площу яку можна обчислити (по різному обчислити, але факт що в них є площа)
+    // отже реалізуємо батьківський клас, щоб їх поєднати, а далі кожного окремо як дочірній
+
+    // class Figure {   // абстракний клас, без реалізації, він потрібен щоб задати поведінку кожній фігурі
+    //     constructor (name) {
+    //         this.name = name;
+    //     }
+    //     getArea() {
+    //         return null;
+    //     }
+    // }
+
+    // class Square extends Figure {
+    //     constructor(sideLength) {
+    //         super('square');
+    //         this.a = sideLength;
+    //     }
+    //     getArea() {
+    //         return this.a * this.a;
+    //     }
+    // }
+
+    // const square = new Square(6);
+    // console.log(square.getArea());  // 36
+    // console.log(square);  // Square {name: 'square', a: 6}
+
+    // class Rectangle extends Figure {
+    //     constructor (sideLengtha, sideWidthb) {
+    //         super('rectangle');
+    //         this.a = sideLengtha;
+    //         this.b = sideWidthb;
+    //     }
+    //     getArea() {
+    //         return this.a * this.b;
+    //     }
+    // }
+
+    // const rectangle = new Rectangle(4, 5);
+    // console.log(rectangle.getArea());  // 20
+    // console.log(rectangle);  // Rectangle {name: 'rectangle', a: 4, b: 5}
+
+    // //кожен створений нами обєкт через конструктор (клас) є екземпляром цього класу(консруктора)
+    // console.log(rectangle instanceof Rectangle);  // true
+    // console.log(rectangle instanceof Figure);  // true
+    // console.log(rectangle instanceof Object);  // true
+    // console.log(rectangle instanceof Square);  // false - бо клас Square не приймав участі в створенні об'єкта rectangle
+
+
+    // // щоб перевірити чи фігура є дочірнім класом перевіряємо за допомогою instanceof належність а далі виконуємо вказаний метод в кожній фігурі
+    // function calcArea (fig) {
+    //     if (fig instanceof Figure) {
+    //         return fig.getArea();
+    //     }
+    //     console.log('fig is not a Figure');
+    // }
+
+
+
+
+    // в середині класу А може бути інсанс якогось іншого класу (композиція)
+
+    // https://abitap.com/1-2-zvyazok-mizh-klasamy-ta-obyektamy/#:~:text=%D0%9C%D0%B8%20%D0%BC%D0%BE%D0%B6%D0%B5%D0%BC%D0%BE%20%D0%B2%D0%B8%D0%B4%D1%96%D0%BB%D0%B8%D1%82%D0%B8%20%D0%BA%D1%96%D0%BB%D1%8C%D0%BA%D0%B0%20%D0%BE%D1%81%D0%BD%D0%BE%D0%B2%D0%BD%D0%B8%D1%85%20%D0%B2%D1%96%D0%B4%D0%BD%D0%BE%D1%81%D0%B8%D0%BD:%20%D1%83%D1%81%D0%BF%D0%B0%D0%B4%D0%BA%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F%2C,User.%20%D0%9D%D0%B5%D1%80%D1%96%D0%B4%D0%BA%D0%BE%20%D1%89%D0%BE%D0%B4%D0%BE%20%D0%B0%D1%81%D0%BE%D1%86%D1%96%D0%B0%D1%86%D1%96%D1%97%20%D0%B2%D0%BA%D0%B0%D0%B7%D1%83%D1%94%D1%82%D1%8C%D1%81%D1%8F%20%D0%BA%D1%80%D0%B0%D1%82%D0%BD%D1%96%D1%81%D1%82%D1%8C%20%D0%B7%D0%B2'%D1%8F%D0%B7%D0%BA%D1%96%D0%B2.
+
+    // Наприклад візьмем наш клас Rectangle
+    // якщо б нам треба було зберегти в ньому координати вершин (якщо наприклад це обємне тіло) то ми б створили клас Coordinates
+    // а вже всередині класу Rectangle ми б створювали і зберігали екземпляри зовнішнього класу Coordinates
+    // це і є композиція
+
+    // class Coordinates{}
+
+    // class Rectangle extends Figure {
+    //     constructor (sideLengtha, sideWidthb) {
+    //         this.pointA = new Coordinates();
+    //         this.pointB = new Coordinates();
+    //         this.pointC = new Coordinates();
+    //         this.pointD = new Coordinates();
+    //         super('rectangle');
+    //         this.a = sideLengtha;
+    //         this.b = sideWidthb;
+    //     }
+    //     getArea() {
+    //         return this.a * this.b;
+    //     }
+    // }
