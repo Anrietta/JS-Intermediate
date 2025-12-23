@@ -1,0 +1,27 @@
+/* // 7 завдання - інтерактивна галерея котиків */
+/* img {
+    cursor: pointer;
+    transition: all 0.3s ease;    /* щоб зміни були плавними */
+    /* margin: 10px; */
+/* } */
+
+/* Клас, який ти маєш додавати/видаляти через JS */
+/* .selected {
+    outline: 5px solid gold;
+    transform: scale(1.1);
+    filter: sepia(0.5);
+    border-radius: 15px;
+} */
+
+
+/* // 8 завдання Вибір кольору кросівок */
+
+.color-picker { display: flex; gap: 10px; cursor: pointer; }
+.color-btn { width: 30px; height: 30px; border-radius: 50%; border: 2px solid transparent; }
+.red { background: red; } 
+.blue { background: blue; } 
+.green { background: green; } 
+.black { background: black; }
+
+/* Клас активного вибору */
+.active { border-color: gold; transform: scale(1.2); }
