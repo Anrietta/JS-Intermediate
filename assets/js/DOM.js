@@ -1023,10 +1023,81 @@
 
 
 
+// 9 Приклад-практика kwiga 041 - Слайдер
 
+// масив слайдів
+// const slides = [ 
+//     { 
+//         src: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=1600&auto=format&fit=crop", 
+//         alt: "Панорама каньйону" 
+//     }, 
+//     { 
+//         src: "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?q=80&w=1600&auto=format&fit=crop",
+//         alt: "Гірський туман" 
+//     }, 
+//     { 
+//         src: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?q=80&w=1600&auto=format&fit=crop",
+//         alt: "Ліс та сонце" 
+//     }, 
+//     { 
+//         src: "https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=80&w=1600&auto=format&fit=crop",
+//         alt: "Гірське озеро" 
+//     }
+// ];
 
+// let currentSlideIndex = 0;
 
+// // Встановлюємо в якості початкового зображення перший елемент масиву slides
+// const slideImg = document.querySelector('.slider-wrapper > img');
+// updateSlideImg(currentSlideIndex);
 
+// // за допомогою деструктуризації колекції отримуємо зразу обидві кнопки і зберігаємо в окремі змінні
+// const [prevBtn, nextBtn] = document.querySelectorAll('.nav-btn');
+
+// function nextSlideHandler(e) {
+//     // if (currentSlideIndex < slides.length - 1) {  // якщо поточний індекс менше ніж довжина slides то збільшуємо індекс
+//     //     currentSlideIndex++;
+//     // } else {   // якщо поточний індекс більше ніж довжина slides то скидаємо поточний індекс на початок, тобто 0
+//     //     currentSlideIndex = 0;
+//     // }
+
+//     // альтернатива умові if..else використати формулу з ділення з остачею
+//     // як це працює - якщо число менше за дільник (4), остачею є саме це число
+//     // (0 + 1) % 4 = 1
+//     // (1 + 1) % 4 = 2
+//     // (2 + 1) % 4 = 3
+//     // (3 + 1) % 4 = 0  - 4 ділиться на 4 без остачі, currentSlideIndex = 0 і ми починаємо з початку - рух по колу
+//     currentSlideIndex = (currentSlideIndex + 1) % slides.length;
+
+//     updateSlideImg(currentSlideIndex);
+// }
+
+// nextBtn.addEventListener('click', nextSlideHandler);
+
+// function prevSlideHandler(e) {
+//     // if (currentSlideIndex > 0) {  // якщо поточний індекс більше ніж перший елемент в масиві slides то зменшуємо поточний індекс
+//     //     currentSlideIndex--;
+//     // } else {   // якщо поточний індекс меше ніж перший елемент в slides то скидаємо поточний індекс на останній елемент slides, тобто 4 
+//     //     currentSlideIndex = slides.length - 1;
+//     // }
+
+//     // альтернатива умові if..else використати формулу з ділення з остачею
+//     // як це працює - якщо число менше за дільник (4), остачею є саме це число
+//     // (0 - 1 + 4) % 4 = 3
+//     // (-1 - 1 + 4) % 4 = 2
+//     // (-2 - 1 + 4) % 4 = 1
+//     // (-3 - 1 + 4) % 4 = 0  - 0 ділиться на 4 без остачі, currentSlideIndex = 0 і ми починаємо знову з кінця - рух по колу
+//     // currentSlideIndex = (currentSlideIndex - 1 + slides.length) % slides.length;
+
+//     updateSlideImg(currentSlideIndex);
+// }
+
+// prevBtn.addEventListener('click', prevSlideHandler);
+
+// function updateSlideImg(currentSlideIndex) {
+//     slideImg.src = slides[currentSlideIndex].src;
+//     slideImg.alt = slides[currentSlideIndex].alt;
+// }
 
 
 
