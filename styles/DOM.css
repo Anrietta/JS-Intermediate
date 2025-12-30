@@ -31,7 +31,7 @@
 
 /* 9 Приклад-практика kwiga 041 - Слайдер */
 
-.slider-wrapper{
+/* .slider-wrapper{
     position: relative;
     width: 600px;
     height: 200px;
@@ -68,4 +68,19 @@
 
 .nextBtn{
     right: 15px;
+} */
+
+
+
+/* ---------------------------------------------------------------------------------------------------------- */
+
+                            /* DOM Лічильник (Counter) */
+
+body {
+    min-height: 100vh;
+    font-size: 36px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
