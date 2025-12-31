@@ -1432,3 +1432,66 @@
 //     // themeBtn.textContent = themeManager.theme === 'light' ? 'Switch to Dark' : 'Switch to Light';
 
 // }
+
+
+
+
+// --------------------------------------------------------------------------------------------------------------------------
+
+                                    // DOM Картка товару: Обране (Favourite toggle)
+
+// Умова задачі:
+// Уяви картку товару. На ній є кнопка-сердечко.
+// View: Кнопка з текстом (або іконкою).
+// Model: Зберігає стан: товар у списку обраного чи ні (логічне значення true або false).
+// ViewModel: При кліку на кнопку ми змінюємо стан у моделі, а інтерфейс реагує: 
+// кнопка змінює колір (наприклад, стає червоною) і змінюється текст ("Додати в обране" 
+// -> "Видалити з обраного").
+// 🏗️ Твій план дій:
+// Крок 1: Model (Клас)Створи клас ProductModel.
+// У конструкторі ініціалізуй властивість _isFavorite (початкове значення false).
+// Додай getter isFavorite.
+// Додай метод toggleFavorite().
+// Завдання із зірочкою: Спробуй використати тернарний оператор або оператор "НЕ" (!), 
+// щоб змінити true на false і навпаки в один рядок.
+// Крок 2: View (DOM)Знайди кнопку на сторінці (наприклад, .fav-btn).
+// Крок 3: ViewModel (Зв'язка)Створи екземпляр класу.Напиши функцію render(). 
+// Вона має:Якщо isFavorite — додати кнопці клас active (уяви, що в CSS він робить її червоною).
+// Якщо false — прибрати клас active.Оновити текст кнопки.Напиши обробник кліку, який смикає 
+// модель і викликає render.
+// 💡 Маленька підказка щодо логіки: Для перемикання true/false найпростіше використовувати оператор 
+// заперечення:this._isFavorite = !this._isFavorite;
+// (це буквально означає: "зроби значенням те, чим воно зараз НЕ є").
+
+
+// class ProductModel {
+//     constructor() {
+//         this._isFavorite = false;
+//     }
+//     get isFavorite() {
+//         return this._isFavorite;
+//     }
+//     toggleFavorite(){
+//         //це буквально означає: "зроби значенням те, чим воно зараз НЕ є"
+//         this._isFavorite = !this._isFavorite;
+//     }
+// }
+
+// const favBtn = document.querySelector('.fav-btn');
+// const favProduct = new ProductModel();
+
+// function favBtnHandler(e) {
+//     favProduct.toggleFavorite();
+//     render();
+// }
+
+// favBtn.addEventListener('click', favBtnHandler);
+
+// function render() {
+//     const currIsFav = favProduct.isFavorite;
+//     // тут додаємо другий аргумент, який щоразу перевірятиме поточний станt his._isFavorite = false чи true в обєкті-екземплярі
+//     // це дозволить синхронізувати перемикач з моделлю а не інтерфейсом, що гарантує безперебійну роботу
+//     // це заміняє запис if .. else: if currIsFav = true то favBtn.classList.remove('active') і навпаки
+//     favBtn.classList.toggle('active', currIsFav);
+//     favBtn.textContent = currIsFav ? 'Remove from favorite' : 'Add to favorite';
+// }

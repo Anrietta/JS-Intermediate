@@ -109,3 +109,28 @@
     background-color:black;
     color: white;
 } */
+
+
+/* ----------------------------------------------------------------------------------------------------------------- */
+
+                                /* DOM Картка товару: Обране (Favourite toggle) */
+
+
+/* body {
+    min-height: 100vh;
+    font-size: 36px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.fav-btn {
+    background-color: aquamarine;
+    border-radius: 8px;
+    line-height: 1.5;
+}
+
+.active {
+    background-color:coral ;
+} */
