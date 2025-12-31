@@ -1337,5 +1337,98 @@
 
 
 
+// --------------------------------------------------------------------------------------------------------------------------
+
+                                    // DOM Перемикач теми (Theme toggler)
+
+// Ми напишемо "Перемикач теми (Theme Toggler)". 
+// У нас буде кнопка, яка перемикає режим: Light (Світла) або Dark (Темна).
+// 📋 Умова задачі:
+// View: Кнопка на сторінці.
+// Model: Зберігає поточну тему (рядок "light" або "dark").
+// ViewModel: Коли ми клікаємо на кнопку, модель змінює тему, а інтерфейс реагує: 
+// змінюється колір фону сторінки та текст на самій кнопці.
+// 🏗️ Кроки до реалізації (твій план дій):
+// Крок 1: Model (Клас)
+// Створи клас ThemeModel.
+// У конструкторі ініціалізуй властивість _theme (наприклад, початкове значення "light").
+// Додай getter theme, щоб отримувати поточне значення.
+// Додай метод toggleTheme(). Логіка проста: якщо було "light" — став "dark", і навпаки.
+// Крок 2: View (DOM)
+// Знайди у своєму HTML кнопку (можеш просто створити її через document.querySelector).
+// Крок 3: ViewModel (Зв'язка)
+// Створи екземпляр класу: const themeManager = new ThemeModel().
+// Напиши функцію render(). Вона має:
+// Подивитися в модель: яка зараз тема?
+// Якщо "dark" — додати до document.body клас або просто змінити style.backgroundColor на чорний.
+// Якщо "light" — змінити фон на білий.
+// Оновити текст на кнопці (наприклад, "Switch to Dark", якщо зараз світло).
+// Напиши обробник кліку на кнопку: він має викликати themeManager.toggleTheme(), а потім 
+// обов'язково викликати render().
+// 💡 Підказка:
+// Згадай про нашу розмову: у методі toggleTheme ми просто міняємо рядок у пам'яті. 
+// А всю "брудну роботу" з фарбування сторінки робимо лише в одному місці — 
+// у функції render (це і є наш updateView).
 
 
+// class ThemeModel {
+//     constructor() {
+//         this._theme = 'light';
+//     }
+
+//     get theme() {
+//         return this._theme;
+//     }
+
+//     toggleTheme() {
+//         // Використовуємо else, щоб спрацювало щось ОДНЕ
+//         // if (this._theme === 'light') {
+//         //     this._theme = 'dark';
+//         // } else {
+//         //     this._theme = 'light';
+//         // }
+
+//         // або виккористовуємо тернарний оператор
+//         this._theme = this._theme === 'light' ? 'dark' : 'light';
+//         // де this._theme = - це одразу зберегти результат в змінну _theme результат умови
+//         //  this._theme === 'light' - це умова, якщо light true то збережи у змінну dark, якщо light false то збережи у змінну light
+        
+
+//     }
+// }
+
+// const themeBtn = document.querySelector('.themeBtn');
+
+// const themeManager = new ThemeModel();
+
+// function themeBtnHandler() {
+//     console.log(themeManager.theme);
+//     // Модель, зміни тему. Рендер, малюй!
+//     themeManager.toggleTheme();
+//     render();
+// }
+
+// themeBtn.addEventListener('click', themeBtnHandler);
+
+// function render() {
+//     const currTheme = themeManager.theme;
+
+//     if (currTheme === 'dark') {
+//         document.body.classList.add('darkTheme');
+//         document.body.classList.remove('lightTheme');
+//         themeBtn.textContent = 'Switch to Light';
+//     } else {
+//         document.body.classList.add('lightTheme');
+//         document.body.classList.remove('darkTheme');
+//         themeBtn.textContent = 'Switch to Dark';
+//     } 
+
+//     // // або ще простіший варіант функції render()
+//     // // Просто видаляємо всі класи тем і додаємо той, що зараз у моделі
+//     // document.body.classList.remove('lightTheme', 'darkTheme');
+//     // document.body.classList.add(`${themeManager.theme}Theme`);
+    
+//     // // Оновлюємо текст кнопки залежно від того, що буде НАСТУПНИМ
+//     // themeBtn.textContent = themeManager.theme === 'light' ? 'Switch to Dark' : 'Switch to Light';
+
+// }

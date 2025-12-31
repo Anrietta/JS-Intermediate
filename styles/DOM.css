@@ -76,7 +76,23 @@
 
                             /* DOM Лічильник (Counter) */
 
-body {
+/* body {
+    min-height: 100vh;
+    font-size: 36px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+} */
+
+
+
+
+/* ----------------------------------------------------------------------------------------------------------------- */
+
+                                /* DOM Перемикач теми (Theme toggler) */
+
+/* body {
     min-height: 100vh;
     font-size: 36px;
     display: flex;
@@ -84,3 +100,12 @@ body {
     justify-content: center;
     align-items: center;
 }
+
+.ligthTheme {
+    background-color: antiquewhite;
+    color: black;
+}
+.darkTheme {
+    background-color:black;
+    color: white;
+} */
