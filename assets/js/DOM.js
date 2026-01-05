@@ -1495,3 +1495,180 @@
 //     favBtn.classList.toggle('active', currIsFav);
 //     favBtn.textContent = currIsFav ? 'Remove from favorite' : 'Add to favorite';
 // }
+
+
+
+// ----------------------------------------------------------------------------------------------------------------------------------------------
+
+                                // DOM Сливання та занурення подій (Bubling and Capturing)
+                                // Керування розповсюдженням подій
+
+// const body = document.body;
+// const section = document.querySelector('section');
+// const button = document.querySelector('button');
+
+// function btnClickHandler(e) {
+//     console.log('e :>> ', e);
+//     console.log('e.target :>> ', e.target);  // ціль події (там де відбувся клік), найбільш занурений елемент
+//     console.log('this :>> ', this);  // e.currentTarget = this
+//     console.log('e.currentTarget :>> ', e.currentTarget);  // e.currentTarget = this
+
+//     this.style.backgroundColor = 'yellow'
+// } 
+
+// button.addEventListener('click', btnClickHandler);
+
+// function clickHandler(e) {
+//     console.log('e :>> ', e);
+//     console.log('e.target :>> ', e.target);  // ціль події (там де відбувся клік), найбільш занурений елемент
+//     console.log('this :>> ', this);  // e.currentTarget = this
+//     console.log('e.currentTarget :>> ', e.currentTarget);  // e.currentTarget = this
+//     console.log('---------------------------------------------');
+
+// } 
+
+// //Capturing - порядок виклику обробників від кореневого до найбільш заглибленого елемента
+// body.addEventListener('click', clickHandler, {capture: true});
+// section.addEventListener('click', clickHandler, {capture: true});
+// button.addEventListener('click', clickHandler, {capture: true});
+
+// //Bubbling - порядок виклику обробників від найбільш заглибленого елемента до кореневого
+// button.addEventListener('click', clickHandler);
+// section.addEventListener('click', clickHandler);
+// body.addEventListener('click', clickHandler);
+
+
+// Припинення розповсюдження події
+// let clickCounter = 0;
+
+// body.addEventListener('click', () => {
+//     clickCounter++;
+//     console.log('clickCounter :>> ', clickCounter);
+// })
+
+// button.addEventListener('click', e => {
+//     e.stopPropagation();  // припинення розповсюдження події на button(на section та body воно вже не розповсюджується)
+// })
+
+
+// Зробимо наочний приклад. Уяви "матрьошку": великий DIV (батько), а всередині нього BUTTON (дитина).
+// Ми повісимо обробники на обох, але для DIV ми зробимо два слухача: один на занурення, інший на спливання.
+
+// знаходимо елементи
+// const parent = document.querySelector('#parent');
+// const child = document.querySelector('#child');
+
+// // 1 Слухач/Обробник на div (Занурення - Capture: true);
+// parent.addEventListener('click', () => {
+//     console.log('1 div: Фаза занурення (Capture)');
+// }, {capture: true});
+
+// // 2 Слухач/Обробник на btn (Ціль - вона в самому центрі)
+// child.addEventListener('click', () => {
+//     console.log('2 btn: Фаза цілі (Target)');
+// })
+
+// // 3 Слухач/Обробник на div (Спливання - Capture: false за замовчуванням)
+// parent.addEventListener('click', () => {
+//     console.log('3 div: Фаза спливання (Bubbling)');
+// })
+
+// Що ти побачиш у консолі, якщо натиснеш на КНОПКУ:
+// 1. DIV: Фаза занурення (Capture) (Подія тільки-но почала свій шлях зверху вниз. 
+//     Вона ще не дійшла до кнопки, але DIV її вже "перехопив", бо ми вказали capture: true).
+// 2. BUTTON: Фаза цілі (Target) (Подія досягла самого центру — кнопки).
+// 3. DIV: Фаза спливання (Bubbling) (Подія розвернулася і полетіла назад вгору. 
+//     Тепер спрацював другий обробник на DIV, який працює за замовчуванням).
+
+// Занурення (capture: true) використовують рідко, але воно корисне, 
+// якщо ти хочеш заблокувати подію до того, як вона дійде до елемента.
+// Наприклад: ти хочеш заборонити кліки по всіх кнопках у певному блоці. 
+// Ти вішаєш на батьківський контейнер обробник із capture: true і в ньому 
+// пишеш event.stopPropagation(). Подія "помре", ще не встигнувши долетіти вниз до самих кнопок.
+// Тепер, дивлячись на цей "маршрут" події, стало зрозуміліше, що capture — 
+// це просто вибір фази для зупинки "попутки", а не зміна самої дороги? 😉
+
+// Маршрут незмінний: Подія завжди йде за маршрутом: Window → ... → Target → ... → Window.
+//  Це як поїзд, який завжди їде від початкової станції до кінцевої і назад.
+// capture: true: Це твоя можливість зайти в поїзд ще на шляху ДО кінцевої зупинки (Target).
+// capture: false (або нічого): Це можливість сісти в поїзд на зворотному шляху, 
+// коли він уже ПОВЕРТАЄТЬСЯ з кінцевої зупинки.
+
+
+
+// Приклад з використанням stopPropagation()
+// Умова задачі: "Скляний купол"
+// У нас є контейнер (div), і ми хочемо, щоб при кліку на нього в консоль виводилося: "Контейнер відчув клік!". 
+// Але всередині цього контейнера є маленька кнопка. Ми хочемо, щоб при кліку на неї:
+// Виводилося: "Кнопка натиснута!".
+// АЛЕ контейнер про це не дізнався (тобто повідомлення про контейнер не повинно з'явитися).
+// 🏗️ Твій план дій:
+// Крок 1: HTML Створи div з id container і всередині нього button з id btn.
+// Крок 2: JS (Без зупинки)
+// Повійшав обробник на container, який робить console.log('Контейнер відчув клік!').
+// Повійшав обробник на btn, який робить console.log('Кнопка натиснута!').
+// Перевір у консолі: при кліку на кнопку мають вискочити обидва написи.
+// Крок 3: JS (Із зупинкою)
+// Додай у функцію обробника кнопки один рядок з event.stopPropagation().
+// Спробуй клікнути знову.
+// 💡 Питання для самоперевірки:
+// Що станеться, якщо ти натиснеш на порожнє місце в container (не на кнопку)? Чи спрацює обробник кнопки?
+// Що саме "зупинив" stopPropagation: фазу занурення чи фазу спливання в даному випадку?
+
+
+// const container = document.querySelector('#container');
+// const btn = container.querySelector('#btn');
+
+// function containerClickHandler() {
+//     console.log('Контейнер відчув клік!');
+// }
+
+// function btnClickHandler(e) {
+//     e.stopPropagation();
+//     console.log('Кнопка натиснута!');
+
+// }
+
+// container.addEventListener('click', containerClickHandler);
+// btn.addEventListener('click', btnClickHandler);
+
+// Результат на сплиття:
+// Якщо не прописати в btnClickHandler e.stopPropagation(); то при кліку на кнопку спрацьовують 
+// обидва обробника і той що на кнопці і той що на контейнері, 
+// а при кліку на контейнер спрацьовує лише обробник контейнера
+// Якщо прописати в btnClickHandler e.stopPropagation(); то при кліку на кнопку спрацьовує 
+// лише обробник на кноці, а той що на контейнері не працює. А при кліку на контейнер спрацьовує лише 
+// обробник що висить на контейнері.
+// В даному випадку e.stopPropagation(); в btnClickHandler зупинив фазу спливання від цілі target 
+// до рутового елемента currentTarget
+
+
+// Приклад попередньої задачі, але покладу e.stopPropagation(); на занурення а не на спливання
+
+// const container = document.querySelector('#container');
+// const btn = container.querySelector('#btn');
+
+// function containerClickHandler(e) {
+//     e.stopPropagation();
+//     console.log('Контейнер відчув клік!');
+//     console.log(e.target);
+//     console.log(e.currentTarget);
+// }
+
+// function btnClickHandler() {
+//     console.log('Кнопка натиснута!');
+
+// }
+
+// container.addEventListener('click', containerClickHandler, {capture: true});
+// btn.addEventListener('click', btnClickHandler);
+
+// Результат на занурення :
+// Якщо не прописати в containerClickHandler{capture: true} e.stopPropagation(); то при кліку на 
+// кнопку спрацьовують обидва обробника і той що на кнопці і той що на контейнері, 
+// а при кліку на контейнер спрацьовує лише обробник контейнера
+// Якщо прописати в containerClickHandler{capture: true} e.stopPropagation(); то при кліку на 
+// кнопку спрацьовує лише той обробник що на контейнері, той що на кнопці не спрацьовує
+// А при кліку на контейнер спрацьовує лише обробник що висить на контейнері.
+// В даному випадку e.stopPropagation(); в containerClickHandler{capture: true} зупинив фазу занурення  
+// від рутового елемента currentTarget до цілі target при цьому він всерівно знає що клік відбувся на кнопку

@@ -134,3 +134,25 @@
 .active {
     background-color:coral ;
 } */
+
+
+
+
+/* ----------------------------------------------------------------------------------------------------------------- */
+
+                                /* DOM Сливання та занурення подій (Bubling and Capturing)*/
+
+
+body {
+    min-height: 100vh;
+    font-size: 36px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+section {
+    border: 5px solid red;
+    padding: 30px;
+}
