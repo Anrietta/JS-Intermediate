@@ -1832,3 +1832,85 @@
 
 // gallery.addEventListener('click', galleryClickHandler);
 // window.addEventListener('click', windowClickHandler);
+
+
+
+
+
+// Завдання : Менеджер завдань з пріоритетами
+// У тебе є список завдань. При кліку на саме завдання воно має "виконуватися" 
+// (змінювати колір тексту). Але всередині є кнопка для зміни пріоритету (зірочка) 
+// та кнопка видалення.
+// Що треба зробити в JS:
+// Делегування: Повійшай обробник кліку на головний контейнер #todo-app.
+// Ізоляція: Зроби так, щоб будь-який клік всередині #todo-app не спливав 
+// до window (пам'ятаєш про "печеру"?).
+// Логіка кнопок (використовуй early return):
+// Якщо клікнули на .delete-btn — виведи: "Видаляємо завдання № [ID]". 
+// Обов'язково перерви функцію, щоб код нижче не спрацював.
+// Якщо клікнули на .priority-btn — зміни колір фону саме цієї картки (.task-item) 
+// на світло-червоний (#ffe6e6) та виведи: "Пріоритет змінено". Теж перерви функцію.
+// Логіка картки:
+// Якщо клікнули просто на текст завдання або на будь-яке місце в межах .task-item 
+// (але не на кнопки!) — переключи колір тексту цього завдання на сірий та додай 
+// закреслення (стиль text-decoration: line-through).
+// Глобальний клік:
+// Додай на window обробник, який каже: "Клік поза застосунком". Він не має спрацьовувати, 
+// коли ми працюємо з тасками.
+// 🔥 Підказка по структурі функції:
+// Спробуй таку послідовність (як ми обговорювали):
+// e.stopPropagation().
+// Знайти taskItem через closest.
+// Якщо !taskItem — return.
+// Перевірка на кнопку видалення -> return.
+// Перевірка на кнопку пріоритету -> return.
+// Весь інший код (для виконання завдання).
+
+// const todoApp = document.querySelector('#todo-app');
+
+// function todoAppClickHandler(e) {
+//     // спершу зупинимо спливання до window події на клік в межах todo-App
+//     e.stopPropagation();
+
+//     const target = e.target;
+//     const taskItem = target.closest('.task-item')
+    
+//     // якщо клік не на елементі списку то нічого не робим (виходим з обробника)
+//     if (!taskItem) return;
+
+//     const taskItemId = taskItem.dataset.id;
+
+//     if (target.closest('.delete-btn')) {
+//         console.log(`Видаляємо завдання № ${taskItemId}`);
+//         return;
+//     }
+
+//     if (target.closest('.priority-btn')) {
+//         if (taskItem.style.borderColor === '#ffe6e6' || taskItem.style.borderColor === 'rgb(255, 230, 230)') {
+//             taskItem.style.borderColor = '#ccc'; 
+//         } else {
+//             taskItem.style.borderColor = '#ffe6e6';
+//         }
+
+//         console.log('Пріоритет змінено');
+//         return;
+//     }
+
+//     // якщо всі попередні if умови не підійшли то вважаємо що клік відбувся в межах картки але не на кнопках
+//     // також додамо повернення до стану по замовчуванню при повторному кліку на картку
+
+//         // перевіряємо чи присутнє в момент закреслення на картці
+//         const isDone = taskItem.style.textDecoration === 'line-through';
+//         // перемикаємось в залежності від поточного стану isDone
+//         taskItem.style.textDecoration = isDone ? 'none' : 'line-through';
+//         taskItem.style.color = isDone ? '' : 'grey';
+
+
+// }
+
+
+// todoApp.addEventListener('click', todoAppClickHandler);
+
+// window.addEventListener('click', () => {
+//     console.log('Клік поза застосунком');
+// })
