@@ -1963,3 +1963,111 @@
 
 // el.classList.entries(), .keys(), .values(): 
 // Дозволяють працювати з переліком класів як з повноцінним списком (масивоподібним об'єктом).
+
+
+
+// Задача: "Картки товарів з вибором"
+// Уяви, що в тебе є список карток товарів. Користувач може клікати на картку,
+//  щоб її "вибрати" (виділити рамкою).
+// Умови:
+// Коли користувач клікає на картку — їй додається клас .is-selected.
+// Якщо клікнути на вже вибрану картку — виділення знімається.
+// Але! Якщо на картці є клас .out-of-stock (товару немає в наявності), 
+// клік по ній не повинен нічого робити (вона не може бути вибрана).
+// Твоє завдання (напиши JS код):
+// Повійшай один обробник подій на батьківський елемент .product-list.
+// Використай Early Return, щоб перевірити, чи клік відбувся саме по картці (клас .product-card).
+// Використай ще один Early Return, щоб нічого не робити, якщо у картки є клас .out-of-stock.
+// Якщо все "ок", одним рядком перемикай клас .is-selected на цій картці.
+
+// const productList = document.querySelector('.product-list');
+
+// function productListClickHandler(e) {
+
+//     if (!e.target.classList.contains('product-card')) {
+//         return;
+//     }
+//     if (e.target.classList.contains('out-of-stock')) {
+//         return;
+//     }
+
+//     e.target.classList.toggle('is-selected');
+// }
+
+
+// productList.addEventListener('click', productListClickHandler);
+
+
+
+// А тепер невеличкий "левел-ап" (Level Up) 🚀
+// Уяви ситуацію: всередині картки з'явився ще якийсь текст у тезі <span> або картинка.
+// <li class="product-card">
+//   <span>Назва товару</span>
+// </li>
+// Якщо користувач клікне прямо на текст <span>, твій e.target буде саме цим спаном. 
+// І перша перевірка !e.target.classList.contains('product-card') спрацює...
+//  і функція зробить return, хоча клікнули по картці!
+// Завдання на "зірочку": Як нам змінити визначення цільового елемента, 
+// щоб клік по будь-якому нутрощах картки все одно знаходив саму картку?
+// Підказка: Ми це вже проходили, метод називається .closest().
+// Спробуй переписати початок функції так, щоб ми спочатку знаходили саму 
+// картку через closest, а потім вже робили по ній перевірки.
+
+// const productList = document.querySelector('.product-list');
+
+// function productListClickHandler(e) {
+
+//     const targetCard = e.target.closest('.product-card');
+
+//     if (!targetCard) {
+//         return;
+//     }
+//     if (targetCard.classList.contains('out-of-stock')) {
+//         console.log('out of stock');
+//         return;
+//     }
+
+//     targetCard.classList.toggle('is-selected');
+// }
+
+// productList.addEventListener('click', productListClickHandler);
+
+// Ще один "левел-ап" (Level Up) Фінальний бос цієї теми 🐉
+// Давай ускладнимо логіку. Бізнес-задача змінилася: Тепер ми хочемо, 
+// щоб у списку тільки одна картка могла бути вибраною одночасно.
+// Твоє завдання: Модифікуй свою функцію так, щоб:
+// Якщо ми клікаємо на картку, яка вже вибрана — вона втрачає клас
+//  .is-selected (це ти вже вмієш через toggle).
+// Якщо ми клікаємо на нову картку — ми спочатку знімаємо клас .is-selected 
+// з тієї картки, де він був раніше (якщо така є), і тільки потім додаємо його новій картці.
+// Про out-of-stock та closest не забуваємо — вони мають працювати як і раніше.
+// Підказка: Щоб знайти "попередню" вибрану картку, ти можеш використати 
+// document.querySelector('.is-selected').
+
+
+// const productList = document.querySelector('.product-list');
+
+// function productListClickHandler(e) {
+
+//     const targetCard = e.target.closest('.product-card');
+
+//     if (!targetCard) {
+//         return;
+//     }
+//     if (targetCard.classList.contains('out-of-stock')) {
+//         console.log('out of stock');
+//         return;
+//     }
+
+//     const selected = document.querySelector('.is-selected');
+
+//     // Очищуємо попередню ТІЛЬКИ якщо вона не є поточною
+//     if (selected && selected !== targetCard) {
+//         selected.classList.remove('is-selected');
+//     } 
+
+//     targetCard.classList.toggle('is-selected');
+
+// }
+
+// productList.addEventListener('click', productListClickHandler);
