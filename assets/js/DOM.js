@@ -2071,3 +2071,50 @@
 // }
 
 // productList.addEventListener('click', productListClickHandler);
+
+
+
+
+// Задвання: Розумний FAQ - Accordion
+// У нас є список питань. При кліку на питання має відкриватися блок з відповіддю.
+// Одночасно може бути відкрита лише одна відповідь.
+// Твоє завдання:
+// Напиши один обробник кліку на .faq-container.
+// Визнач через closest, на який .faq-item клікнули.
+// Якщо клік був поза елементом .faq-item, виходь через Early Return.
+// Знайди елемент, який вже має клас .is-open.
+// Якщо такий є І це не той самий елемент, на який клікнули — видали
+//  у нього клас .is-open.
+// Перемкни (toggle) клас .is-open на поточному елементі.
+
+// const faqContainer = document.querySelector('.faq-container');
+
+// function faqContainerClickHandler(e) {
+
+//     const currfaqItem = e.target.closest('.faq-item');
+
+//     if (!currfaqItem) {
+//         console.log('oops');  // чому це не виводиться якщо клікати за межі faq-container?
+//         return;
+
+//     }
+
+//     const openFaqItem = document.querySelector('.is-open');
+    
+//     if (openFaqItem && openFaqItem !== currfaqItem) {
+//         openFaqItem.classList.remove('is-open');
+//     }
+
+//     // Можна використати Optional Chaining (знак питання), якщо ти впевнена,
+//     //  що логіка з !== тобі не заважає (або якщо ти просто закриваєш усе старе): 
+//     // openFaqItem?.classList.remove('is-open');
+
+//     // Але твій варіант із перевіркою !== — кращий, бо він не робить 
+//     // зайвої роботи (не видаляє клас, щоб через мілісекунду його знову 
+//     // додати через toggle).
+
+//     currfaqItem.classList.toggle('is-open');
+
+// }
+
+// faqContainer.addEventListener('click', faqContainerClickHandler);
