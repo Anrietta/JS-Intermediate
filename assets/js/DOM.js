@@ -2118,3 +2118,72 @@
 // }
 
 // faqContainer.addEventListener('click', faqContainerClickHandler);
+
+
+
+
+// Задвання: BurgerMenu - Kwiga 044
+// маємо кнопку яка відкриває бургер меню при кліку, закриває меню при кліку на кнопку чи в будь яку іншу частину сторінки
+// burgerMenuContainerHide після кліку видаляється на цей елемент додається клас burgerMenuContainerActive
+
+// const burgerBtn = document.querySelector('.burgerMenuBtn');
+// const burgerContainer = document.querySelector('.burgerMenuContainer');
+
+// function burgerBtnClickHandler(e) {
+//     // використаєм toggle() = Якщо перший вимкнений — увімкни, якщо другий увімкнений — вимкни"
+//     // replace() без if-else тут не спрацює тому що replace — це для заміни одного на інше назавжди або по ланцюжку, 
+//     // а toggle — для нескінченного "туди-сюди". 😊
+
+//     // якщо при кліку на кнопку контейнер має клас Hide то він видалиться а Active додасться
+//     burgerContainer.classList.toggle('burgerMenuContainerHide');
+//     // якщо при кліку на кнопку контейнер має клас Active то він видалиться а Hide додасться
+//     burgerContainer.classList.toggle('burgerMenuContainerActive');
+//     e.stopPropagation();  // якщо клікнули на кнопку бургер меню то подія не спливе (і при закритті меню не спрацює обробник на body)
+
+    
+// }
+
+// burgerBtn.addEventListener('click', burgerBtnClickHandler);
+
+// // обробник на body для того щоб можна було закрити бургер меню при натисканні на будь яку частину сторінки а не лише на кнопку
+// // він запускається навіть коли бургер меню приховане, заходить в add і бачить що клас висить, додавати його  нетреба, іде
+// // в remove дивиться класу burgerMenuContainerActive немає, значить і видаляти його нетреба, і виходить з обробника
+// function bodyClickHandler() {
+//     burgerContainer.classList.add('burgerMenuContainerHide')
+//     burgerContainer.classList.remove('burgerMenuContainerActive')
+// }
+// document.body.addEventListener('click', bodyClickHandler);
+
+
+// 2 варіант рішення з одним обробником
+
+// Навішавши два обробника, ми зробили можливим закриття бургер меню на кнопку і в будь яку частину боді якщо бургер меню активне)
+// Але цю ж задачу можна вирішити за допомогою одного обробника повішаного на body або document через делегування
+
+// document.addEventListener('click', (e) => {
+//     const isClickOnBtn = e.target.closest('.burgerMenuBtn');
+//     const isClickInsideMenu = e.target.closest('.burgerMenuContainer');
+
+//     // 1. Якщо клікнули на кнопку — перемикаємо меню (туди-сюди)
+//     if (isClickOnBtn) {
+//         burgerContainer.classList.toggle('burgerMenuContainerHide');
+//         burgerContainer.classList.toggle('burgerMenuContainerActive');
+//         return; // Виходимо, щоб не спрацювала логіка закриття нижче
+//     }
+
+//     // 2. Якщо клікнули НЕ по кнопці І НЕ всередині меню — закриваємо меню
+//     if (!isClickInsideMenu) {
+//         burgerContainer.classList.add('burgerMenuContainerHide');
+//         burgerContainer.classList.remove('burgerMenuContainerActive');
+//     }
+// });
+
+// Чому цей підхід (один обробник) такий крутий?
+// 1. Не потрібен stopPropagation(): Нам більше не треба "ламати" стандартну поведінку браузера. 
+// Подія спокійно спливає, а ми просто фільтруємо її за допомогою closest.
+
+// 2. Менше коду: Ми не створюємо дві різні функції, вся логіка бургера лежить в одному місці.
+
+// 3. Автоматичне вирішення багів: Оскільки ми додали перевірку !isClickInsideMenu, меню 
+// тепер не буде закриватися при кліку всередині нього (на пункти списку), бо ми явно 
+// сказали: "якщо клік всередині меню — нічого не роби".
