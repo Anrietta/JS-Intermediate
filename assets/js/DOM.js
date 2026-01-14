@@ -2237,3 +2237,202 @@
     
 
 // })
+
+
+
+
+
+// -----------------------------------------------------------------------------------------------------------------------------------------
+
+                                // Створення, додавання елементів в розмітку, видалення елементів з розмітки.
+
+// Ієрархія класів елементів
+// Доступ до сусідніх/батьківських/дочірніх елементів
+// Створення елементів createElement
+// Додавання елементів в розмітку
+// - як дочірній елемент prepend/append
+// - як сіблінги елемента before/after
+// Видалення елемента з розмітки remove
+
+// звідки в елемента є ті властивості які ми звикли бачити?
+// якщо у node є властивості, то елемент унаслідує ці ж властивості + матиме свої додатково
+
+// навігація по вузлах ?? (parent, previousSibling, nextSibling, firstChild, etc.)
+// навігація по елементах ?? (parentElement, previousElelmentSibling, nextElementSibling, children, firstElementChild, etc.)
+
+// До цього ми користувались тільки готовою розміткою, але насправді є розмітка яку недоцільно прописувати одразу, 
+// краще її згенерувати коли вона потрібна (на льоту).
+
+// Створення елементу (без додавання в розмітку) : document.createElement('elementType') 
+// Додавання дочірнього:
+// -element.append(newEl) – після останнього дочірнього
+// -element.prepend(newEl) – перед першим дочірнім
+//  Додавання сусіда:
+// -element.before(newEl) – перед елементом
+// -element.after(newEl) – посля елементу
+
+//  element.remove() – видалення себе (не розумію, це видалення до створення елементу чи до додавання в розмітку?)
+
+// Приклад:
+// const section = document.createElement('section'); //  створимо елемент
+// const divRoot = document.querySelector('#root');  // отримаєм елемент до якого будем додавати section
+
+// // додавання дочірніх
+// divRoot.append(section);  // додаємо в div останній дочірній елемент section
+// section.textContent = 'Lorem ipsum dolor sit.'; // додаємо контент до новоствореного елемента
+// section.style.backgroundColor = 'grey'; // додаємо інлайн стилі до новоствореного елемента
+
+// const article = document.createElement('article'); // створимо елемент
+// divRoot.prepend(article);  // додаємо в div перший дочірній елемент atricle
+// article.textContent = 'some text'; // додаємо контент до новоствореного елемента
+// article.style.backgroundColor = 'darkgreen'; // додаємо інлайн стилі до новоствореного елемента
+
+
+// // додавання сіблінгів
+
+// const btn = document.createElement('button');
+// section.after(btn);  // додаємо після section наступний сусідній елемент btn (після себе)
+// btn.textContent = 'Click me!'; // // додаємо контент до новоствореного елемента
+
+// // видалення елемента
+// // при наведенні миші на нього ми будемо його видаляти
+// const dirForRemove = document.querySelector('.removable');  // отримуєм елемент який треба видалити
+
+// dirForRemove.addEventListener('mouseenter', function (e) {
+//     this.remove();  // this = currentTarget - той елемент на якому висить(зпрацьовує) обробник
+// })
+
+
+
+
+// Завдання: "Генератор картки товару"
+// Твоя мета:
+// Створити елемент div (це буде картка).
+// Додати йому клас product-card.
+// Всередині картки створити заголовок h2 з назвою товару (наприклад, "Apple iPhone 15").
+// Створити кнопку "Видалити", при кліку на яку ця конкретна картка зникне зі сторінки.
+// Твій план дій (спробуй написати код сама):
+// Отримай посилання на #container.
+// Створи card через createElement.
+// Створи title через createElement і задай йому текст.
+// Створи deleteBtn через createElement і задай їй текст.
+// Додавання: Використай append, щоб зібрати все докупи 
+// (title і btn — всередину card, а card — всередину container).
+// Видалення: Повісь слухач подій на deleteBtn, який викликає метод remove() для card.
+
+// const container = document.querySelector('#container');
+// const card = document.createElement('div');
+// const title = document.createElement('h2');
+// const removeBtn = document.createElement('button');
+
+// title.textContent = 'Apple iPhone 15';
+// removeBtn.textContent = 'Видалити';
+
+// card.append(title);
+// title.after(removeBtn);
+// card.classList.add('product-card');  // спершу декоруємо елемент
+// container.append(card);  // потім додаємо в DOM, бо при кожній зміні елементу DOM сторінка перемальовується
+
+// removeBtn.addEventListener('click', () => {
+//     card.remove();
+// })
+
+
+// 2 Рішення завдання (Round 2) за допомогю insertAdjacentHTML:
+// Спробуй реалізувати ту саму картку, але тепер створи її структуру одним рядком.
+// Твій план:
+// Отримай контейнер.
+// Створи рядок (використовуй бек-тіки ` `, щоб зручно писати HTML на кілька рядків).
+// Встав цей рядок у контейнер через insertAdjacentHTML.
+// Важливий нюанс: Оскільки ми вставляємо рядок, у нас немає змінної card чи removeBtn. 
+// Щоб видалити картку, тобі доведеться спочатку знайти кнопку в DOM після вставки.
+// Підказка для видалення:
+// Після вставки рядка:
+// const btn = document.querySelector('.delete-btn'); // припустимо, ти дала такий клас у рядку
+// const card = document.querySelector('.product-card');
+
+// btn.addEventListener('click', () => {
+//     card.remove();
+// });
+
+// const container = document.querySelector('#container');
+
+// const content = `<div class="product-card">
+//                     <h2>Apple iPhone 15</h2>
+//                     <button class="remove-btn">Remove card</button>
+//                 </div>`;
+
+
+// container.insertAdjacentHTML('beforeend', content);  // додаємо контент як останній дочірній елемент в container
+
+// // після того як додали, отримуємо кнопку і картку, якщо будем шукати перед 
+// // тим як додати то отримааємо null, бо їх ще не існує
+// const removeBtn = document.querySelector('.remove-btn');
+// const card = document.querySelector('.product-card');
+
+// // навішуємо обробник на кнопку щоб при кліку видалити всю картку товару
+// removeBtn.addEventListener('click', () => {
+//     card.remove();
+// });
+
+
+
+// 3 Рішення завдання: Фінальний проєкт: "Динамічна вітрина"
+// Уяви, що дані приходять до тебе у вигляді масиву об'єктів (саме так це працює 
+// в реальних проєктах).
+// Твій план дій:
+// Масив даних: Створи масив products, де кожен елемент — це об'єкт з 
+// властивостями id та name.
+// Генерація розмітки: Використай map або forEach, щоб перетворити масив 
+// об'єктів на один великий рядок HTML.
+// Рендеринг: Встав цей рядок у container за один раз через insertAdjacentHTML.
+// Делегування: Повісь один слухач подій на container, який через event.target 
+// та closest буде видаляти ту картку, на якій натиснули кнопку.
+// Твій стартовий код:
+// const products = [
+//     { id: 1, name: 'Apple iPhone 15' },
+//     { id: 2, name: 'Samsung Galaxy S24' },
+//     { id: 3, name: 'Google Pixel 8' }
+// ];
+
+// const container = document.querySelector('#container');
+// // 1. Створи рядок розмітки на основі масиву products
+// // Підказка: використай map та join('')
+// // 2. Встав розмітку в container
+// // 3. Додай делегування подій на container для видалення картки
+
+
+// const products = [
+//     { id: 1, name: 'Apple iPhone 15' },
+//     { id: 2, name: 'Samsung Galaxy S24' },
+//     { id: 3, name: 'Google Pixel 8' }
+// ];
+
+// const container = document.querySelector('#container');
+// // 1. Створи рядок розмітки на основі масиву products
+// // Підказка: використай map та join('')
+// const productsContent = products.map(product => `<div class="product-card">
+//                                                     <h2>${product.name}</h2>
+//                                                     <button class="remove-btn">Remove card</button>
+//                                                 </div>`
+// ).join('');
+
+// // 2. Встав розмітку в container
+// container.insertAdjacentHTML('beforeend', productsContent);
+// // 3. Додай делегування подій на container для видалення картки
+
+// container.addEventListener('click', function (e) {
+//     // Шукаємо кнопку, по якій клікнули (або в межах якої клікнули)
+//     const removeBtn = e.target.closest('.remove-btn');
+
+//     //Якщо клікнули не по кнопці — виходимо з функці
+//     if (!deleteBtn) return;
+
+//     // Від кнопки піднімаємося вгору до найближчого батька з класом .product-card
+//     const card = removeBtn.closest('.product-card');
+
+//     // Видаляємо саме цю конкретну картку
+//     if (card) {
+//         card.remove();
+//     }
+// })
