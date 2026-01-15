@@ -2436,3 +2436,171 @@
 //         card.remove();
 //     }
 // })
+
+
+
+
+// Завдання: "Динамічний список завдань (To-Do List)"
+
+// Рівень 1: Створення через форму (Base)
+// Замість того, щоб мати готовий масив, давай дозволимо користувачеві 
+// самому додавати елементи.
+// Твоє завдання:
+// У тебе є <input type="text"> та <button id="add-btn">Додати</button>.
+// Коли користувач натискає на кнопку, потрібно:
+// Взяти текст із інпуту (властивість .value).
+// Якщо інпут не порожній, створити новий елемент <li>.
+// Додати цей <li> до списку <ul>.
+// Очистити інпут після додавання.
+// Твій план дій:
+// Знайди інпут, кнопку та список у DOM.
+// Повій слухач click на кнопку додавання.
+// Всередині обробника:
+// Створи li за допомогою document.createElement.
+// Присвой тексту з інпуту значення textContent для li.
+// Використай append, щоб додати li в ul.
+// Очисти інпут: input.value = ''.
+
+// const input = document.querySelector('#task-input');
+// const addBtn = document.querySelector('#add-btn');
+// const taskList = document.querySelector('#task-list');
+
+// addBtn.addEventListener('click', function(e) {
+//     if (input.value === '') return;
+
+//     const taskItem = document.createElement('li');
+
+//     taskItem.textContent = input.value;
+//     taskList.append(taskItem);
+//     input.value = '';
+
+// })
+
+
+
+// Рівень 2: Додаємо кнопку видалення та "Стан"
+// Зараз ми додаємо просто текст. Але справжньому списку справ потрібна кнопка 
+// видалення поруч із кожним завданням.
+// Твоє завдання:
+// Модифікуй код створення li. Тепер всередині кожного li має бути:
+// Текст завдання.
+// Кнопка з текстом "Видалити" (клас delete-btn).
+// Оскільки кнопок буде багато, використай делегування подій на рівні taskList (ul), 
+// щоб видаляти завдання.
+// Підказка щодо структури: Тепер зручніше буде створювати li через innerHTML, щоб 
+// не плодити купу createElement.
+// // Наприклад:
+// taskItem.innerHTML = `
+//     <span>${input.value}</span>
+//     <button class="delete-btn">Видалити</button>
+// `;
+// Твій план дій:
+// Онови обробник кліку на addBtn, щоб він створював li з кнопкою всередині.
+// Додай другий обробник подій для taskList (делегування).
+// У цьому обробнику перевіряй через event.target.closest('.delete-btn') і видаляй 
+// відповідний li.
+// Бонусне завдання: Спробуй зробити так, щоб після кліку на кнопку "Додати" фокус
+//  автоматично повертався в інпут (метод input.focus()), щоб можна було друкувати
+//   наступне завдання без зайвого кліку мишкою.
+
+// const input = document.querySelector('#task-input');
+// const addBtn = document.querySelector('#add-btn');
+// const taskList = document.querySelector('#task-list');
+
+// addBtn.addEventListener('click', function() {
+//     if (input.value === '') return;
+
+//     const content = `<li>${input.value}<button class="delete-btn">Delete</button></li>`;
+
+//     taskList.insertAdjacentHTML('afterbegin', content);
+
+//     input.focus();
+//     input.value = '';
+
+
+// })
+
+// taskList.addEventListener('click', function(e) {
+//     const deleteBtn = e.target.closest('.delete-btn');
+
+//     if(!deleteBtn) return;
+
+//     const taskItem = deleteBtn.closest('li');
+
+//     if (taskItem) {
+//         taskItem.remove();
+//     }
+// })
+
+
+// Рівень 3: "Завдання виконано" (Стилізація та Стан)
+// Давай додамо останній штрих до функціонала: можливість позначати завдання як виконане.
+// Твоє завдання:
+// Зроби так, щоб при кліку на текст завдання (а не на кнопку видалення), цьому елементу
+//  li додавався або забирався клас .completed.
+// У CSS (уяви, що він є) цей клас робить текст закресленим: text-decoration: line-through;
+//  color: gray;.
+// Як це реалізувати:
+// Тобі не потрібно додавати новий обробник подій! Використай той самий 
+// taskList.addEventListener, що вже є.
+// Всередині перевір:
+// Якщо клікнули по кнопці видалення — видаляй (це вже є).
+// Якщо клікнули по самому li (або тексту всередині) — перемикай клас за допомогою 
+// classList.toggle('completed').
+// Маленька підказка: Щоб ці дві дії не заважали одна одній, використовуй else if 
+// або просто переконайся, що клік по кнопці видалення не викликає перемикання класу
+//  (для цього після видалення можна написати return).
+
+
+// const input = document.querySelector('#task-input');
+// const addBtn = document.querySelector('#add-btn');
+// const taskList = document.querySelector('#task-list');
+
+// addBtn.addEventListener('click', function() {
+//     if (input.value === '') return;
+
+//     const content = `<li class="task-item">${input.value}<button class="delete-btn">Delete</button></li>`;
+
+//     taskList.insertAdjacentHTML('afterbegin', content);
+
+//     input.focus();
+//     input.value = '';
+
+
+// })
+
+// taskList.addEventListener('click', function(e) {
+//     const deleteBtn = e.target.closest('.delete-btn');
+//     const taskItem = e.target.closest('.task-item');
+    
+//     // якщо клік не в межах li то виходим з обробника
+//     if (!taskItem) return;  
+
+//     // якщо клік на кнопку видалення - видаляєм li
+//     if (deleteBtn) {
+//         taskItem.remove();
+//         input.focus();
+//         return;
+//     }
+
+//     // якщо ми дійшли сюди, значить клікнули по картці але не по кнопці видалення
+//     taskItem.classList.toggle('completed');
+
+// })
+
+// // // ще один варіант обробника з перевіркою через "ціль"
+// // taskList.addEventListener('click', function(e) {
+// //     const taskItem = e.target.closest('.task-item');
+    
+// //     // якщо клік не в межах li то виходим з обробника
+// //     if (!taskItem) return;  
+
+// //     // якщо клік на кнопку видалення - видаляєм li
+// //     if (e.target.closest('.delete-btn')) {
+// //         taskItem.remove();
+// //         input.focus();
+// //     } else {
+// //         // якщо клік нен на кнопку - значить це решта li
+// //         taskItem.classList.toggle('completed');
+// //     }
+// // })
