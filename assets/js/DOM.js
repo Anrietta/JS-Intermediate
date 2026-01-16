@@ -2678,6 +2678,93 @@
 //     // видаляємо весь item при кліку на дочірній Delete
 //     if (deleteBtn) {
 //         listItem.remove();
+//        return;
+//     }
+// })
+
+
+
+// Завдання: Картки відгуків (Review Cards)
+// Уяви, що ти робиш блок відгуків для сайту. Користувач може написати відгук,
+//  а інші можуть "лайкати" його або редагувати текст.
+//  Твій план дій:
+// При кліку на "Опублікувати":
+// Створюй картку відгуку всередині reviews-container.
+// У картці має бути:
+// Заголовок з ім'ям.
+// Параграф з текстом відгуку (клас review-body).
+// Кнопка "Like" (клас like-btn) з лічильником: Like (<span>0</span>).
+// Кнопка "Edit" (клас edit-btn).
+// Кнопка "Delete".
+// Делегування (на reviews-container):
+// Видалення: як і раніше (просто видаляй картку).
+// Лайк: знайди span всередині цієї картки і збільш число в ньому. 
+// (Це те, що ти вже робила в кошику).
+// Редагування (Ось тут цікаво!):
+// При кліку на "Edit" виклич prompt() (це таке віконце в браузері, яке питає текст).
+// const newText = prompt('Введіть новий текст відгуку');
+// Якщо користувач ввів текст (не натиснув скасувати), знайди параграф .review-body
+//  у цій самій картці і заміни його текст на newText.
+// Чому це завдання корисне саме зараз:
+// Редагування вмісту: Ти навчишся не просто змінювати цифри, а змінювати довгий 
+// текст у параграфах.
+// Комбінація методів: Ти знову відпрацюєш схему closest ➔ querySelector.
+// Робота з різними типами полів: У тебе тепер є і input, і textarea.
+// Порада: Для лічильника лайків обов'язково обгорни цифру в <span>, щоб при 
+// натисканні на кнопку "Like (0)" ти могла змінити лише цифру, не зачіпаючи 
+// слово "Like".
+
+// const userName = document.querySelector('#user-name');
+// const reviewText = document.querySelector('#review-text');
+// const submitReviewBtn = document.querySelector('#submit-review');
+// const reviewsContainer = document.querySelector('#reviews-container');
+
+
+// submitReviewBtn.addEventListener('click', function () {
+
+//     const reviewCardContent = `<div class="review-card">
+//                                     <h2 class="review-owner-name">${userName.value}</h2>
+//                                     <p class="review-body">${reviewText.value}</p>
+//                                     <button class="like-btn">Like<span class="like-amount">0</span></button>
+//                                     <button class="edit-btn">Edit</button>
+//                                     <button class="delete-btn">Delete</button>
+//                                 </div>`;
+
+//     reviewsContainer.insertAdjacentHTML('afterbegin', reviewCardContent);
+//     userName.focus();
+//     userName.value = '';
+//     reviewText.value = '';
+// })
+
+// reviewsContainer.addEventListener('click', function (e) {
+//     const reviewCard = e.target.closest('.review-card');
+
+//     if(!reviewCard) return;
+
+//     if (e.target.closest('.delete-btn')) {
+//         reviewCard.remove();
 //         return;
+//     }
+
+//     if (e.target.closest('.like-btn')) {
+//         const likeAmount = reviewCard.querySelector('.like-amount');
+
+//         likeAmount.textContent = +likeAmount.textContent + 1 ;
+//         return;
+//     }
+
+//     if (e.target.closest('.edit-btn')) {
+//         const reviewText = reviewCard.querySelector('.review-body');
+//         const updReviewText = prompt('Please edit your review:', `${reviewText.textContent}`);
+
+//         // Перевіряємо: чи не натиснули Cancel (null) 
+//         // ТА чи не залишився рядок порожнім після видалення пробілів
+//         if (updReviewText !== null && updReviewText.trim() !== "") {
+//             reviewBody.textContent = updReviewText;
+//         } else if (updReviewText !== null) {
+//             alert("Відгук не може бути порожнім!");
+//         }
+
+//         return;  // ЗАВЖДИ ставимо, щоб "застовпити" кінець логічного блоку
 //     }
 // })
