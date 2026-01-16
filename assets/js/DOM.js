@@ -2604,3 +2604,80 @@
 // //         taskItem.classList.toggle('completed');
 // //     }
 // // })
+
+
+// Завдання: "Калькулятор кошика покупок"
+// Твій план дій:
+// Додавання товару:
+// При кліку на "Додати", створюй <li>, у якому буде:
+// Назва товару (з першого інпуту).
+// Кількість (з другого інпуту).
+// Дві кнопки: "+" (клас plus-btn) та "-" (клас minus-btn).
+// Кнопка "Видалити" (клас delete-btn).
+// Делегування подій на списку (ul):
+// Якщо натиснули на "Видалити" — видаляй весь рядок li.
+// Якщо натиснули на "+" — знайди число у цьому рядку і збільш його на 1.
+// Якщо натиснули на "-" — зменш число на 1 (але не дозволяй ставати менше за 1).
+// Чому це корисне завдання:
+// Ти навчишся не просто видаляти елементи, а шукати та змінювати дані всередині них.
+// Ти закріпиш роботу з closest() та пошуком елементів всередині конкретного li 
+// (наприклад, через item.querySelector('.amount-value')).
+// Ти знову попрацюєш із "чистим кодом" та логікою if / else if всередині одного
+//  обробника.
+// Порада: При створенні li через insertAdjacentHTML, обгорни число у окремий тег,
+//  наприклад <span class="amount">1</span>, щоб його було легко знайти і змінити
+//   за допомогою .textContent.
+
+// const inputName = document.querySelector('#item-name');
+// const inputAmount = document.querySelector('#item-amount');
+// const addBtn = document.querySelector('#add-btn');
+// const shoppingList = document.querySelector('#shopping-list');
+
+// addBtn.addEventListener('click', function () {
+
+//     const itemContent = `<li class="shopping-list-item">
+//                         <span class="shopping-list-item-name">${inputName.value}</span>
+//                         <span class="shopping-list-item-amount">${inputAmount.value}</span>
+//                         <button class="shopping-list-item-incr-btn">+</button>
+//                         <button class="shopping-list-item-decr-btn">-</button>
+//                         <button class="shopping-list-item-delete-btn">Delete</button>
+//                     </li>`;
+
+//     shoppingList.insertAdjacentHTML('beforeend', itemContent);
+//     inputName.focus();
+//     inputName.value = '';
+//     inputAmount.value = 1;
+// });
+
+// shoppingList.addEventListener('click', function (e) {
+//     const listItem = e.target.closest('.shopping-list-item');
+//     const incrBtn = e.target.closest('.shopping-list-item-incr-btn');
+//     const decrBtn = e.target.closest('.shopping-list-item-decr-btn');
+//     const deleteBtn = e.target.closest('.shopping-list-item-delete-btn');
+
+
+//     // якщо клікнули не по item то виходим з обробника
+//     if (!listItem) return;
+
+//     // в поточному listItem(де клікнули) шукаєм дочірній amount
+//     const itemAmount = listItem.querySelector('.shopping-list-item-amount');
+//     let count = +itemAmount.textContent;
+
+//     // якщо клік на + додаємо 1
+//     if (incrBtn) {
+//         itemAmount.textContent = ++count;
+//         return;
+//     }
+
+//     // якщо клік на - віднімаємо 1 (якщо кількість більше ніж 1)
+//     if (decrBtn) {
+//         if(count > 1) itemAmount.textContent = --count;
+//         return
+//     }
+
+//     // видаляємо весь item при кліку на дочірній Delete
+//     if (deleteBtn) {
+//         listItem.remove();
+//         return;
+//     }
+// })
