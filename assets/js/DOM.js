@@ -2768,3 +2768,113 @@
 //         return;  // ЗАВЖДИ ставимо, щоб "застовпити" кінець логічного блоку
 //     }
 // })
+
+
+// Завдання: "Конструктор профілю"
+// Давай створимо міні-застосунок, де ми будемо змінювати властивості картки користувача.
+// Твій план дій - перемикач (toggle) - два сценарія для одної кнопки:
+// Оновлення даних (Кнопка "Оновити профіль"):
+// При кліку зчитуй значення з input та select.
+// Зміни текст у h2 на ім'я з інпуту.
+// Зміни атрибут src у картинки img на той value, який обрано в select.
+// Додатково: Якщо інпут порожній, не давай оновити ім'я (використовуй свій улюблений return).
+// Маніпуляція станом (Кнопка "Заблокувати профіль"):
+// При кліку на цю кнопку:
+// Кнопка-перемикач (block-btn): Тепер при кліку на неї код має перевіряти: 
+// "А в якому стані зараз кнопка 'Оновити профіль'?".
+// Сценарій А (Якщо профіль зараз активний):
+// Зміни текст статусу на "Заблокований".
+// Додай атрибут disabled кнопці "Оновити профіль" (updateBtn.disabled = true), щоб 
+// користувач більше не міг нічого змінювати.
+// Зміни колір тексту статусу на червоний (через .style.color).
+// Вимикаємо інпут імені та селект аватарки.
+// Змінюємо текст самої кнопки блокування на "Розблокувати профіль".
+// Сценарій Б (Якщо профіль вже заблокований — клікаємо вдруге):
+// Змінюємо статус назад на "Активний".
+// Фарбуємо статус у зелений (або чорний).
+// Вмикаємо кнопку "Оновити профіль" (updBtn.disabled = false).
+// Вмикаємо інпут та селект.
+// Змінюємо текст кнопки назад на "Заблокувати профіль".
+// Чим це відрізняється від попереднього разу:
+// Раніше твій код просто "вбивав" можливість редагування назавжди. Тепер ти маєш дати 
+// користувачеві можливість "передумати".
+
+// Маленька підказка по коду: В обробнику blockBtn використовуй if (updBtn.disabled === false) 
+//     для Сценарію А, а в else пропиши Сценарій Б.
+
+// На чому ми тут фокусуємось:
+// Робота з src: як змінювати зображення динамічно.
+// Робота з disabled: як робити інтерфейс "розумним" (блокувати дії).
+// Робота з select: як отримувати дані з випадного списку (це так само як в 
+//     інпуті — через .value).
+// Спробуй написати цей код. Тут не потрібно делегування, бо кнопок мало, але зверни увагу 
+// на чіткість: знайди всі елементи на початку і опиши два окремі обробники подій.
+
+
+// const nameInput = document.querySelector('#name-input');
+// const avatarSelect = document.querySelector('#avatar-select');
+// const updBtn = document.querySelector('#update-btn');
+// const blockBtn = document.querySelector('#block-btn');
+
+// const profileName = document.querySelector('#profile-name');
+// const profileImg = document.querySelector('#profile-img');
+// const profileStatus = document.querySelector('#profile-status');
+
+// updBtn.addEventListener('click', function() {
+//     const name = nameInput.value.trim()
+//     if (!name) return;   // Красивий guard clause (архітектурна назва early return)
+
+
+//     // тут не додаю if бо ми вже виключили пустий рядок і пробіли в коді вище
+//     profileName.textContent = name;
+//     profileImg.src = avatarSelect.value;
+
+//     nameInput.value = '';
+
+// })
+
+// blockBtn.addEventListener('click', function () {
+
+//     if (updBtn.disabled === false) {
+//         profileStatus.textContent = 'Заблокований';
+//         profileStatus.style.color = 'red';
+    
+//         // блокую кнопку оновлення, інпут та selectAvatar
+//         updBtn.disabled = true;
+//         nameInput.disabled = true;
+//         avatarSelect.disabled = true;
+    
+//         // Змінюю текст кнопки Розблокувати / заблокувати профіль
+//         this.textContent = 'Розблокувати профіль';
+//     } else {
+//         profileStatus.textContent = 'Активний';
+//         profileStatus.style.color = '';   // порожній рядок видаляє інлайновий стиль і повертає колір, який прописаний у CSS (дефолтний)
+    
+//         // блокую кнопку оновлення, інпут та selectAvatar
+//         updBtn.disabled = false;
+//         nameInput.disabled = false;
+//         avatarSelect.disabled = false;
+
+//         // Змінюю текст кнопки Розблокувати / заблокувати профіль
+//         this.textContent = 'Заблокувати профіль';
+//     }
+// })
+
+
+// Професійний стислий варіант рішення написання обробника для blockBtn з перемикання станів:
+
+// blockBtn.addEventListener('click', function () {
+//     // Створюємо змінну-перемикач (інверсію поточного стану - тобто навпаки, щоб вибудувати логіку)
+//     const shouldBlock = !updBtn.disabled; 
+
+//     // Застосовуємо це значення до всіх полів одним махом
+//     updBtn.disabled = shouldBlock;
+//     nameInput.disabled = shouldBlock;
+//     avatarSelect.disabled = shouldBlock;
+
+//     // А для тексту та кольору все одно доведеться використати if,
+//     // бо там значення кардинально різні (текст "Блок" vs "Розблок")
+//     this.textContent = shouldBlock ? 'Розблокувати профіль' : 'Заблокувати профіль';
+//     profileStatus.textContent = shouldBlock ? 'Заблокований' : 'Активний';
+//     profileStatus.style.color = shouldBlock ? 'red' : '';
+// });
