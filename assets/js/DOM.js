@@ -2878,3 +2878,296 @@
 //     profileStatus.textContent = shouldBlock ? 'Заблокований' : 'Активний';
 //     profileStatus.style.color = shouldBlock ? 'red' : '';
 // });
+
+
+
+
+// ---------------------------------------------------------------------------------------------------------------------------------------------
+
+// Приклад-практика 046 Kwiga Список користувачів
+
+// Генерація однієї картки
+
+
+// Формат даних що приходять з сервера про користувача
+// для цієї інфи потрібно згенерувати структуру HTML (image, fullName, age, deleteBtn)
+// легше намітити структуру спершу в HTML а потім перенести в JS
+// потім додамо стилі в CSS
+// const user = {
+//     firstName: 'Test1',
+//     lastName: 'Testovich1',
+//     age: 28,
+//     photoSrc: 'https://as2.ftcdn.net/v2/jpg/02/04/97/67/1000_F_204976796_9AZRezm11tizYxsloAvXa6zz7uiNMydM.jpg',
+// };
+
+// для зображеня-заглушки краще брати прямокутне або квадратне фото - так я не забуду підлаштувати його коректне відображення на сторінці і перевірити баги
+// а якщо взяти кругле, то воно наімовірніше за все впишеться одразу ідеально і можна забути провести йому краш тест
+
+// для викорситання іконок (font awesome) треба знайти іконку, скопіювати її тег i і вставити в HTML-Body
+// потім треба знайти source для іконок https://cdnjs.com/libraries/font-awesome  тут, скопіювати link і вставити в HTML-head перед своїми лінками зі стилями
+// перевірити чи все працює
+
+// що нам потрібно для створення кожного такого елемента
+// створити елемент
+// задати значення атрибута
+// додати клас там де це необхідно
+// додати контент
+// навісити обробник на кнопку видалення (іконка)
+// вбудувати на потрібне місце
+
+// const userCardEl = document.createElement('article');
+// userCardEl.classList.add('user-card');
+// document.body.append(userCardEl);
+
+// const userImgEl = document.createElement('img');
+// userImgEl.src = user.photoSrc;
+// userImgEl.alt = `${user.firstName} ${user.lastName} portrait`;
+// userImgEl.classList.add('user-img');
+// userCardEl.append(userImgEl);
+
+// const userInfoEl = document.createElement('div');
+// userInfoEl.classList.add('user-info');
+// userCardEl.append(userInfoEl);
+
+// const userNameEl = document.createElement('p');
+// userNameEl.classList.add('user-name');
+// userNameEl.textContent = `${user.firstName} ${user.lastName}`;
+// userInfoEl.append(userNameEl);
+
+// const userAgeEl = document.createElement('span');
+// userAgeEl.classList.add('user-age');
+// userAgeEl.textContent = user.age;
+// userInfoEl.append(userAgeEl);
+
+// const trashIconEl = document.createElement('i');
+// trashIconEl.classList.add('fa-solid', 'fa-bucket', 'trash-icon');
+// // trashIconEl.classList.add('fa-solid');
+// // trashIconEl.classList.add('fa-bucket');
+// // trashIconEl.classList.add('trash-icon');
+// userCardEl.append(trashIconEl);
+
+
+// // навішуємо обробник на клік на іконку видалення
+// // по правильному тег іконки має бути загорнутий в тег button в розмітці
+// // тут ми не загортали щоб не морочитись
+
+// function deleteUserClickHandler(e) {
+//     // або через метод closest() - найкраще!
+//     e.target.closest('.user-card').remove();
+
+//     // або через властивість(property) parentElement - але він прибере лише першого батька а конкретна глибина це не добра практика
+//     // щоб дістатись до другого батьківського елемента в ієрархії можа використовувати e.target.parentElement.parentElement
+
+//     // e.target.parentElement.remove();
+
+// }
+
+// trashIconEl.onclick = deleteUserClickHandler;
+
+
+// Рефакторинг попереднього коду з дотриманням гарних практик
+
+// Гарні практики та Корисні принципи в розробці:
+// SOLID OOP
+// DRY - Don't repeat yourself principle - використовувати єдине джерело істини
+// YAGNI - You Ain't Gonna Need It - не пиши те чого не будеш зараз використовувати
+// KISS - Keep it simple, Stupid - не пиши складно те що можна написати просто
+// поняття Зв'язність модулів :
+//        1. Cohesion (Внутрішня зв'язність) — "Один за всіх"
+//              Cohesion показує, наскільки добре елементи всередині одного модуля або функції пасують один одному.
+//              Висока зв'язність (High Cohesion) — це ДОБРЕ. Це означає, що функція або модуль робить тільки одну чітку задачу.
+//              Низька зв'язність (Low Cohesion) — це ПОГАНО. Це коли функція перетворюється на "швейцарський ніж": вона і рахує ціну, і міняє колір кнопки, і відправляє лист бабусі.
+//        2. Coupling (Зачеплення або Зовнішня зв'язність) — "Залежність"
+//              Coupling показує, наскільки сильно твій модуль "приклеєний" до інших частин програми.
+//              Слабке зачеплення (Loose Coupling) — це ДОБРЕ. Це коли ти можеш змінити код в одному місці, і нічого не зламається в іншому. Модулі спілкуються через "мінімально необхідні порти".
+//              Сильне зачеплення (Tight Coupling) — це ПОГАНО. Це коли все залежить від усього. Змінила назву id у кнопці — і в тебе "полетіло" 10 функцій у різних файлах.
+
+
+
+// Рефакторим код вище 
+// наприклад винесем у функції код що часто повторюється
+
+// const user = {
+//     firstName: 'Test1',
+//     lastName: 'Testovich1',
+//     age: 28,
+//     photoSrc: 'https://as2.ftcdn.net/v2/jpg/02/04/97/67/1000_F_204976796_9AZRezm11tizYxsloAvXa6zz7uiNMydM.jpg',
+// };
+
+// const userCardEl = document.createElement('article');
+// userCardEl.classList.add('user-card');
+// document.body.append(userCardEl);
+
+// const userImgEl = createImg(user);
+// const userInfoEl = createUserInfo(user);
+// const trashIconEl = createTrashIcon();
+
+// userCardEl.append(userImgEl, userInfoEl, trashIconEl);
+
+// // можна не створювати проміжні змінні а одразу функції прописати послідовно в append
+// // userCardEl.append(createImg(user), createUserInfo(user), createTrashIcon());
+
+// // створення img - передаємо у функцію деструктуровані дані з обєкта user
+// function createImg({photoSrc, firstName, lastName}) {
+//     const userImgEl = document.createElement('img');
+//     userImgEl.src = photoSrc;
+//     userImgEl.alt = `${firstName} ${lastName} portrait`;
+//     userImgEl.classList.add('user-img');
+//     return userImgEl;
+// }
+
+// // створення userInfo - передаємо у функцію деструктуровані дані з обєкта user
+// // userInfo це div в середині якого ще є p та span, ми вкладені елементи
+// // створимо в середині функції, і return userInfoEl буде повертати готовий 
+// // div разом із вкладеннями, тобто на момент append(userInfoEl) він додаватиметься 
+// // разом із p та span
+
+// function createUserInfo ({firstName, lastName, age}) {
+//     const userInfoEl = document.createElement('div');
+//     userInfoEl.classList.add('user-info');
+
+//     const userNameEl = document.createElement('p');
+//     userNameEl.classList.add('user-name');
+//     userNameEl.textContent = `${firstName} ${lastName}`;
+//     userInfoEl.append(userNameEl);
+
+//     const userAgeEl = document.createElement('span');
+//     userAgeEl.classList.add('user-age');
+//     userAgeEl.textContent = age;
+//     userInfoEl.append(userAgeEl);
+
+//     return userInfoEl;
+// }
+
+// function createTrashIcon() {
+//     const trashIconEl = document.createElement('i');
+//     trashIconEl.classList.add('fa-solid', 'fa-bucket', 'trash-icon');
+//     return trashIconEl
+
+// }
+
+// // навішуємо обробник на клік на іконку видалення
+// // по правильному тег іконки має бути загорнутий в тег button в розмітці
+// // тут ми не загортали щоб не морочитись
+
+// function deleteUserClickHandler(e) {
+//     e.target.closest('.user-card').remove();
+// }
+
+// trashIconEl.onclick = deleteUserClickHandler;
+
+
+// Рефакторим код вище ще раз + генеруємо масив карток а не одну картку
+// із масива обєктів даних юзерів
+// ціль отримати багато карток
+
+// const users = [{
+//     firstName: 'Test1',
+//     lastName: 'Testovich1',
+//     age: 28,
+//     photoSrc: 'https://as2.ftcdn.net/v2/jpg/02/04/97/67/1000_F_204976796_9AZRezm11tizYxsloAvXa6zz7uiNMydM.jpg',
+//   },
+//   {
+//     firstName: 'Test2',
+//     lastName: 'Testovich2',
+//     age: 31,
+//     photoSrc:
+//       'https://images.pexels.com/photos/1858175/pexels-photo-1858175.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+//   },
+//   {
+//     firstName: 'Test3',
+//     lastName: 'Testovich3',
+//     age: 70,
+//     photoSrc:
+//       'https://images.pexels.com/photos/573299/pexels-photo-573299.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+//   },
+//   {
+//     firstName: 'Test4',
+//     lastName: 'Testovich4',
+//     age: 20,
+//     photoSrc:
+//       'https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+//   },
+//   {
+//     firstName: 'Test5',
+//     lastName: 'Testovich5',
+//     age: 28,
+//     photoSrc:
+//       'https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+//   },
+// ];
+// // пізніще щоб не писати самим такі масиви обєктівданих, ми будемо використовувати тренувальні сервери
+// // з якими можна буде гратись майже по справжньому зі створення динамічних структур
+
+// // проходимось методом map по кожному обєкту масиву users, і викликаємо для кожного обєкта 
+// // функцію створити картку і зберігаємо це в масив userCards. кожен елемент масиву userCards це однда картка
+// // користувача (розмітка з усіма вкладеннями та прописаними даними юзера)
+// const userCards = users.map(u => createUserCard(u));
+// // далі через append додаємо кожну картку з масиву userCards в розмітку (розпаковуємо масив і по одному додаємо кожен елемент)
+// document.body.append(...userCards);
+
+// // створимо функцію для створення userCard яка створюватиме всі внутрішні елементи і повертати готову картку
+// function createUserCard(user) {
+//     const userCardEl = document.createElement('article');
+//     userCardEl.classList.add('user-card');
+
+
+//     const userImgEl = createImg(user);
+//     const userInfoEl = createUserInfo(user);
+//     const trashIconEl = createTrashIcon();
+
+//     userCardEl.append(userImgEl, userInfoEl, trashIconEl);
+//     return userCardEl;
+// }
+
+// // створення img - передаємо у функцію деструктуровані дані з обєкта user
+// function createImg({photoSrc, firstName, lastName}) {
+//     const userImgEl = document.createElement('img');
+//     userImgEl.src = photoSrc;
+//     userImgEl.alt = `${firstName} ${lastName} portrait`;
+//     userImgEl.classList.add('user-img');
+//     return userImgEl;
+// }
+
+// // створення userInfo - передаємо у функцію деструктуровані дані з обєкта user
+// // userInfo це div в середині якого ще є p та span, ми вкладені елементи
+// // створимо в середині функції, і return userInfoEl буде повертати готовий 
+// // div разом із вкладеннями, тобто на момент append(userInfoEl) він додаватиметься 
+// // разом із p та span
+
+// function createUserInfo ({firstName, lastName, age}) {
+//     const userInfoEl = document.createElement('div');
+//     userInfoEl.classList.add('user-info');
+
+//     const userNameEl = document.createElement('p');
+//     userNameEl.classList.add('user-name');
+//     userNameEl.textContent = `${firstName} ${lastName}`;
+//     userInfoEl.append(userNameEl);
+
+//     const userAgeEl = document.createElement('span');
+//     userAgeEl.classList.add('user-age');
+//     userAgeEl.textContent = age;
+//     userInfoEl.append(userAgeEl);
+
+//     return userInfoEl;
+// }
+
+
+// function createTrashIcon() {
+//     const trashIconEl = document.createElement('i');
+//     trashIconEl.classList.add('fa-solid', 'fa-bucket', 'trash-icon');
+
+//     // навішуємо обробник на клік на іконку видалення всередині функції створення
+//     // при створенні ми одразу навішуємо обробник і все разом повертаємо з функції
+
+//     function deleteUserClickHandler(e) {
+//         e.target.closest('.user-card').remove();
+//     }
+
+//     trashIconEl.onclick = deleteUserClickHandler;
+
+//     return trashIconEl;
+
+// }
+
+
