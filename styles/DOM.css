@@ -419,3 +419,44 @@ header {
 
 
 
+/* Завдання: "Оренда житла" (Real Estate Cards) */
+/* :root {
+    font-family: sans-serif;
+    --card-img-width: 150px;
+    --card-img-height: 120px;
+}
+
+.rental-list {
+    padding: 15px;
+}
+
+.rental-card {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border: 1px solid antiquewhite;
+    border-radius: 8px;
+    box-shadow: 0 0 3px antiquewhite;
+    margin-bottom: 10px;
+    padding: 15px;
+}
+
+.card-img {
+    width: var(--card-img-width);
+    height: var(--card-img-height);
+    border-radius: 5px;
+    object-fit: cover;
+}
+
+.status-bage {
+    display: inline-block;
+    margin-left: auto;
+}
+
+.status-bage-green {
+    color: green;
+}
+
+.status-bage-red {
+    color: red;
+} */

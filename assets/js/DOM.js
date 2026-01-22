@@ -3407,3 +3407,110 @@
 // }
 
 
+
+
+// Завдання: "Оренда житла" (Real Estate Cards)
+// План дій (структура):
+// Контейнер: Створи section з класом rentals-list.
+// Функція createPhoto(photo, title): Повертає img.
+// Функція createRentalInfo({ title, location, rooms, price }):
+// Створює div.
+// Всередині: h3 (заголовок), p (адреса), span (к-ть кімнат) та strong (ціна).
+// Функція createStatusBadge(isAvailable):
+// Створює маленький div або span.
+// Якщо isAvailable — текст "Вільна", колір зелений.
+// Якщо false — текст "Зайнята", колір червоний.
+// Головна функція createRentalCard(rental): Збирає все в article.
+// Рендеринг: Виведи через map та ....
+// 💡 Маленький виклик (Challenge):
+// Спробуй у функції createRentalInfo ціну за місяць вивести через шаблонний 
+// рядок ось так: 15000 грн / міс.
+// Чому це важливо:
+// Це завдання навчить тебе працювати з умовною логікою всередині функцій 
+// створення (як у випадку зі статусом "Вільна/Зайнята").
+
+
+// const rentals = [
+//   {
+//     title: 'Затишна студія в центрі',
+//     location: 'Київ, Печерськ',
+//     price: 15000,
+//     rooms: 1,
+//     isAvailable: true,
+//     photo: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=400&q=80'
+//   },
+//   {
+//     title: 'Сучасна 3-кімнатна квартира',
+//     location: 'Львів, Сихів',
+//     price: 22000,
+//     rooms: 3,
+//     isAvailable: false,
+//     photo: 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=400&q=80'
+//   }
+// ];
+
+// const rentalListEl = document.createElement('section');
+// rentalListEl.classList.add('rental-list');
+// document.body.append(rentalListEl);
+
+// const rentalCards = rentals.map(r => createRentalCard(r));
+// rentalListEl.append(...rentalCards);
+
+// function createRentalCard (rental) {
+//     const rentalCard = document.createElement('article');
+//     rentalCard.classList.add('rental-card');
+
+//     const cardImgEl = createCardImg(rental);
+//     const rentalInfoEl = createRentalInfo(rental);
+//     const statusBageEl = createStatusBage(rental);
+
+//     rentalCard.append(cardImgEl, rentalInfoEl, statusBageEl);
+
+//     return rentalCard;
+// }
+ 
+
+
+// function createCardImg ({photo, title}) {
+//     const cardImg = document.createElement('img');
+//     cardImg.src = photo;
+//     cardImg.alt = title;
+//     cardImg.classList.add('card-img');
+
+//     return cardImg;
+// }
+
+// function createRentalInfo({title, location, rooms, price}) {
+//     const rentalInfo = document.createElement('div');
+//     rentalInfo.classList.add('rental-info');
+
+//     const rentalName = document.createElement('h3');
+//     rentalName.textContent = title;
+
+//     const rentalLocation = document.createElement('p');
+//     rentalLocation.textContent = `Локація: ${location}`;
+    
+//     const rentalRooms = document.createElement('span');
+//     rentalRooms.textContent = `Кількість кімнат: ${rooms}`;
+
+//     const rentalPrice = document.createElement('strong');
+//     rentalPrice.textContent = `${price} грн / місяць`;
+
+//     rentalInfo.append(rentalName, rentalLocation, rentalRooms, rentalPrice);
+
+//     return rentalInfo;
+// }
+
+// function createStatusBage({isAvailable}) {
+//     const statusBage = document.createElement('span');
+//     statusBage.classList.add('status-bage');
+
+//     if (isAvailable) {
+//         statusBage.textContent = 'Вільна';
+//         statusBage.classList.add('status-bage-green');
+//     } else {
+//         statusBage.textContent = 'Зайнята';
+//         statusBage.classList.add('status-bage-red');
+//     }
+//     return statusBage;
+// }
