@@ -3292,3 +3292,118 @@
 //     return favBtn;
 // }
 
+
+
+
+// Завдання: "Генерація списку меню"
+// Уяви, що ти робиш сторінку для ресторану. Тобі потрібно вивести список страв.
+//  Що потрібно зробити (твій план дій):
+// Створити головний контейнер const menuListEl = document.createElement('main') 
+// та додати його в body.
+// Написати функцію createDishImage({ image, name }): створює img, додає 
+// клас dish-img, задає src та alt.
+// Написати функцію createDishInfo({ name, description, price }):
+// створює div з класом dish-info;
+// всередині створює h2 (назва), p (опис) та strong (ціна + текст "грн");
+// додає їх у div і повертає його.
+// Написати функцію createOrderBtn():
+// створює кнопку з текстом "Замовити";
+// додає обробник події click, який при натисканні просто змінює текст кнопки 
+// на "У кошику" та додає їй клас in-cart (стиль зміниться на зелений).
+// Написати головну функцію createDishCard(dish):
+// створює article з класом dish-card;
+// викликає три попередні функції;
+// робить append результатів у article і повертає його.
+// Запустити процес: через map створити масив карток і додати їх у menuListEl.
+// Твоя "шпаргалка-нагадування":
+// Коли пишеш, проговорювай про себе:
+// "Ця функція — фахівець з картинок. Вона бере URL і повертає готовий тег img."
+// "Ця функція — фахівець з тексту. Вона упаковує слова в div."
+// "Головна функція — це складальник. Вона каже фахівцям: 'дайте мені ваші деталі', 
+// складає їх в один article і віддає готову картку."
+
+// const dishes = [
+//   {
+//     name: 'Маргарита',
+//     description: 'Класична піца з томатами та моцарелою',
+//     price: 250,
+//     category: 'Піца',
+//     image: 'https://img.freepik.com/free-photo/fresh-pizza-with-tomatoes-and-cheese_23-2148011652.jpg'
+//   },
+//   {
+//     name: 'Цезар',
+//     description: 'Салат з куркою, пармезаном та соусом цезар',
+//     price: 180,
+//     category: 'Салати',
+//     image: 'https://img.freepik.com/free-photo/caesar-salad-with-chicken-and-parmesan_23-2148161741.jpg'
+//   },
+//   {
+//     name: 'Карбонара',
+//     description: 'Паста з беконом, яйцем та твердим сиром',
+//     price: 210,
+//     category: 'Паста',
+//     image: 'https://img.freepik.com/free-photo/pasta-carbonara-with-bacon-and-cheese_23-2148161705.jpg'
+//   }
+// ];
+
+
+// const menuListEl = document.createElement('main');
+// document.body.append(menuListEl);
+
+// const dishCards = dishes.map(d => createDishCard(d));
+//     menuListEl.append(...dishCards);
+
+// function createDishCard (dish) {
+//     const dishCard = document.createElement('article');
+//     dishCard.classList.add('dish-card');
+
+//     const dishImgEl = createDishImgEl(dish);
+//     const dishInfoEl = createDishInfo(dish);
+//     const orderBtnEl = createOrderBtn();
+//     dishCard.append(dishImgEl, dishInfoEl, orderBtnEl);
+
+//     return dishCard;
+// }
+
+
+// function createDishImgEl({image, name}) {
+//     const dishImg = document.createElement('img');
+//     dishImg.src = image;
+//     dishImg.alt = name;
+//     dishImg.classList.add('dish-img');
+//     return dishImg;
+// }
+
+// function createDishInfo({name, description, price}) {
+//     const dishInfo = document.createElement('div');
+//     dishInfo.classList.add('dish-info');
+
+//     const dishName = document.createElement('h2');
+//     dishName.textContent = name;
+
+//     const dishDescr = document.createElement('p');
+//     dishDescr.textContent = description;
+
+//     const dishPrice = document.createElement('strong');
+//     dishPrice.textContent = `${price} грн.`;
+
+//     dishInfo.append(dishName, dishDescr, dishPrice);
+
+//     return dishInfo;
+// }
+
+// function createOrderBtn() {
+//     const orderBtn = document.createElement('button');
+//     orderBtn.textContent = 'Замовити';
+
+//     function orderBtnHandler() {
+//         orderBtn.textContent = 'У кошику';
+//         orderBtn.classList.add('in-cart');
+//         orderBtn.disabled = true;
+//     }
+//     orderBtn.onclick = orderBtnHandler;
+
+//     return orderBtn;
+// }
+
+

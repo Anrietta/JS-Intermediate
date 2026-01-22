@@ -353,7 +353,7 @@ header {
 
 
 /* Завдання: "Генерація списку музичних альбомів */
-:root {
+/* :root {
     --album-cover-size: 100px;
 }
 
@@ -388,4 +388,34 @@ header {
 
 .active {
     color: gold;
+} */
+
+
+
+
+/* Завдання: "Генерація списку меню" */
+
+/* .dish-card {
+    display: flex;
+    border: 1px solid #ddd;
+    margin-bottom: 15px;
+    padding: 10px;
+    border-radius: 12px;
+    align-items: center;
+    gap: 20px;
 }
+
+.dish-img {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.in-cart {
+    background-color: #4CAF50;
+    color: white;
+} */
+
+
+
