@@ -3171,3 +3171,124 @@
 // }
 
 
+
+
+
+
+// Завдання: "Генерація списку музичних альбомів
+// Уяви, що ти розробляєш міні-плеєр. Тобі приходить масив даних про альбоми. 
+// Твоя мета — вивести їх на сторінку.
+// Що треба зробити (кроки рефакторингу):
+// Функція createCover(coverUrl, title): Створює img з класом album-cover.
+// Функція createAlbumInfo(artist, title, year): Створює div, всередині якого
+//  буде заголовок h3 (назва), p (виконавець) та span (рік).
+// Функція createFavoriteBtn(isFavorite):
+// Створює кнопку або іконку серця (fa-heart).
+// Додатково: якщо isFavorite: true, додай кнопці золотий колір або спеціальний клас .active.
+// Навішай обробник події: при кліку серце має змінювати колір (toggle класу).
+// Головна функція createAlbumCard(album): Збирає все докупи в тег section або article 
+// з класом album-card.
+// Рендеринг: Пройдись по масиву albums за допомогою map і додай всі картки в 
+// контейнер на сторінці (наприклад, у <div id="library"></div>).
+// Чек-ліст для самоперевірки:
+// [ ] Чи використовуєш ти деструктуризацію в параметрах функцій? 
+// (Наприклад: function createCover({cover, title})).
+// [ ] Чи є у тебе окрема функція для кожної логічної частини картки?
+// [ ] Чи працює кнопка "Серце" незалежно в кожній картці (через closest)?
+// Це завдання закріпить навичку "розбиття великого на мале". Коли ти напишеш це, 
+// ти відчуєш, що створення складних сайтів — це просто багато маленьких, простих функцій.
+
+
+// const albums = [
+//   {
+//     title: 'Random Access Memories',
+//     artist: 'Daft Punk',
+//     year: 2013,
+//     cover: 'https://upload.wikimedia.org/wikipedia/ru/2/26/Daft_Punk_-_Random_Access_Memories.png',
+//     isFavorite: true
+//   },
+//   {
+//     title: 'The Dark Side of the Moon',
+//     artist: 'Pink Floyd',
+//     year: 1973,
+//     cover: 'https://upload.wikimedia.org/wikipedia/en/3/3b/Dark_Side_of_the_Moon.png',
+//     isFavorite: false
+//   },
+//   {
+//     title: 'Future Nostalgia',
+//     artist: 'Dua Lipa',
+//     year: 2020,
+//     cover: 'https://upload.wikimedia.org/wikipedia/en/f/f5/Dua_Lipa_-_Future_Nostalgia_%28Official_Album_Cover%29.png',
+//     isFavorite: true
+//   }
+// ];
+
+
+
+// const musicAlbumsListEl = document.createElement('section');
+// musicAlbumsListEl.classList.add('music-albums-list');
+// document.body.append(musicAlbumsListEl);
+
+// const albumCardEls = albums.map(a => createAlbumCardEl(a))
+// // const albumCardEl = createAlbumCardEl(album);
+// musicAlbumsListEl.append(...albumCardEls);
+
+// function createAlbumCardEl (album) {
+//     const albumCard = document.createElement('article');
+//     albumCard.classList.add('album-card');
+
+//     const albumCoverEl = createAlbumCover(album);
+//     const albumInfoEl = createAlbumInfo(album);
+//     const favBtnEl = createFavBtn();
+//     albumCard.append(albumCoverEl, albumInfoEl, favBtnEl);
+
+//     return albumCard;
+// }
+
+// function createAlbumCover ({cover, title, artist}) {
+//     const albumCover = document.createElement('img');
+//     albumCover.src = cover;
+//     albumCover.alt = `Cover image of ${title} by ${artist}`;
+//     albumCover.classList.add('album-cover');
+//     return albumCover;
+
+// }
+
+// function createAlbumInfo ({title, artist, year}) {
+//     const albumInfo = document.createElement('div');
+//     albumInfo.classList.add('album-info');
+
+//     const albumName = document.createElement('h3');
+//     albumName.textContent = `${title}`;
+//     albumName.classList.add('album-name');
+    
+
+//     const albumArtist = document.createElement('p');
+//     albumArtist.textContent = `${artist}`;
+//     albumArtist.classList.add('album-artist');
+
+//     const albumYear = document.createElement('span');
+//     albumYear.textContent = `${year}`;
+//     albumYear.classList.add('album-year');
+
+//     albumInfo.append(albumName, albumArtist, albumYear)
+
+//     return albumInfo;
+
+// }
+
+// function createFavBtn () {
+//     const favBtn = document.createElement('button');
+//     favBtn.classList.add('fav-btn');
+
+//     const favBtnIcon = document.createElement('i');
+//     favBtnIcon.classList.add('fa-solid', 'fa-heart');
+//     favBtn.append(favBtnIcon);
+    
+//     favBtn.addEventListener('click', function (e) {
+
+//         favBtn.classList.toggle('active');
+//     })
+//     return favBtn;
+// }
+
