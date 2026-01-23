@@ -3514,3 +3514,125 @@
 //     }
 //     return statusBage;
 // }
+
+
+
+
+// ----------------------------------------------------------------------------------------------------------------------------------------------
+
+                            // Data-* атрибути (Data-* attributes)
+
+//https://uk.javascript.info/dom-attributes-and-properties#nestandartni-atributi-dataset
+
+
+// Які бувають атрибути взагалі? (глобальні, специфічні, булеві, дата/користувацькі)
+// де використовується(коли доречно використовувати) кожен з них?
+
+// Нестандартні (Власні) атрибути
+// Дехто вигадує свої назви, наприклад <div my-cool-attr="hello">.
+// Проблема: Це вважається помилкою валідації HTML. Браузер їх не розуміє, і вони можуть 
+// конфліктувати з майбутніми стандартами.
+// Рішення: Саме для цього і придумали data-атрибути. Якщо тобі потрібен свій атрибут — завжди пиши data-назва.
+
+
+// зчитуємо дата атрибуи через колекцію dataset
+// на тегу дата атрибут виглядає так: data-host а в JS до неї звертаємось так : dataset.host
+// на тегу дата атрибут виглядає так: data-user-name а в JS до неї звертаємось так : dataset.userName
+// в HTML назви пишем в кебаб кейсі, а в JS отримуємо дата атрибут в Кемел кейс
+
+
+// До появи .dataset використовували методи getAttribute та setAttribute.
+//  Вони працюють і зараз, але вони менш зручні:
+// el.getAttribute('data-user-id') — треба писати повну назву з дефісами.
+// el.dataset.userId — набагато коротше і приємніше.
+
+
+// 1. Читання даних
+// Уяви, що у тебе є такий тег в HTML:
+// <div id="user" data-id="74" data-role="admin" data-registration-date="2024-05-20"></div>
+// Щоб отримати ці дані в JS, ти просто звертаєшся до властивості .dataset:
+// const userEl = document.querySelector('#user');
+
+// console.log(userEl.dataset.id);               // "74"
+// console.log(userEl.dataset.role);             // "admin"
+// console.log(userEl.dataset.registrationDate);    // "2024-05-20" (CamelCase!)
+
+// 2. Запис та зміна даних
+// Ти можеш не тільки читати, а й змінювати дані або додавати нові прямо "на льоту". Це миттєво оновить HTML-код елемента.
+// // Змінюємо існуючий атрибут
+// userEl.dataset.role = 'editor'; 
+// // В HTML стане: data-role="editor"
+
+// // Додаємо абсолютно новий атрибут
+// userEl.dataset.isOnline = 'true'; 
+// // В HTML додасться: data-is-online="true"
+
+// 3. Видалення даних
+// Якщо дані більше не потрібні, їх можна видалити за допомогою оператора delete:
+// delete userEl.dataset.registrationDate;
+// // Атрибут data-registration-date повністю зникне з тегу
+
+
+
+// Пошук атрибутів  в CSS або через querySelector. 
+// Дата-атрибути — це такі ж атрибути, як href або src. А ми знаємо, що в CSS та JS 
+// можна шукати елементи за допомогою селекторів атрибутів (це ті, що в квадратних дужках []).
+
+// 1. Пошук через JavaScript (querySelector)
+// Уяви, що в тебе є список із 100 користувачів, і тобі потрібно знайти картку конкретного 
+// користувача з id="42", щоб змінити її колір.
+// Замість того, щоб перебирати весь масив циклом, ти можеш просто "гукнути" цей елемент за його атрибутом:
+// // Шукаємо елемент, у якого атрибут data-id дорівнює "42"
+// const userCard = document.querySelector('[data-id="42"]');
+
+// if (userCard) {
+//     userCard.style.border = '2px solid red';
+// }
+// Чому це круто? Тобі не потрібно знати, де саме в списку стоїть цей елемент. 
+// Ти просто звертаєшся до нього за його "унікальною міткою".
+
+// 2. Пошук у CSS
+// Це взагалі магія. Ти можеш стилізувати елементи залежно від їхніх даних прямо в CSS!
+// /* Стилізуємо всі елементи, які мають категорію "pizza" */
+// [data-category="pizza"] {
+//     background-color: #fff9e6;
+//     border: 1px solid gold;
+// }
+
+// /* Можна навіть міняти вигляд залежно від статусу */
+// [data-status="busy"] {
+//     opacity: 0.5;
+//     pointer-events: none;    /* робимо картку неактивною */
+// }
+
+// 3. Комбіновані селектори
+// Ти можеш бути дуже специфічною у пошуку:
+// div[data-user-id] — знайти всі div, у яких взагалі є атрибут data-user-id (неважливо, який там номер).
+// .btn[data-action="delete"] — знайти кнопку з класом btn, яка має дію "delete".
+
+
+
+// Таск: При натисканні на кнопку виведем в консоль їх дата атрибут host
+const btns = document.querySelectorAll('button');
+
+function btnClickHandler (e) {
+    console.log(e.target.dataset.host);
+}
+
+btns.forEach(btn => (btn.onclick = btnClickHandler));
+
+console.log(btns[0].dataset.userName);
+
+
+
+// Task: в контейнер помістити 4 кнопки
+// в залежності від того, на яку настиснули, 
+// змінювати колір кнопки цієї кнопки
+
+const colorBtns = document.querySelectorAll('div > button');
+
+function colorBtnClickHandler(e) {
+    e.target.style.backgroundColor = e.target.dataset.color;
+}
+
+colorBtns.forEach(b => (b.onclick = colorBtnClickHandler));
