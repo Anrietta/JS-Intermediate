@@ -3613,15 +3613,15 @@
 
 
 // Таск: При натисканні на кнопку виведем в консоль їх дата атрибут host
-const btns = document.querySelectorAll('button');
+// const btns = document.querySelectorAll('button');
 
-function btnClickHandler (e) {
-    console.log(e.target.dataset.host);
-}
+// function btnClickHandler (e) {
+//     console.log(e.target.dataset.host);
+// }
 
-btns.forEach(btn => (btn.onclick = btnClickHandler));
+// btns.forEach(btn => (btn.onclick = btnClickHandler));
 
-console.log(btns[0].dataset.userName);
+// console.log(btns[0].dataset.userName);
 
 
 
@@ -3629,10 +3629,88 @@ console.log(btns[0].dataset.userName);
 // в залежності від того, на яку настиснули, 
 // змінювати колір кнопки цієї кнопки
 
-const colorBtns = document.querySelectorAll('div > button');
+// const colorBtns = document.querySelectorAll('div > button');
 
-function colorBtnClickHandler(e) {
-    e.target.style.backgroundColor = e.target.dataset.color;
-}
+// function colorBtnClickHandler(e) {
+//     e.target.style.backgroundColor = e.target.dataset.color;
+// }
 
-colorBtns.forEach(b => (b.onclick = colorBtnClickHandler));
+// colorBtns.forEach(b => (b.onclick = colorBtnClickHandler));
+
+
+
+
+// Завдання: "Менеджер завдань (Task Planner)"
+// Уяви, що ти робиш додаток для планування справ. Тобі потрібно вивести 
+// список задач, і кожна задача повинна мати свій унікальний ID, щоб її 
+// можна було видалити.
+// 2. Що потрібно зробити:
+// Контейнер: Створи ul з класом task-list і додай його в body.
+// Функція createTaskItem(task):
+// Створює елемент li.
+// Додає йому клас task-item.
+// Важливо: Додає йому дата-атрибут data-id зі значенням з об'єкта 
+// (наприклад, data-id="task-1").
+// Додає ще один дата-атрибут data-priority (наприклад, data-priority="high").
+// Всередині li створює span з текстом задачі.
+// Створює кнопку "Видалити" (button).
+// Логіка видалення (внутрі функції створення кнопки):
+// Додай кнопці обробник події onclick.
+// Всередині обробника не використовуй li.remove(). Замість цього:
+// Дістань ID з батьківського елемента (через closest або іншим способом).
+// Використай цей ID, щоб знайти елемент на сторінці за допомогою селектора 
+// атрибутів document.querySelector('[data-id="..."]').
+// Видали знайдений елемент.
+// Рендеринг: Виведи всі задачі на сторінку.
+// Чому це завдання важливе?
+// Ти навчишся "спілкуванню" між елементами: кнопка дізнається ID, передає
+//  його в пошук, пошук знаходить всю картку і видаляє її. Це і є той 
+//  самий "місток", про який ми говорили.
+
+// const tasks = [
+//   { id: 'task-1', text: 'Вивчити Data-атрибути', priority: 'high' },
+//   { id: 'task-2', text: 'Приготувати вечерю', priority: 'low' },
+//   { id: 'task-3', text: 'Прочитати 20 сторінок книги', priority: 'medium' }
+// ];
+
+// const taskList = document.createElement('ul');
+// taskList.classList.add('task-list');
+// document.body.append(taskList);
+
+// const tasksToCreate = tasks.map(t => createTaskItem(t));
+// taskList.append(...tasksToCreate);
+
+// function createTaskItem ({id, priority, text}) {
+//     const taskItem = document.createElement('li');
+//     taskItem.dataset.id = id;
+//     taskItem.dataset.priority = priority;
+//     taskItem.classList.add('task-item');
+
+//     const taskItemText = document.createElement('span');
+//     taskItemText.textContent = text;
+//     taskItem.append(taskItemText);
+
+//     const taskItemDeleteBtn = createDeleteBtn();
+//     taskItem.append(taskItemDeleteBtn);
+
+
+//     return taskItem;
+
+// }
+
+// function createDeleteBtn () {
+//     const deleteBtn = document.createElement('button');
+//     deleteBtn.textContent = 'Delete';
+
+//     function deleteBtnHandler () {
+//         const targetItem = deleteBtn.closest('[data-id]').dataset.id;
+
+//         if (!targetItem) return;
+
+//         document.querySelector(`[data-id="${targetItem}"]`).remove();
+
+//     }
+//     deleteBtn.onclick = deleteBtnHandler;
+//     return deleteBtn;
+// }
+
