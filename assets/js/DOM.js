@@ -3714,3 +3714,73 @@
 //     return deleteBtn;
 // }
 
+
+
+// Завдання: "Оновити ціну категорії продуктів" 
+
+// Уяви, що у нас є список товарів. Кожен товар має data-category та data-price.
+// Завдання:
+// Напиши функцію updatePrice(category, newPrice).
+// Ця функція повинна знайти УСІ елементи (через querySelectorAll) з цією категорією.
+// Кожному знайденому елементу вона має змінити текст на newPrice і ОНОВИТИ його 
+// власний дата-атрибут ціни data-price.
+// Масив для тесту:
+// // HTML структура, яку ти уявляєш:
+// // <li class="product" data-category="fruit" data-price="20">Яблуко</li>
+// // <li class="product" data-category="fruit" data-price="30">Груша</li>
+
+
+// const updPrice10 = 10;
+// const category = 'fruit';
+
+// function updatePrice(category, newPriceTax) {
+//     const categoryProds = document.querySelectorAll(`[data-category="${category}"]`);
+
+//     categoryProds.forEach(p => {
+//         const newPrice = Number(p.dataset.price) + (Number(p.dataset.price) * Number((newPriceTax / 100)));
+//         p.dataset.price = `${newPrice}`;
+
+//         const newPriceEl = document.createElement('span');
+//         newPriceEl.textContent = ` ${newPrice.toFixed(2)} грн.`;
+    
+//         p.append(newPriceEl);
+//     })
+// }
+
+// updatePrice(category, updPrice10);
+
+
+// Оновлений варіант із перевіркою, щоб при повторному виклику
+//  функції не додавався ще один span (з використанням data-attr як лейбла)
+
+// const updPrice10 = 10;
+// const category = 'fruit';
+
+// function updatePrice(category, newPriceTax) {
+//     const categoryProds = document.querySelectorAll(`[data-category="${category}"]`);
+
+//     categoryProds.forEach(p => {
+//         const newPrice = Number(p.dataset.price) + (Number(p.dataset.price) * Number((newPriceTax / 100)));
+
+//         const priceLabel = p.querySelector('[data-type="price-label"]');
+//         if (priceLabel) {
+//             priceLabel.textContent = ` ${newPrice.toFixed(2)} грн.`;
+//             p.dataset.price = newPrice.toFixed(2);
+//         } else {
+//             const newPriceEl = document.createElement('span');
+//             newPriceEl.textContent = ` ${newPrice.toFixed(2)} грн.`;
+//             newPriceEl.dataset.type = 'price-label';
+//             p.dataset.price = newPrice.toFixed(2);
+
+//             p.append(newPriceEl);
+
+//         }
+
+//     })
+    
+// }
+
+// updatePrice(category, updPrice10);
+// updatePrice(category, updPrice10);
+// updatePrice(category, updPrice10);
+
