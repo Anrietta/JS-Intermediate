@@ -3784,3 +3784,122 @@
 // updatePrice(category, updPrice10);
 // updatePrice(category, updPrice10);
 
+
+
+
+
+// Завдання: "Смарт-фільтр користувачів" 
+
+// У тебе є список користувачів. Тобі потрібно реалізувати функціонал "Перемикання статусу"
+//  та "Масової дії".
+// 2. Що потрібно зробити:
+// Рендеринг:
+// Кожен користувач — це div з класом user-card.
+// У картки мають бути дата-атрибути: data-id, data-role та data-status.
+// Всередині картки: ім'я користувача (span) та кнопка "Змінити статус".
+// Функція toggleStatus(userId):
+// Функція має знайти на сторінці картку користувача за її data-id.
+// Прочитати поточний data-status.
+// Якщо був active — змінити на inactive, і навпаки.
+// Важливо: Оновити і сам дата-атрибут, і текст всередині картки (наприклад, додати 
+//     слово "Offline" поруч з ім'ям, якщо статус inactive).
+// Фінальний бос — функція highlightAdmins():
+// Створи окрему кнопку "Підсвітити адмінів" поза списком.
+// При кліку на неї, функція повинна знайти УСІХ користувачів, у яких data-role="admin", 
+// і додати їм золоту рамку або змінити колір фону.
+// Чому це завдання круте:
+// Ти знову потренуєш пошук за атрибутом (для одного користувача).
+// Ти потренуєш масовий пошук (для всіх адмінів).
+// Ти навчишся використовувати дата-атрибут як перемикач (toggle) стану.
+// Маленька порада: Для перемикання статусу в кнопці, не забудь використати 
+// closest('[data-id]'), щоб дізнатися, на якого саме користувача натиснули.
+
+
+// const users = [
+//   { id: 'u1', name: 'Олена', role: 'admin', status: 'active' },
+//   { id: 'u2', name: 'Ігор', role: 'user', status: 'inactive' },
+//   { id: 'u3', name: 'Анна', role: 'user', status: 'active' },
+//   { id: 'u4', name: 'Валерій', role: 'admin', status: 'active' },
+//   { id: 'u5', name: 'Сергій', role: 'user', status: 'inactive' },
+//   { id: 'u6', name: 'Юлія', role: 'admin', status: 'active' }
+// ];
+
+// const highlightAdminsBtnEl = document.createElement('button');
+// highlightAdminsBtnEl.textContent = 'Підсвітити адмінів';
+// highlightAdminsBtnEl.style.marginBottom = '20px';
+// document.body.prepend(highlightAdminsBtnEl);
+
+// const sectionEl = document.createElement('section');
+// document.body.append(sectionEl);
+
+// const userCards = users.map(u => createUserCards(u));
+// sectionEl.append(...userCards);
+
+// function createUserCards ({id, name, role, status}) {
+//     const userCardEl = document.createElement('div');
+//     userCardEl.classList.add('user-card');
+//     userCardEl.dataset.id = id;
+//     userCardEl.dataset.role = role;
+//     userCardEl.dataset.status = status;
+    
+//     const userNameEl = document.createElement('span');
+//     userNameEl.textContent = name;
+
+//     const statusEl = document.createElement('span');
+//     statusEl.classList.add('status-lable')
+//     statusEl.textContent = `    ${status}    `;  // пробіли лише для зручності щоб стилі не писати
+
+//     const toggleStatusBtn = toggleStatus();
+
+//     userCardEl.append(userNameEl, statusEl, toggleStatusBtn) ;
+
+//     return userCardEl;
+
+// }
+
+// function toggleStatus() {
+//     const toggleStatusBtnEl = document.createElement('button');
+//     toggleStatusBtnEl.textContent = 'Змінити статус';
+
+//     function toggleStatusBtnHandler (e) {
+
+//         const currentUser = e.target.closest('[data-id]');
+        
+//         if (!currentUser) return;
+
+//         const currentStatus = currentUser.querySelector('.status-lable');
+
+//         currentUser.dataset.status === 'active' ? currentUser.dataset.status = 'inactive' : currentUser.dataset.status = 'active';
+//         currentStatus.textContent = `   ${currentUser.dataset.status}   `;  // пробіли лише для зручності щоб стилі не писати
+
+
+//         // if (currentUser.dataset.status === 'active') {
+//         //     currentUser.dataset.status = 'inactive';
+//         //     currentStatus.textContent = `   ${currentUser.dataset.status}   `;  // пробіли лише для зручності щоб стилі не писати
+
+//         // } else {
+//         //     currentUser.dataset.status = 'active';
+//         //     currentStatus.textContent = `   ${currentUser.dataset.status}   `;  // пробіли лише для зручності щоб стилі не писати
+//         // }
+//     }
+
+//     toggleStatusBtnEl.onclick = toggleStatusBtnHandler;
+
+//     return toggleStatusBtnEl;
+// }
+
+// function highlightAdminsBtnHandler (e) {
+//     // тут не роблю перевірку бо очевидно це малофункціональна кнопка, наврядчи там будуть якісь вкладені елементи
+//     const admins = document.querySelectorAll('.user-card[data-role="admin"]');
+
+//     admins.forEach(admin => {
+//         if (admin.style.border === '') {
+//             admin.style.border = '1px solid gold';
+//             admin.style.backgroundColor = 'antiquewhite';
+//         } else {
+//             admin.style.border = '';
+//             admin.style.backgroundColor = '';
+//         }
+//     })
+// }
+// highlightAdminsBtnEl.onclick = highlightAdminsBtnHandler;
