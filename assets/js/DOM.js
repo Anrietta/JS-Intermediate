@@ -3903,3 +3903,153 @@
 //     })
 // }
 // highlightAdminsBtnEl.onclick = highlightAdminsBtnHandler;
+
+
+
+// Завдання: "Керування плейлистом"
+// Тобі потрібно створити систему, де можна позначати треки як "улюблені" 
+// та масово змінювати їхній тип (наприклад, перетворювати всі "Audio" на "Podcast").
+// 2. Що потрібно реалізувати:
+// Рендеринг:
+// Кожен трек — це div з класом track-card.
+// Атрибути: data-id, data-type, data-is-favorite="false".
+// Всередині: назва треку, його тривалість у хвилинах (треба перерахувати з секунд) 
+// та кнопка "❤️".
+// Функція toggleFavorite(trackId):
+// При кліку на "❤️", знаходь картку за ID.
+// Змінюй data-is-favorite з false на true (і навпаки).
+// Візуально: якщо true — додавай картці червону рамку або емодзі зірочки біля назви.
+// Масова дія convertToLoFi():
+// Створи кнопку "Зробити все музикою Lo-Fi".
+// При кліку функція має знайти УСІ треки, де data-type="music".
+// Змінити їм назву на "Lo-Fi: [Стара назва]" і оновити атрибут data-type на lo-fi.
+// Аналітика calculateTotalDuration():
+// Створи кнопку "Порахувати час".
+// При кліку вона має зібрати дані з усіх картках на сторінці (через dataset.duration), 
+// додати їх і вивести загальну суму секунд у консоль або в окремий div.
+// Чому це цікаво:
+// Перерахунок: Ти перетвориш секунди в хвилини під час рендерингу.
+// Складна зміна рядка: В convertToLoFi тобі треба буде взяти старий текст і додати 
+// до нього префікс.
+// Збір даних: Остання функція навчить тебе використовувати DOM як джерело даних для 
+// обчислень (не з масиву, а саме з атрибутів уже створених елементів).
+// Підказка:
+// Коли будеш рахувати загальну тривалість, пам'ятай: document.querySelectorAll('.track-card')
+//  дасть тобі список, а далі через forEach ти будеш витягувати Number(card.dataset.duration).
+
+
+// const tracks = [
+//   { id: 't1', title: 'Song A', type: 'music', duration: 180 },
+//   { id: 't2', title: 'Podcast B', type: 'podcast', duration: 3600 },
+//   { id: 't3', title: 'Song C', type: 'music', duration: 240 },
+//   { id: 't4', title: 'Song D', type: 'music', duration: 300 }
+// ];
+
+// const track = { id: 't4', title: 'Song D', type: 'music', duration: 3600 };
+
+// const sectionEl = document.createElement('section');
+// document.body.append(sectionEl);
+
+// const toLoFiBtnEl = document.createElement('button');
+// toLoFiBtnEl.textContent = 'Зробити все музикою Lo-Fi';
+// toLoFiBtnEl.style.marginBottom = '15px';
+// sectionEl.append(toLoFiBtnEl);
+
+
+// const createCard = tracks.map(t => createTrackCards(t));
+// sectionEl.append(...createCard);
+
+// function createTrackCards ({id,title, type, duration}, isFavorite = false) {
+//     const trackCardEl = document.createElement('div');
+//     trackCardEl.classList.add('track-card');
+//     trackCardEl.dataset.id = id;
+//     trackCardEl.dataset.type = type;
+//     trackCardEl.dataset.isFavorite = isFavorite;
+
+//     const titleEl = document.createElement('span');
+//     titleEl.dataset.title = title;
+//     titleEl.textContent = title;
+
+//     const durationEl = document.createElement('span');
+//     const durMinutes = (Number(duration) / 60).toFixed(2);
+//     durationEl.dataset.duration = duration;
+//     durationEl.textContent = `  ${durMinutes} mins  `;
+
+//     const favBtn = toggleFavorite(id);
+//     trackCardEl.append(titleEl, durationEl, favBtn);
+
+//     return trackCardEl;
+// }
+
+// function toggleFavorite(trackID) {
+//     const favBtnEl = document.createElement('button');
+//     const favBtnIconEl = document.createElement('i');
+//     favBtnIconEl.classList.add('fa-solid', 'fa-heart');
+//     favBtnIconEl.style.color = 'red';
+//     favBtnEl.append(favBtnIconEl);
+
+//     function favBtnHandler(e) {
+//        const currentTrack = document.querySelector(`.track-card[data-id="${trackID}"]`);
+       
+//        if(!currentTrack) return;
+
+//        // чомусь мені не вдалось зробити toggle через !currentTrack.dataset.isFavorite (істинний чи фолсі вираз) не розумію чому
+//        // також я незнаю в даному випадку як і чи варто "висушити" цей блок (DRY)
+//        if (currentTrack.dataset.isFavorite === 'false') {
+//             currentTrack.dataset.isFavorite = true;
+//             currentTrack.style.border = '1px solid red';
+//        } else {
+//             currentTrack.dataset.isFavorite = false;
+//             currentTrack.style.border = '';
+//        }
+
+//     }
+
+//     favBtnEl.onclick = favBtnHandler;
+
+//     return favBtnEl;
+
+// }
+
+// function convertToLoFiHandler () {
+//     const tracksTypeMusic = document.querySelectorAll('.track-card[data-type="music"]');
+//     tracksTypeMusic.forEach(t => {
+//         // тут виникло ускладнення, довелось імпровізувати, тому що при виклику цієї функції
+//         // у мене весь вміст track-card (хвилини, favBtn)замінювався на text.content тут
+//         // тому я для title зробила окремий span в createTrackCards щоб змінювати лише його  
+//         const titleSpan = t.querySelector('span[data-title]');
+//         titleSpan.textContent = `Lo-Fi: [${titleSpan.dataset.title}]`;
+//         t.dataset.type = 'lo-fi';
+//     })
+// }
+
+// toLoFiBtnEl.onclick = convertToLoFiHandler;
+
+// const totalDurationBtn = document.createElement('button');
+// totalDurationBtn.textContent = 'Порахувати загальну тривалість';
+// totalDurationBtn.style.marginTop = '15px';
+// totalDurationBtn.style.marginBottom = '15px';
+// sectionEl.append(totalDurationBtn);
+
+// totalDurationBtn.addEventListener('click', function () {
+//     let totalDuration = 0;
+//     const allTracksArr = Array.from(document.querySelectorAll('.track-card > span[data-duration]'))
+//     .forEach(t => {
+//         totalDuration += Number(t.dataset.duration);
+//     });
+//     // якщо я totalDurationMins пересуну вверх (над allTracksArr) то результат завжджи буде 0, 
+//     // тому що збирає дані перед тим як провелись розрахунки і внеслись зміни в totalDuration
+//     const totalDurationMins = (Number(totalDuration) / 60).toFixed(2);
+    
+//     const totalDurationText = `The total duration of your Play List is : ${totalDurationMins} mins.`
+//     let totalDurationEl = document.querySelector('p.total-duration');
+
+//     if (!totalDurationEl) {
+//         totalDurationEl = document.createElement('p');
+//         totalDurationEl.classList.add('total-duration');
+//         sectionEl.append(totalDurationEl);
+//     } 
+
+//     totalDurationEl.textContent = totalDurationText;
+
+// })
