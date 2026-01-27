@@ -1,0 +1,466 @@
+/* // 7 завдання - інтерактивна галерея котиків */
+/* img {
+    cursor: pointer;
+    transition: all 0.3s ease;    /* щоб зміни були плавними */
+    /* margin: 10px; */
+/* } */
+
+/* Клас, який ти маєш додавати/видаляти через JS */
+/* .selected {
+    outline: 5px solid gold;
+    transform: scale(1.1);
+    filter: sepia(0.5);
+    border-radius: 15px;
+} */
+
+
+/* // 8 завдання Вибір кольору кросівок */
+
+/*
+.color-picker { display: flex; gap: 10px; cursor: pointer; }
+.color-btn { width: 30px; height: 30px; border-radius: 50%; border: 2px solid transparent; }
+.red { background: red; } 
+.blue { background: blue; } 
+.green { background: green; } 
+.black { background: black; }
+
+/* Клас активного вибору */
+/*.active { border-color: gold; transform: scale(1.2); }
+
+
+
+/* 9 Приклад-практика kwiga 041 - Слайдер */
+
+/* .slider-wrapper{
+    position: relative;
+    width: 600px;
+    height: 200px;
+    margin: 100px auto;
+}
+
+.slider-wrapper > img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.nav-btn{
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    font-size: 24px;
+    border-radius: 50%;
+    border: none;
+    opacity: 50%;
+    transition: opacity 0.5s ease-in-out;
+
+}
+
+.nav-btn:hover {
+    opacity: 70%;
+}
+
+.prevBtn{
+    left: 15px;
+}
+
+.nextBtn{
+    right: 15px;
+} */
+
+
+
+/* ---------------------------------------------------------------------------------------------------------- */
+
+                            /* DOM Лічильник (Counter) */
+
+/* body {
+    min-height: 100vh;
+    font-size: 36px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+} */
+
+
+
+
+/* ----------------------------------------------------------------------------------------------------------------- */
+
+                                /* DOM Перемикач теми (Theme toggler) */
+
+/* body {
+    min-height: 100vh;
+    font-size: 36px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.ligthTheme {
+    background-color: antiquewhite;
+    color: black;
+}
+.darkTheme {
+    background-color:black;
+    color: white;
+} */
+
+
+/* ----------------------------------------------------------------------------------------------------------------- */
+
+                                /* DOM Картка товару: Обране (Favourite toggle) */
+
+
+/* body {
+    min-height: 100vh;
+    font-size: 36px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.fav-btn {
+    background-color: aquamarine;
+    border-radius: 8px;
+    line-height: 1.5;
+}
+
+.active {
+    background-color:coral ;
+} */
+
+
+
+
+/* ----------------------------------------------------------------------------------------------------------------- */
+
+                                /* DOM Сливання та занурення подій (Bubling and Capturing)*/
+
+
+/* body {
+    min-height: 100vh;
+    font-size: 36px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+section {
+    border: 5px solid red;
+    padding: 30px;
+} */
+
+
+
+
+/* Задвання: BurgerMenu - Kwiga 044 */
+
+/* :root {
+  --burger-btn-width: 50px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: sans-serif;
+  min-height: 100vh;
+}
+
+ul {
+  list-style: none;
+}
+li {
+  padding: 30px;
+}
+li + li {
+  border-top: 1px solid #000;
+}
+
+article {
+  padding: 15px;
+}
+
+header {
+  min-height: 200px;
+  background: lightgray
+    url(https://images.pexels.com/photos/2684383/pexels-photo-2684383.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* фіксуємо весь контейнер (в т.ч. кнопку бургера) в лівий верхній куток
+таким чином, коли меню активне ми зможемо скролити основну сторінку.
+крім того контейнер розташований найвищим шаром над іншими елементами */
+/* .burgerMenuContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  max-width: 300px;
+  width: 100%;
+  background-color: lightgray;
+  transition: 0.5s;
+} */
+
+/* приховуємо контейнер зміщенням вліво на 100% */
+/* .burgerMenuContainerHide {
+  transform: translateX(-100%);
+} */
+
+/* активуємо контейнер зміщенням вправо на 100% відносно прихованого стану */
+/* .burgerMenuContainerActive {
+  transform: translateX(0);
+} */
+/* 
+.burgerMenuBtn {
+  position: absolute;
+  left: 100%;
+  top: 0;
+  width: var(--burger-btn-width);
+  height: var(--burger-btn-width);
+  border: none;
+  border-radius: 50%;
+  background-color: rgba(100, 100, 100, 0.3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 0.5s;
+}
+
+.burgerMenuBtn:hover {
+  background-color: rgba(100, 100, 100, 0.5);
+}
+
+/* стан ліній бургер меню при наведенні */
+/* .burgerMenuBtn:hover::before,
+.burgerMenuBtn:hover::after,
+.burgerMenuBtn:hover > .burgerMenuLine {
+  box-shadow: black 0 0 0px 0.5px;
+} */
+
+/* стан ліній бургер меню стандартний */
+/* .burgerMenuBtn::before,
+.burgerMenuBtn::after,
+.burgerMenuLine {
+  height: 2px;
+  border-radius: 1px;
+  width: 60%;
+  background-color: black;
+  transition: 0.5s;
+} */
+
+/* .burgerMenuBtn::before,
+.burgerMenuBtn::after {
+  content: '';
+  position: absolute;
+} */
+/* 
+.burgerMenuContainerHide .burgerMenuBtn::before {
+  top: 30%;
+}
+
+.burgerMenuContainerHide .burgerMenuBtn::after {
+  bottom: 30%;
+}
+
+.burgerMenuContainerActive .burgerMenuBtn::before {
+  transform: translateY(30%) rotate(-0.125turn);
+}
+.burgerMenuContainerActive .burgerMenuLine {
+  display: none;
+}
+.burgerMenuContainerActive .burgerMenuBtn::after {
+  transform: translateY(-30%) rotate(0.125turn);
+} */
+
+/* затінення залишку сторінки коли бургер меню активний */
+/* .fullScreenOverlay {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: -1;
+  background-color: rgba(100, 100, 100, 0);
+  transition: 1s;
+}
+
+.burgerMenuContainerActive + .fullScreenOverlay {
+  z-index: 1;
+  background-color: rgba(100, 100, 100, 0.5);
+} */
+
+
+
+/* -------------------------------------------------------------------------------------------------------------------- */
+
+/* Приклад-практика 046 Kwiga Список користувачів
+
+Генерація однієї картки  + генерація масиву карток*/
+/* :root {
+    font-family: sans-serif;
+    --user-img-size: 100px;
+}
+
+.user-card {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    box-shadow: grey 0 0 5px;
+    margin: 10px;
+    border-radius: 8px;
+    padding: 15px;
+}
+
+.user-img {
+    width: var(--user-img-size);
+    height: var(--user-img-size);
+    border-radius: 50%;
+    border: 2px solid grey;
+    object-fit: cover;
+}
+
+.user-name {
+    margin-bottom: 10px;
+}
+
+.user-age {
+    color: grey;
+}
+
+.trash-icon {
+    margin-left: auto;
+} */
+
+
+
+
+
+/* Завдання: "Генерація списку музичних альбомів */
+/* :root {
+    --album-cover-size: 100px;
+}
+
+.music-albums-list {
+    padding: 15px;
+}
+
+.album-card {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 20px;
+    border: 1px solid grey;
+    border-radius: 8px;
+    box-shadow: 0 0 5px grey;
+    margin-bottom: 10px;
+}
+
+.album-cover {
+    width: var(--album-cover-size);
+    height: var(--album-cover-size);
+    object-fit: contain;
+    border-radius: 50%;
+}
+
+.fav-btn {
+    margin-left: auto;
+    background-color: transparent;
+    border: none;
+    font-size: 16px;
+}
+
+.active {
+    color: gold;
+} */
+
+
+
+
+/* Завдання: "Генерація списку меню" */
+
+/* .dish-card {
+    display: flex;
+    border: 1px solid #ddd;
+    margin-bottom: 15px;
+    padding: 10px;
+    border-radius: 12px;
+    align-items: center;
+    gap: 20px;
+}
+
+.dish-img {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.in-cart {
+    background-color: #4CAF50;
+    color: white;
+} */
+
+
+
+/* Завдання: "Оренда житла" (Real Estate Cards) */
+/* :root {
+    font-family: sans-serif;
+    --card-img-width: 150px;
+    --card-img-height: 120px;
+}
+
+.rental-list {
+    padding: 15px;
+}
+
+.rental-card {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border: 1px solid antiquewhite;
+    border-radius: 8px;
+    box-shadow: 0 0 3px antiquewhite;
+    margin-bottom: 10px;
+    padding: 15px;
+}
+
+.card-img {
+    width: var(--card-img-width);
+    height: var(--card-img-height);
+    border-radius: 5px;
+    object-fit: cover;
+}
+
+.status-bage {
+    display: inline-block;
+    margin-left: auto;
+}
+
+.status-bage-green {
+    color: green;
+}
+
+.status-bage-red {
+    color: red;
+} */
+
+
+
+/* Завдання: "Менеджер завдань (Task Planner)" */
