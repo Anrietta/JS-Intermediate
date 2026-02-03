@@ -4053,3 +4053,81 @@
 //     totalDurationEl.textContent = totalDurationText;
 
 // })
+
+
+
+
+// Завдання: "Simple drag´n´drop"
+
+// // щоб зберегти посилання на перетягуваний елемент
+// let dragged;
+
+// // події, що спрацьовують на об'єкті, який можна перетягувати 
+
+// //отримаємо елемент який можна перетягувати
+// const sources = document.querySelectorAll('.list-item[draggable="true"]');
+
+// sources.forEach(source => {
+//     // навішаємо на нього обробник на перетягування
+//     source.addEventListener('drag', (event) => {
+//         console.log('drag : dragging');
+//     })
+
+//     source.addEventListener('dragstart', (event) => {
+//         // зберігаємо посилання на елемент який перетягується
+//         dragged = event.target.closest('.list-item');
+//         // зміним колір перетягуваного обєкта з моменту початку перетягування
+//         event.target.closest('.list-item').classList.add('dragging');
+//     })
+
+//     source.addEventListener('dragend', (event) => {
+//         // повернем базовий колір з моменту закінчення перетягування, як тільки мишка відпустила елемент
+//         event.target.closest('.list-item').classList.remove('dragging');
+//     })
+
+
+//     // події, що відбулися на цілях для скидання
+//     const targets = document.querySelectorAll('.drop-target');
+
+//     targets.forEach(target => {
+//         target.addEventListener('dragover', (event) => {
+//             // відміняємо стандартну поведінку щоб дозволити скидання елемента при перетягуванні елемента
+//             event.preventDefault();
+//         })
+
+//         target.addEventListener('dragenter', (event) => {
+//             // виділити потенційну ціль скидання, коли елемент, що перетягується, потрапляє в її межі
+//             if (event.target.classList.contains('dropzone')) {
+//                 event.target.classList.add('dragover');
+//             }
+//         })
+
+//         target.addEventListener('dragleave', (event) => {
+//             // зняти виділення потенційної цілі скидання, коли елемент, що перетягується, покидає її межі
+//             if (event.target.classList.contains('dropzone')) {
+//                 event.target.classList.remove('dragover');
+//             }
+//         })
+
+//         target.addEventListener('drop', (event) => {
+//             // відміняємо стандартну поведінку для перетягуваних елементів (наприклад перейти за посиланням, тощо)
+//             event.preventDefault();
+
+//             if(event.target.classList.contains('dropzone')) {
+//                 // зняти виділення потенційної цілі скидання, коли елемент, що перетягується, покидає її межі
+//                 event.target.classList.remove('dragover');
+//                 // додати у dropzone дочірній елемент = той елемент який ми перетягували, посилання на якого зберегли в dragstart
+//                 event.target.appendChild(dragged);
+//             }
+//         })
+//     })
+
+//     // тут я реалізувла drag'n'drop в обидві сторони (з поточного контейнера в інший, і навпаки). 
+//     // Реалізувати вдалось за допомогою querySelectorAll=>forEach щоб на кожен елемент навісити слухачі
+//     // інакше воно не працювало
+//     // той самий принцип використала щоб зробьити обидва контейнери доступними до скидання перетягуваних елементів
+//     // при цьому нумерація елементів змінюється автоматично і незалежно. в кожному контейнері перетягнутий 
+//     // та скинутий елемент починає порядковий номер з 1 незалежно від того яким він був у попередньому контейнері
+//     // тобто елементи завжди додаються в кінець контейнера з відповідним порядковим номером в цьому контейнері
+
+// })

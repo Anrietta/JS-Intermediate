@@ -463,4 +463,66 @@ header {
 
 
 
-/* Завдання: "Менеджер завдань (Task Planner)" */
+
+
+
+
+/* Завдання: "Simple drag´n´drop" */
+
+/* body {
+  user-select: none;
+  box-sizing: border-box;
+  padding: 40px;
+}
+
+#task-list {
+  border: 1px solid red;
+  padding: 30px;
+  margin-bottom: 30px;
+}
+
+.list-item {
+  border: 1px solid green;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  max-width: 750px;
+}
+
+.content-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  column-gap: 15px;
+  padding: 15px;
+}
+
+.item-text {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
+  flex-basis: 70%;
+  min-width: 0;
+}
+
+.delete-btn {
+  width: 76px;
+  height: 30px;
+}
+
+.dropzone {
+  width: 750px;
+  min-height: 350px;
+  border: 1px solid purple;
+  padding: 30px;
+}
+
+.dropzone.dragover {
+  background-color: orange;
+}
+
+.dragging {
+  background-color: yellow;
+
+} */
+
+
