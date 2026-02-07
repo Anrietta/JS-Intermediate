@@ -4138,5 +4138,196 @@
 
 
 
+// Завдання: ToDoList з можливістю drag'n'drop
+
+// const saveBtn = document.querySelector('.save-btn');
+// const inputContent = document.querySelector('#input');
+
+// saveBtn.addEventListener('click', function () {
+    
+//     if(!inputContent || !inputContent.value.trim()) {
+//         alert('Поле для вводу не може бути пустим!');
+//         inputContent.value = '';
+//         inputContent.focus();
+//         return;
+//     }
+    
+//     const listItemEl = createlistItem(inputContent.value);
+//     listEl.prepend(listItemEl);
+//      // викликаю фукцію з навішування обробників для кожного елемента який можна перетягувати ще при його сторенні
+//     createDragNDropListeners(listItemEl);
+
+
+// })
+
+
+// const listEl = document.createElement('ol');
+// listEl.id = 'tasks-list';
+// listEl.classList.add('dropzone');
+// document.body.append(listEl);
+
+// створюю обробник на клік по елементу щоб позначати його done і навпаки
+// function listClickListener (e) {
+//     const targetDeleteBtn = e.target.closest('.delete-btn');
+//     const targetItem = e.target.closest('.list-item');
+//     const targetItemText = targetItem.querySelector('.item-text')
+    
+//     if (!targetItem) return;
+    
+//     if (targetDeleteBtn) {
+//         targetItem.remove();
+//         inputContent.focus();
+//         return;
+//     }
+    
+//     targetItemText.classList.toggle('done');
+
+// }
+
+// listEl.addEventListener('click', listClickListener);
+
+
+// function createlistItem (contentText) {
+//     const listItemEl = document.createElement('li');
+//     listItemEl.classList.add('list-item');
+//     listItemEl.setAttribute('draggable', 'true');
+//     listEl.prepend(listItemEl);
+
+//     const itemContentWrapper = document.createElement('div');
+//     itemContentWrapper.classList.add('content-wrapper');
+//     listItemEl.append(itemContentWrapper);
+
+
+//     const itemTextEl = document.createElement('span');
+//     itemTextEl.classList.add('item-text');
+//     itemTextEl.textContent = contentText;
+
+
+//     const deleteBtn = createDeleteBtn();
+//     itemContentWrapper.append(itemTextEl, deleteBtn);
+
+//     inputContent.value = '';
+//     inputContent.focus();
+
+//     return listItemEl;
+
+// }
+
+
+// function createDeleteBtn() {
+//     const deleteBtnEl = document.createElement('button');
+//     deleteBtnEl.classList.add('delete-btn');
+//     deleteBtnEl.textContent = 'Видалити';
+
+//     return deleteBtnEl;
+// }
+
+
+// // реалізація drag'n'drop
+
+// // створюю змінну в яку буду зберігати поточний перетягуваний елемент (той на якому почнеться подія)
+// // щоб потім скинути цей елемент в 'drop' у відповідний drop-zone
+// let dragged;
+
+// function createDragNDropListeners (item) {
+
+//     // 1. Події що спрацьовують на елементі який можна перетягувати
+
+//     item.addEventListener('drag', (event) => {
+//         // тут просто перевіряю чи впринципі подія відбувється на .list-item draggable
+//         console.log('dragging');
+//     })
+
+//     item.addEventListener('dragstart', (event) => {
+//         // зберігаю в глоб.змінну посилання на елемент .list-item в межах якого почалась подія 
+//         // щоб в 'drop' скинути цей самий елемент
+//         dragged = event.target.closest('.list-item');
+
+//         // додаю колір з моменту як подія почалась до елементу .list-item в межах якого почалась подія 
+//         event.target.closest('.list-item').classList.add('dragging');
+//     })
+
+//     item.addEventListener('dragend', (event) => {
+//         // знімаю колір з моменту як подія закінчилась з елементу .list-item в межах якого почалась подія 
+//          // (тобто повертаю першопочаткові стилі)
+//         event.target.closest('.list-item').classList.remove('dragging');
+//     })
+
+// }
+
+// // 2. Події що спрацьовують при скиданні
+
+// // отримую елемент ol.dropzone він у мене лише один (тобто перетягування відбувається в межах одного контейнера)
+// const dropTarget = document.querySelector('.dropzone');
+
+// dropTarget.addEventListener('dragover', (event) => {
+//     // скидаю поведінку за замовчуванням щоб дозволити скидання в цьому контейнері, 
+//      // тому що браузер по замовчуванню не дозволяє скидання для елементів
+//     // тепер якщо перетягувати елемент в межах .dropzone то курсор показуватиме + а за його межами знак заборони (стандартна поведінка курсора)
+//     event.preventDefault();
+// })
+
+// dropTarget.addEventListener('dragenter', (event) => {
+//     // тут event.target буде будь-який елемент через який тягнеться мишка після початку події
+//     // тому відфільтровуємо лише наш контейнер і йому додаємо кольору коли перетягуваний елемент
+//     // заходить в його межі
+//     if (event.target.classList.contains('dropzone')) {
+//         event.target.classList.add('dragover');
+//     }
+// })
+
+// // dropTarget.addEventListener('dragleave', (event) => {
+// //     // тут event.target буде будь-який елемент через який тягнеться мишка після початку події
+// //     // тому відфільтровуємо лише наш контейнер і забираємо в нього колір коли перетягуваний елемент
+// //     // виходить за його межі
+// //     if (event.target.classList.contains('dropzone')) {
+// //         event.target.classList.remove('dragover');
+// //     }
+// // })
+
+// dropTarget.addEventListener('drop', (event) => {
+//     // скидаю поведінку за замовчуванням для деяких елементів
+//     // (наприклад щоб не перейти за посиланням якщо перетягуваний елемент це посилання, або не перевантажити сторінку, тощо)
+//     event.preventDefault();
+
+
+//     if (event.target.classList.contains('dropzone')) {
+//         event.target.classList.remove('dragover');
+
+//         // --спробуй getBoundingClientRect()
+//         // спробуй element.offsetTop 
+
+//         // отримую координати мишки в момент скидання (точку де я відпустила кнопку мишки)
+//         const dropCoordY = event.pageY;
+
+//         // тут мушу використати getElementsByClassName щоб отримати живу "HTMLCollection" інакше 
+//         // після першої зміни в положенні елеменітів, вони перестануть перетягуватись бо Статична NodeList
+//         // не обновиться після переміщення і міститиме неактуальні дані координат кожного елемента
+//         // від чого вся реалізація полетить
+//         const draggableItemsArr = Array.from(document.getElementsByClassName('list-item'));
+
+//         // отримую елемент що по координатам стоїть найближче перед місцем точкою скидання перетягуваного елемента,
+//         // щоб могти перед ним всунути елемент який ми переятягували
+//         const prevItem = draggableItemsArr.reverse().find(n => n.offsetTop < dropCoordY);
+
+//         if (prevItem) {
+//          // вставляю перетфгуваний елемент як наступний сіблінг після того який ми знайшли за координатами (який є попереднім)
+//             prevItem.after(dragged);
+//         } 
+
+//         // Тут є маленька пастка: event.pageY враховує прокрутку сторінки, а offsetTop — ні. 
+//         // Якщо сторінка буде дуже довгою і ти її прокрутиш, розрахунки можуть "з'їхати". 
+//         // Але на цьому етапі залишу цю тему в спокої, розберусь потім
+//         if (!prevItem && dropCoordY >= event.target.offsetTop){
+                // якщо я хочу вставити елемент першим в списку, то він не матиме попередньго сіблінга, 
+                // тому я вставляю його як перший дочірній в контейнері для скидання 
+//             event.target.prepend(dragged)
+//         }
+
+//     }
+// })
+
+
+
 
 
