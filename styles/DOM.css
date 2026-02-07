@@ -468,8 +468,8 @@ header {
 
 
 /* Завдання: "Simple drag´n´drop" */
-
-/* body {
+/* 
+body {
   user-select: none;
   box-sizing: border-box;
   padding: 40px;
@@ -524,5 +524,7 @@ header {
   background-color: yellow;
 
 } */
+
+
 
 
