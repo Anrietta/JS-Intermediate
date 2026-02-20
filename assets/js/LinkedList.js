@@ -53,3 +53,767 @@
 
 
 
+// Завдання: "Список справ (ToDo List)"
+// Твоя мета — створити однозв'язний список (Singly Linked List), 
+// який буде імітувати чергу справ.Що треба зробити:Створити клас 
+// Node:Має властивість task (це будуть наші дані — текст справи).
+// Має властивість next (посилання на наступний вузол). 
+// Створити клас ToDoList:Має властивість head (початок списку).
+// Реалізувати метод addTask(text): додає нову справу в кінець списку 
+// (пам'ятай про цикл while, щоб знайти останній вузол, або використай tail, 
+// якщо хочеш спробувати варіант $O(1)$).Реалізувати метод showTasks(): 
+// виводить у консоль усі справи по порядку.Твій стартовий шаблон:
+// Скопіюй це собі в редактор і допиши логіку там, де стоять коментарі.
+
+
+// Рівень "Зірочка" ⭐ (якщо хочеш ще трохи розім'ятися)
+// Спробуй реалізувати метод deleteFirst().Він має видаляти першу 
+// справу (Голову).Підказка: тобі треба просто сказати списку, 
+// що тепер this.head — це той, хто був другим.
+// Це та сама операція $O(1)$, про яку ми говорили.
+// Не забудь подумати, що станеться, якщо список вже порожній 
+// (якщо this.head === null).
+
+
+
+// клас для створення вузла (ми їх створюватимемо в класі TodoList)
+// class Node {
+//   constructor(task) {
+//     this.task = task;    // дані що зберігаються у вузлі
+//     this.next = null;   // для старту пустий (бо ще нема наступного вузла)
+//   }
+// }
+
+// class ToDoList {
+//   constructor() {
+//     this.head = null;   // голова для старту пуста (бо список ще пустий)
+//   }
+
+//   // метод для додавання вузлів в кінець списку
+//   addTask(text) {
+//     const newNode = new Node(text);
+//     // Твій код тут:
+//     // 1. Якщо голова порожня — нова справа стає головою.
+//     if (this.head === null) {
+//         this.head = newNode;
+//     } else {
+//         // 2. Якщо ні — знайди останній вузол і приєднай до нього новий.
+//         let current = this.head;
+//         while(current.next !== null) {
+//             current = current.next;
+//         }
+//         // Коли знайшли останній (у якого next === null), чіпляємо до нього новий
+//         current.next = newNode;
+
+//     }
+//   }
+
+//   deleteFirst() {
+//     let current = this.head;
+//     if (current) {
+//         this.head = current.next;
+//     }
+//   }
+
+//     // Додамо метод clear(), щоб видалити все одним махом
+
+//     clear() {
+//         this.head = null; // відрізаємо голову і весь список втрачає звязки
+//     }
+
+//   // метод для виведення списку тасок в консоль
+//   showTasks() {
+//     // Твій код тут:
+//     // Пройдися циклом по всьому списку і виведи кожну справу в консоль.
+//     let current = this.head;
+//     let result = '';
+//     while(current) {
+//         result += current.task + ' ' + '->' + ' ';
+//         current = current.next;
+//     }
+//     console.log(result + current);
+
+// }
+// }
+
+// // ПЕРЕВІРКА:
+// const myTasks = new ToDoList();
+// myTasks.addTask("Купити молоко");
+// myTasks.addTask("Помити кота");
+// myTasks.addTask("Вивчити Linked List");
+
+// myTasks.showTasks();   // Купити молоко -> Помити кота -> Вивчити Linked List -> null
+// // Маленька підказка:Коли будеш писати showTasks, згадай: ми починаємо з 
+// // let current = this.head, а в циклі щоразу "перестрибуємо" далі: 
+// // current = current.next.
+
+// // видаляємо перший вузол списку (голову) зробивши другий вузол головою
+// myTasks.deleteFirst();
+// myTasks.showTasks();    // Помити кота -> Вивчити Linked List -> null
+
+// // видалимо увесь список
+// myTasks.clear();
+// myTasks.showTasks();    // null
+
+
+
+
+// Завдання: "Список улюблених кольорів (Syngly Linked List)"
+
+// стврюю клас для створення вузлів
+
+// class Node {
+//     constructor(color) {
+//         this.value  = color;
+//         this.next = null;
+//     } 
+// }
+
+// // створюю фабрику зі стсвореня звязного списку
+// class colorLinkedList {
+//     constructor() {
+//         this.head = null;
+//     }
+
+//     addNode(value) {
+//         const newColor = new Node(value);
+
+//         if (this.head === null) {
+//             this.head = newColor;
+//         } else {
+//             let current = this.head;
+//             while(current.next !== null) {
+//                 current = current.next;
+//             }
+//             current.next = newColor;
+//         }
+//     }
+
+//     deleteFirstNode() {
+//         if (this.head !== null) {
+//             this.head = this.head.next;
+//         }
+
+//     }
+
+//     clearAllNodes() {
+//         this.head = null;
+//     }
+
+//     print() {
+//         let current = this.head;
+//         let result = '';
+
+//         while(current) {
+//             result += current.value + ' ' + '=>' + ' ';
+//             current = current.next;
+//         }
+
+//         console.log(result + current);
+//     }
+// }
+
+// const myFavColors = new colorLinkedList();
+
+// myFavColors.addNode('yellow');
+// myFavColors.addNode('green');
+// myFavColors.addNode('blue');
+// myFavColors.addNode('red');
+
+// myFavColors.print();   // yellow => green => blue => red => null
+
+// myFavColors.deleteFirstNode();
+// myFavColors.print();     // green => blue => red => null
+
+// myFavColors.clearAllNodes();
+// myFavColors.print();    // null
+
+
+
+
+
+// Завдання: "Список улюблених чисел (Syngly Linked List) + Хвіст"
+
+// class Node {
+//     constructor(value) {
+//         this.num = value;
+//         this.next = null;
+//     }
+// }
+
+// class NumLinkedList {
+//     constructor() {
+//         this.head = null;
+//         this.tail = null;
+//     }
+
+//     addHeadNode(value) {
+//         const newNum = new Node(value);
+//         if (this.head === null) {
+//             this.head = newNum;
+//             this.tail = newNum;
+//         } else {
+//             newNum.next = this.head;  // новий вузол посилаиметься на попередню голову
+//             this.head = newNum;  // новий вузол стане новою головою
+//         }
+//     }
+
+//     addTailNode(value) {
+//         const newNum = new Node(value)
+//         if (this.head === null) {
+//             this.head = newNum;
+//             this.tail = newNum;
+//         } else {
+//             this.tail.next = newNum;
+//             this.tail = newNum;
+//             // this.tail.next = null;  // це зайве, значення null приходить разом з новим вузлом з конструктора 
+//         }
+//     }
+
+//     print() {
+//         let current = this.head;
+//         let result = '';
+
+//         while(current) {
+//             result += current.num + '->';
+//             current = current.next;
+//         }
+//         console.log(result + current);
+
+//     }
+// }
+
+// const myNums = new NumLinkedList();
+// myNums.addTailNode(1);
+// myNums.addTailNode(3);
+// myNums.addTailNode(5);
+// myNums.addTailNode(7);
+// myNums.addTailNode(9);
+
+// myNums.print();  // 1->3->5->7->9->null
+
+// myNums.addHeadNode(-1);
+// myNums.addHeadNode(-3);
+// myNums.addHeadNode(-5);
+// myNums.addHeadNode(-7);
+// myNums.addHeadNode(-9);
+
+// myNums.print();  // -9->-7->-5->-3->-1->1->3->5->7->9->null
+
+
+
+// Завдання: "Плейлист (Doubly Linked List)"
+// Уяви, що ми робимо музичний плеєр. 
+// У ньому важливо мати можливість перемкнути на наступну пісню і повернутися 
+// до попередньої.
+
+// Що треба зробити:
+// Клас SongNode:
+// title (назва пісні).
+// next (посилання вперед).
+// prev (посилання назад).
+
+// Клас Playlist:
+// head та tail.
+// Метод addSong(title): додає пісню в кінець. (Тут треба правильно "зшити" next 
+// останнього і prev нового!).
+// Метод showForward(): виводить список пісень від першої до останньої.
+// Метод showBackward(): виводить список від останньої до першої (використовуючи prev).
+// На що звернути увагу:
+// Коли додаєш вузол, у тебе тепер два завдання: сказати новому вузлу, хто його "тато" 
+// (prev), і сказати старому хвосту, хто його "дитина" (next).
+
+// Завдання: «Вставити пісню ПІСЛЯ конкретної пісні»
+// Додати метод для додавання пісні після конкретної пісні.
+// Уяви, що ти хочеш додати ремікс одразу після оригіналу. Нам треба:
+// Знайти пісню, після якої ми робимо вставку (targetTitle).
+// Створити нову пісню.
+// Якщо ця пісня — хвіст, ми просто викликаємо твій addSong().
+// Якщо це середина — ми «розсовуємо» вузли.
+// Логіка «розсування» (4 кроки):
+// Нова пісня має вказати prev на поточну пісню.
+// Нова пісня має вказати next на наступну пісню.
+// Наступна пісня має переставити свій prev на нову пісню.
+// Поточна пісня має переставити свій next на нову пісню.
+
+// Додати метод для видалення останнього вузла.Уяви, що ми хочемо видалити останню пісню (Help!). У двозв'язному списку це зробити 
+// набагато легше, ніж в однозв'язному. Згадай: в однозв'язному нам доводилося бігти від 
+// самої голови, щоб знайти "передостаннього", а тут...
+
+// Запитання: Як ти думаєш, маючи прямий доступ до this.tail, як нам швидко 
+// видалити останній елемент і зробити "Help!" недосяжним, а "Let It Be" — новим хвостом?
+
+// Додати метод для видалення першого вузла
+
+// Додати метод для видалення з будь якого місця за назвою пісні
+
+// Додати метод для очищення всього списку
+
+// Твій стартовий шаблон:
+
+// class SongNode {
+//   constructor(title) {
+//     this.title = title;
+//     this.next = null;
+//     this.prev = null;
+//   }
+// }
+
+// class Playlist {
+//   constructor() {
+//     this.head = null;
+//     this.tail = null;
+//   }
+
+//   addSong(title) {
+//     const newSong = new SongNode(title);
+//     if (!this.head) {
+//       this.head = newSong;
+//       this.tail = newSong;
+//     } else {
+//       // ПІДКАЗКА: 
+//       // 1. Нова пісня має знати, хто був до неї (this.tail)
+//       // 2. Старий хвіст має знати, що за ним тепер є нова пісня
+//       // 3. Оновити сам хвіст
+//         this.tail.next = newSong;
+//         newSong.prev = this.tail;
+//         this.tail = newSong;
+//     }
+//   }
+
+//   insertAfter(targetTitle, newTitle) {
+//     if (!this.head) return;  // якщо список пустий - виходим
+
+//     let current = this.head;  // починаєм шукати з голови
+
+//     // поки current!==null та назва пісні не дорівнює targetTitle переходим до наступного вузла
+//     while(current && current.title !== targetTitle) {
+//         current = current.next;
+//     }
+
+//     if (!current) return;  // якщо не знайшли пісню - виходим
+
+//     // якщо знайшли пісню і вона хвіст то викликаєм функцію додати пісню в хвіст
+//     if (current === this.tail) {
+//         this.addSong(newTitle);  
+//         return;  // і виходим з функції
+//     }
+
+//     // якщо ми дійшли сюди значить список не пустий, пісню знайшли і вона не хвіст
+//     // створимо обєкт нової пісні і додамо її після шуканої пісні
+//     const newSong = new SongNode(newTitle);
+
+//     newSong.prev = current;  // нова пісня має вказати prev на поточну пісню
+//     newSong.next = current.next;  // нова пісня має вказати next на наступну пісню
+//     current.next.prev = newSong; // Наступна пісня має переставити свій prev на нову пісню
+//     current.next = newSong; // Поточна пісня має переставити свій next на нову пісню
+//   }
+
+//   removeLastSong() {
+//     if (!this.tail) return;  // якщо список порожній - нічого не робим
+
+//     this.tail = this.tail.prev;  // робимо попередній елемент новим хвостом
+
+//     // Якщо після попереднього рядка коду в списку ще хтось залишається, тобто
+//     // в списку було > 1 вузла
+//     if (this.tail) {
+//         this.tail.next = null;
+//     } else {
+//         // а якщо в списку було < 1 вузла (тобто був лише 1 елемент) 
+//         this.head = null; // обнуляємо і голову, щоб весь список став зовсім порожнім
+//     }
+//   }
+
+//   removeFirstSong() {
+//     if (!this.head) return;  // якщо список пооржній, виходжу з функції
+
+//     this.head = this.head.next;  // якщо список нне порожній то роблю головою наступний елемент
+
+//     // якщо в списку більше ніж 1 вузол
+//     if (this.head) {
+//         this.head.prev = null;  // обнуляю новій голові prev
+//     } else {
+//         this.tail = null; // інакше обнуляю хвіст щоб зробити список зовсім порожнім
+//     }
+//   }
+
+//   removeByTitle(title) {
+//     if (!this.head) return;  // якщо список пустий - виходим
+
+//     let current = this.head;  // якщо список не пустий то починаємо з голови проходитись по циклу
+
+//     // поки current !== null та title не збігається ми будемо рухатись до настпуного вузла
+//     while (current && current.title !== title) {
+//         current = current.next
+//     }
+
+//     // якщо дійшли до кінця спсику і не знайшли те що шукали - виходим
+//     if (!current) return;
+
+//     // якщо знайшли що шукали, і ця пісня є головою, то просто викличем метод видалення голови
+//     if (current === this.head) {
+//         this.removeFirstSong();
+//         return;
+//     }
+
+//     // якщо знайшли що шукали, і ця пісня є хвостом, то просто викличем метод видалення хвоста
+//     if (current === this.tail) {
+//         this.removeLastSong();
+//         return;
+//     }
+
+//     // якщо ми дійшли сюди, значить ми знайшли те що шукали, і це не голова і не хвіст!
+
+//     // тоді для попереднього вузла, наступним робимо того хто йшов після current
+//     current.prev.next = current.next;
+//     // для наступного вузла попереднім робимо того хто йшов перед current
+//     current.next.prev = current.prev;
+
+//     // ми розриваємо зв'язки з current і garbage collector його видалить
+//     // наша робота лише не посилатись на нього щоб він самовидаливсчя з списку
+//   }
+
+//   clearAllSongs() {
+//     // у двозв'язних спсиках щоб очистити весь список за раз потрібно обнулити і head і tail
+//     // тому що вони обидва є точками входу в список (на відміну від однозв'язного списку, 
+//     // в якому вхід лише один через head)
+//     this.head = null;
+//     this.tail = null;
+//   }
+
+//   showForward() {
+//     let current = this.head;
+//     let result = "Плейлист (вперед): ";
+//     while (current) {
+//       result += current.title + " <-> ";
+//       current = current.next;
+//     }
+//     console.log(result + "null");
+//   }
+
+//   showBackward() {
+//     // Твій код тут:
+//     // Почни з this.tail і йди по current.prev
+//     let current = this.tail;
+//     let result = 'Плейлист (назад): ';
+//     while(current) {
+//         result += current.title + '<->';
+//         current = current.prev;
+//     }
+//     console.log(result + 'null');
+//   }
+// }
+
+// // ПЕРЕВІРКА:
+// const myMusic = new Playlist();
+// myMusic.addSong("Yesterday");
+// myMusic.addSong("Let It Be");
+// myMusic.addSong("Do it");
+// myMusic.addSong("La la la");
+// myMusic.addSong("Help!");
+
+// // myMusic.removeLastSong();
+// // myMusic.removeFirstSong();
+// // myMusic.clearAllSongs();
+// myMusic.removeByTitle('Do it')
+// myMusic.insertAfter('La la la', 'Amandish')
+
+
+// myMusic.showForward();
+// myMusic.showBackward();
+
+
+
+
+// Завдання: "Колесо Фортуни" (Circular Doubly Linked List)
+// Уяви, що ми створюємо гру "Колесо Фортуни". Стрілка стоїть на одному секторі, 
+// і ми можемо крутити колесо як вправо, так і вліво. Коли ми доходимо до останнього 
+// сектора, наступним знову стає перший.
+
+// Що тобі потрібно написати:
+// Клас SectorNode:
+// value (наприклад, сума грошей: 100, 500, "Bankrupt").
+// next та prev.
+// Клас FortuneWheel:
+// head (сектор, на якому зараз стрілка).
+// tail (потрібен для зручності додавання нових секторів).
+// Метод addSector(value): додає новий сектор.
+// Важливо: Якщо це перший сектор — він вказує сам на себе.
+// Важливо: Якщо вже є сектори — новий вставляється між tail та head, замикаючи коло.
+// Метод spin(steps, direction):
+// Приймає кількість кроків (steps) та напрямок ('forward' або 'backward').
+// Пересуває this.head на вказану кількість кроків по колу.
+// Виводить у консоль: "Стрілка зупинилася на: [value]".
+// Приклад роботи:
+
+
+// class SectorNode {
+//     constructor(value) {
+//         this.value = value;
+//         this.next = null;
+//         this.prev = null;
+
+//     }
+// }
+
+// class FortuneWheel {
+//     constructor() {
+//         this.head = null;
+//         this.tail = null;
+//     }
+
+//     addSector(value) {
+//         const newSector = new SectorNode(value);
+
+//         // якщо список пустий то робим головою новий сектор (і хвостом)
+//         // інакше новий сектор буде новим хвостом поєднаним з головою
+//         if (!this.head) {
+//             this.head = newSector;
+//             this.tail = newSector;
+//             // ЗАМИКАННЯ кільця: навіть один елемент має знати про себе
+//             newSector.next = newSector;
+//             newSector.prev = newSector
+//         } else {
+//             // Новий сектор вклинюється між хвостом і головою
+//             newSector.prev = this.tail; // новий хвіст зєднується з старим хвостом
+//             newSector.next = this.head;  // новий хвіст зєднується з головою
+
+//             this.tail.next = newSector;   // старий хвіст зєднується з новим хвостом
+//             this.head.prev = newSector;   // голова зєднується з новим хвостом
+
+//             this.tail = newSector;  // хвостом стає новий сектор
+//         }
+
+//         // варіант з більш чистим if...else і замиканням кільця
+//         // if (!this.head) {
+//             //     this.head = newSector;
+//             //     this.tail = newSector;
+//             // } else {
+//             //     this.tail.next = newSector;
+//             //     newSector.prev = this.tail;
+//             //     this.tail = newSector;
+//             // }
+
+//             // // УНІВЕРСАЛЬНЕ ЗАМИКАННЯ кільця:
+//             // // Працює завжди, незалежно від кількості елементів (хоч 1 хоч 100)
+//             // this.tail.next = this.head;
+//             // this.head.prev = this.tail;
+//     }
+
+//     spin(steps, direction) {
+//         let stepsCounter = 0;
+//         let current = this.head;
+
+//         if (!current) return;
+
+//         while(current && stepsCounter !== steps) {
+//             if (direction === 'forward') {
+//                 current = current.next;
+//                 stepsCounter++;
+//             }
+//             if (direction === 'backward') {
+//                 current = current.prev;
+//                 stepsCounter++;
+//             }
+            
+//         }
+//         // Оновлюємо положення стрілки (голову), щоб наступний спін почався звідси
+//         this.head = current;  
+//         console.log('Стрілка зупинилась на :' + current.value);
+//     }
+
+//     print() {
+//         if (!this.head) return;
+
+//         let current = this.head;
+//         let result = '';
+
+//         do {
+//             result += current.value + '=>';
+//             current = current.next;
+//         } while (current !== this.head) 
+
+//         console.log(result + '(back to ' + this.head.value + ')');
+
+//     }
+// }
+
+
+// const wheel = new FortuneWheel();
+// wheel.addSector(100);
+// wheel.addSector(500);
+// wheel.addSector(0); // Bankrupt
+
+// wheel.print();
+
+
+// wheel.spin(1, 'forward'); // Має вивести 500
+// wheel.spin(2, 'forward'); // Пройде 0 і знову зупиниться на 100 (коло замикається!)
+// wheel.spin(1, 'backward'); // Повернеться на 0
+
+
+
+
+// Завдання: «Карусель браузера» (Tab Carousel)
+// Уяви, що ти пишеш логіку для перемикання вкладок (Tabs) у браузері за допомогою 
+// клавіш Ctrl + Tab (вперед) та Ctrl + Shift + Tab (назад). Якщо ти доходиш до останньої 
+// вкладки й натискаєш «вперед» — ти опиняєшся на першій.
+
+// Що потрібно написати:
+// Клас TabNode:
+// url (адреса сайту, наприклад "https://www.google.com/search?q=google.com").
+// next та prev.
+// Клас TabCarousel:
+// currentTab (це буде наш аналог head, вкладка, яка зараз відкрита).
+// tail (остання додана вкладка).
+// Метод openTab(url): додає нову вкладку в кінець.
+// Важливо: Використовуй ту універсальну формулу замикання, яку ми обговорили 
+// (this.tail.next = this.currentTab тощо).
+// Метод nextTab(): перемикає currentTab на наступну і виводить: 
+// "Зараз відкрита вкладка: [url]".
+// Метод prevTab(): перемикає currentTab на попередню і виводить: 
+// "Зараз відкрита вкладка: [url]".
+// Метод showAllTabs(): виводить весь список вкладок по колу один раз.
+// Умова «з нуля»:
+// Спробуй написати все в новому файлі (або просто все видали), не підглядаючи 
+// в попередній код «Колеса Фортуни».
+// Маленька порада: Коли в методі openTab створюєш першу вкладку, не забудь призначити
+//  її і в currentTab, і в tail.
+
+
+// class TabNode {
+//     constructor(url) {
+//         this.url = url;
+//         this.next = null;
+//         this.prev = null;
+//     }
+// }
+
+// class TabCarousel {
+//     constructor() {
+//         this.currentTab = null;  // аналог head
+//         this.tail = null;
+//     }
+
+//     openTab(url) {
+//         const newTab = new TabNode(url);
+
+//         // якщо список пустий то робим новий вузол головою і хвостом
+//         if (!this.currentTab) {
+//             this.currentTab = newTab;
+//             this.tail = newTab;
+//         } else {
+//             // інакше 
+//             this.tail.next = newTab;  // поточний хвіст зєднуємо з новим вузлом 
+//             newTab.prev = this.tail;   // новий вузол зєднуємо з поточним хвостом
+//             this.tail = newTab;  // робимо новий вузол хвостом
+//         }
+//         this.tail.next = this.currentTab;    // новий хвіст зєднуємо з головою (навіть якщо в списку лише один вузол)
+//         this.currentTab.prev = this.tail;   // голову зєднуємо з новим хвостом (навіть якщо в списку лише один вузол)
+//     }
+
+//     // метод щоб перейти на наступну вкладку
+//     nextTab() {
+//         let current = this.currentTab;  // починаємо з голови
+
+//         if (!current) return;  // якщо список пустий - виходимо
+
+//         current = current.next;  // інакше переходим до наступного вузла
+
+//         this.currentTab = current;  // робимо головою наступний вузол
+//         // це дає змогу утворити динамічне кільце з вузлів, 
+//         // і тоді метод ShowAllTabs буде завжди показувати всі елементи по колу,
+//         //  але першим буде той який зараз в голові
+
+//         console.log(`Зараз відкрита вкладка: [ ${this.currentTab.url}]`);
+
+//     }
+
+//     // метод щоб перейти на попередню вкладку
+//     prevTab() { 
+//         let current = this.currentTab;  // починаємо з голови
+
+//         if (!current) return;  // якщо список пустий - виходимо
+
+//         current = current.prev;  // інакше переходимо до попереднього вузла
+
+//         this.currentTab = current;  // робим головою попередній вузол 
+//         // це дає змогу утворити динамічне кільце з вузлів, 
+//         // і тоді метод ShowAllTabs буде завжди показувати всі елементи по колу,
+//         //  але першим буде той який зараз в голові
+
+//         console.log(`Зараз відкрита вкладка: [ ${this.currentTab.url}]`);
+//     }
+
+//     // метод закрити поточну вкладку (видалити поточний вузол)
+//     closeCurrentTab() {
+
+//         if (!this.currentTab) return;  // якщо список пустий - виходим
+
+//         // якщо в списку лише один вузол (він посилається сам на себе) 
+//         if (this.currentTab.next === this.currentTab)  {
+
+//             // коли я обнулила весь обєкт вузла - додатково обнуляти prev та next нетреба
+//             this.currentTab = null;
+//             this.tail = null;
+
+//             console.log('Всі вкладки закрито!');
+//         } else {
+//             // якщо в списку більше 1 вузла
+//             this.currentTab.prev.next = this.currentTab.next;  // попередній вузол посилаємо до наступного вузла (уникаємо поточного)
+//             this.currentTab.next.prev = this.currentTab.prev;  // наступний вузол посилаємо до попереднього вузла (уникаємо поточного)
+
+//             // якщо поточний вузол це хвіст, то хвостом робим попередній вузол від поточного
+//             if (this.currentTab === this.tail) {
+//                 this.tail = this.currentTab.prev;
+//             }
+
+//             // головою робим наступнпий вузол від поточого
+//             this.currentTab = this.currentTab.next;
+
+//             // голову і хвіст важливо задати інакше все весь список полетить
+
+//             console.log(`Вкладку закрито. Зараз активна : [ ${this.currentTab.url} ]`);
+
+//         }
+
+
+//     }
+
+//     // метод щоб вивести весь список
+//     showAllTabs() {
+//         let current = this.currentTab;  // починаємо з голови
+//         let allTabs = '';  // накопичувач
+
+//         if (!current) return;  // якщо список пустий - виходим
+
+//         do {
+//             allTabs += current.url + ' => ';  // додаємо в накопичувач перший вузол списку
+//             current = current.next;  // переходим до наступного вузла
+            
+//         } while(current !== this.currentTab)  // допоки по колу не дійдемо знову до голови
+        
+//         console.log(allTabs);
+
+//     }
+// }
+
+
+// const tabsSession = new TabCarousel();
+
+// tabsSession.openTab('https://www.111.com');
+// tabsSession.openTab('https://www.222.com');
+// tabsSession.openTab('https://www.333.com');
+
+// tabsSession.nextTab();   // Зараз відкрита вкладка: [ https://www.222.com]
+
+// tabsSession.prevTab();  // Зараз відкрита вкладка: [ https://www.111.com]
+
+
+// tabsSession.showAllTabs();  // https://www.111.com => https://www.222.com => https://www.333.com => 
+
+// tabsSession.closeCurrentTab();  // Вкладку закрито. Зараз активна : [ https://www.222.com ]
+// tabsSession.showAllTabs();  // https://www.222.com => https://www.333.com => 
+
+// tabsSession.closeCurrentTab();  // Вкладку закрито. Зараз активна : [ https://www.333.com ]
+// tabsSession.showAllTabs();  // https://www.333.com => 
