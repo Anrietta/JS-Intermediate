@@ -1108,3 +1108,403 @@
 
 // myNote.undo();
 // console.log("Після 4-го Undo:", myNote.content); // повідомленя "Скасовувати нічого"
+
+
+
+
+
+
+// -------------------------------------------------------------------------------------------------------------------------------------------
+
+                // Queue (Data Structure) JS
+
+// Задача: «Система керування принтером»
+// Уяви, що ти пишеш софт для офісного принтера. Принтер один, а працівників багато. 
+// Кожен надсилає документ, і вони мають друкуватися чітко в тому порядку, в якому надійшли.
+// Твоє завдання:
+// Створити клас Printer, який використовує твою Queue.
+// Методи:
+// addDocument(name) — додає назву документа в чергу.
+// print() — "друкує" (виводить в консоль) назву першого документа в черзі та видаляє його. 
+// Якщо черга порожня — пише "Черга порожня".
+// showQueue() — просто показує, скільки документів зараз чекають (використовуй size).
+// Приклад роботи:
+
+// // клас для створення вузла
+// class Node {
+//     constructor(doc) {
+//         this.doc = doc;
+//         this.next = null;
+//     }
+// }
+
+// // клас для керування чергою
+// class Queue {
+//     constructor() {
+//         this.first = null;
+//         this.last = null;
+//         this.size = 0;
+//     }
+
+//     // метод для додавання вузла в кінець (в черзі додаємо вузли завжди в кінець)
+//     enqueue(doc) {
+//         const newDoc = new Node(doc);  // створюємо інстанс вузла
+
+//         if (this.size === 0) {  // якщо черга пуста новий вузол буде початком і кінцем черги
+//             this.first = newDoc;
+//             this.last = newDoc;
+//         } else {
+//             // інакше новий вузол буде новим хвостом
+//             this.last.next = newDoc;  // спершу старий хвіст посилаємо на новий вузол
+//             this.last = newDoc;  // потім новий вузол стає новим хвостом
+//             // next=null прийде сам з конструктора нового вузла
+//         }
+
+//         this.size++;  // збільшуємо розмір черги
+//     }
+
+//     // метод для видалення вузлів з початку (в черзі видаляємо лише з початку)
+//     dequeue() {
+        
+//         if (this.size === 0) return null;  // якщо черга пуста - повернути null і вийти
+        
+//         const firstDoc = this.first.doc;  // зберігаємо значення(дані) першого елемента в черзі
+//         this.first = this.first.next; // перекидаємо посилання на той вузол що був наступний
+//         this.size--;  // зменшуємо  розмір черги
+
+//         if (this.size === 0) {
+//             this.last = null;  // якщо після видалення черга стала пуста то занулити last
+//         }
+//         return firstDoc; // повертаємо збережене значення видаленого вузла
+//     }
+// }
+
+// // клас для роботи з принтером і постановкою в чергу
+// class Printer {
+//     constructor() {
+//         this.queue = new Queue();  // створюю інстанс черги всередині принтера
+//     }
+
+//     // метод додавання документа в чергу
+//     addDoc(fileName) {
+//         this.queue.enqueue(fileName);   // викликаю метод enqueue класу Queue
+//         console.log(`Додано до черги: ${fileName}`);
+//     }
+
+//     // метод надрукувати перший елем у черзі (і видалити його з черги)
+//     print() {
+//         // викликаю метод dequeue класу Queue (який поверне значення видаленого вузла)
+//         const docToPrint = this.queue.dequeue();  // зберігаю дані видаленого елемента з черги
+
+//         // якщо метод dequeue повернув null то вихожу з функції (бо черга пуста)
+//         if (docToPrint === null) {   // перевірка занадто широка (!docToPrint) бо ненадрукується 0 або пуста сторінка            console.log('Черга порожня');
+//             return;
+//         }
+//         // інакше друкую повідолення
+//         console.log(`Друкую: ${docToPrint}`);
+//     }
+
+//     // метод щоб показати поточну кількість документів у черзі
+//     getPendingCount() {
+//         return this.queue.size;
+//     }
+
+//     // метод щоб показати всю чергу (візуалізація черги)
+//     showFullQueue() {
+//         let current = this.queue.first;  // зберігаю перший вузол
+//         let result = 'FRONT -> ';  // накопичувач для елементів в черзі
+
+//         // допоки current трушний (ми не дійшли до хвоста)
+//         while(current) {
+//             result += `[${current.doc}] -> `;  // додаю до накопичувача поточний вузол
+//             current = current.next;  // перехожу до наступного вузла
+//         }
+
+//         console.log(result + 'END');  // друкую все що накопичила в result
+//     }
+
+// }
+
+
+// const myPrinter = new Printer();
+
+// myPrinter.addDoc("Звіт_2025.pdf");
+// myPrinter.addDoc("Фото_з_корпоративу.jpg");
+// myPrinter.addDoc("Рецепт_борщу.docx");
+
+// myPrinter.showFullQueue();
+// //FRONT -> [Звіт_2025.pdf] -> [Фото_з_корпоративу.jpg] -> [Рецепт_борщу.docx] -> END
+
+// myPrinter.print(); // Друкує: "Друкую: Звіт_2025.pdf"
+// myPrinter.print(); // Друкує: "Друкую: Фото_з_корпоративу.jpg"
+// console.log("Кількість документів в черзі становить:", myPrinter.getPendingCount()); // 1
+
+
+
+
+
+
+// Задача: «Електронна черга в кафе»
+// Уяви, що ти відкрила невелике кафе. Клієнти підходять, замовляють каву або десерт, 
+// отримують номер чека і чекають, поки їхнє замовлення приготують. Оскільки бариста один, 
+// він готує замовлення суворо по черзі.
+// Твоє завдання:
+// Створити клас CafeQueue. Він має працювати так:
+// Метод takeOrder(customerName, dish): приймає ім'я клієнта та страву. Зберігає їх у чергу 
+// як один об'єкт (наприклад: { name: "Анна", order: "Латте" }).
+// Метод serveNext():
+// Дістає замовлення з черги.
+// Виводить у консоль: "Готово! [Страва] для клієнта [Ім'я]. Смачного!".
+// Якщо замовлень немає — пише: "Всі клієнти обслужені!".
+// Метод status(): показує, скільки людей ще чекають у черзі.
+// Чому ця задача корисна?
+// Тут ти навчишся передавати в чергу не просто рядки (назви), а цілі об'єкти. В реальному 
+// програмуванні в структурах даних майже завжди лежать складні об'єкти з багатьма полями.
+
+// class Node {
+//     constructor(data) {
+//         this.data = data;  // тут збергігатиметься обєкт {name, dish}
+//         this.next = null;
+//     }
+// }
+
+// class Queue {
+//     constructor() {
+//         this.first = null;
+//         this.last = null;
+//         this.size = 0;
+//     }
+
+//     // додати вузол в чергу (зажди в кінець!)
+//     enqueue(data) {
+
+//         const newOrder = new Node(data);  // створюємо новий вузол (обєкт)
+
+//         if (this.size === 0) {    // якщо черга пуста
+//             this.first = newOrder;  // новий вузол робим головою і хвостом
+//             this.last = newOrder;
+//         } else {
+//             // інакше старий хвіст посилається на нвоий вузол
+//             this.last.next = newOrder;
+//             this.last = newOrder;  // ноівий вузол стає новим хвостом
+//             // this.last.next = null нетреба бо він прийде з конструктора з новим вузлом
+//         }
+//         this.size++;  // збільшуємо розмір черги
+//     }
+
+//     // метод видалення з вузлів з черги (завжди з початку!)
+//     dequeue() {
+//         if (this.size === 0) return null;  // якщо черга пуста, видаляти нічого, повертаєм null
+
+//         const firstOrderData = this.first.data;  // зберігаємо дані першого вузла (обєкт {name, data})
+
+//         this.first = this.first.next;  // першим вузлом робим той що був наступним 
+//         this.size--;  // зменшуємо розімр черги
+
+//         if (this.size === 0) { // якщо після видалення черга стала пуста
+//             this.last = null;   // обнуляємо хвіст
+//         }
+
+//         return firstOrderData;  // повертаємо обєкт {name, dish}
+//     }
+// }
+
+// class CafeQueue {
+//     constructor() {
+//         this.queue = new Queue();  // створюємо інстанс для черги
+//     }
+
+//     // метод щоб додати замовлення в чергу
+//     takeOrder(customerName, dish) {  // отримуємо дані у вигляді двох стрінгів які треба упакувати в обєкт
+//         let order = {};  // створимо пустий обєкт
+//         order.name = customerName; // додаємо першу властивість + знач
+//         order.dish = dish;  // додаємо другу властивість  + знач
+ 
+//         this.queue.enqueue(order);  // викликаємо метод щоб додати в чергу(обєкт order {name, dish})
+
+//     }
+
+//     // дістати з черги замовлення (і видалти його)
+//     serveNext() {
+//         // викликаємо метод для видалення вузла з черги
+//         const currOrder = this.queue.dequeue();  // отримуємо дані вузла - обєкт {name, dish}
+
+//         if (currOrder === null) {  // якщо нам повернувся null - виходимо
+//             console.log('Всі клієнти обслужені!');
+//             return;
+//         } 
+
+//         // інакше виводим повідомлення використовуючи властивості обєкта
+//         console.log(`Готово! ${currOrder.dish} для клієнта ${currOrder.name}. Смачного!`);
+//     }
+
+//     // метод для перевірки поточної кількості вузлів у черзі (кількість)
+//     status() {
+//         return this.queue.size;
+//     }
+
+//     // метод щоб вивести (лінійно) перелік всіх (кожного) замовлення що стоять в черзі
+//     showAllOrders() {
+//         let current = this.queue.first;  // збергіаємо перший вузол (вузол що містить data та next)
+
+//         let result = 'START -> ';  // накопичувач
+
+//         // допоки вузол не хвіст
+//         while(current) {
+//                                     // (current(this.queue.first) -> data -> name -> value)
+//             // накопичуємо імена клієнтів обєктів (вузол -> обєкт-> властивість -> значення)
+//             result += `${current.data.name} ->`;  
+//             current = current.next;  // переходимо до ннаступного вузла
+//         }
+//         console.log(result + 'END');
+//     }
+// }
+
+// // Підказка: у Node.doc (або Node.value) тепер буде лежати об'єкт {}
+
+// const myCafe = new CafeQueue();
+
+// myCafe.takeOrder("Олег", "Еспресо");
+// myCafe.takeOrder("Марія", "Тірамісу");
+// myCafe.takeOrder("Іван", "Капучино");
+
+// console.log(`У черзі чекають: ${myCafe.status()} клієнти(ів)`);
+
+// myCafe.showAllOrders();
+
+// myCafe.serveNext(); // Готово! Еспресо для клієнта Олег.
+// myCafe.serveNext(); // Готово! Тірамісу для клієнта Марія.
+
+// myCafe.takeOrder("Олена", "Чай");
+
+// myCafe.serveNext(); // Готово! Капучино для клієнта Іван.
+// myCafe.serveNext(); // Готово! Чай для клієнта Олена.
+// myCafe.serveNext(); // Всі клієнти обслужені!
+
+
+
+
+
+// Задача: «Приймальне відділення лікарні»
+// Уяви систему реєстрації пацієнтів. Кожен пацієнт — це об'єкт з трьома полями: name (ім'я), 
+// symptom (скарга) та priority (номер у черзі).
+// Твій код-челендж:
+// Створити клас HospitalQueue.
+// Метод registerPatient(name, symptom):
+// Автоматично призначає пацієнту номер (id), який інкрементується (1, 2, 3...).
+// Створює об'єкт: { id: 1, name: "Іван", symptom: "Кашель" }.
+// Додає його в чергу.
+// Метод examineNext():
+// Витягує пацієнта з черги.
+// Виводить: "Лікар приймає пацієнта №[id] ([Ім'я]). Скарга: [symptom]".
+// Якщо порожньо: "Всі пацієнти здорові, лікар відпочиває!".
+// Метод showWaitingList():
+// Виводить список імена та ID всіх, хто чекає. Наприклад: "Чекають: №1-Іван, №2-Марія".
+// На що звернути увагу:
+// Коли будеш писати showWaitingList, пам'ятай: current — це вузол. 
+// current.data — це об'єкт пацієнта. Отже, ID буде в current.data.id.
+// Не забувай про перевірку на null в методі examineNext.
+
+// class Node {
+//     constructor(data) {
+//         this.data = data;
+//         this.next = null;
+//     }
+// }
+
+// class Queue {
+//     constructor() {
+//         this.first = null;
+//         this.last = null;
+//         this.size =0;
+//     }
+
+//     // метод щоб додати вузол в кінець черги
+//     enqueue(data) {
+//         const newNode = new Node(data);
+
+//         if (this.size === 0) {
+//             this.first = newNode;
+//             this.last = newNode;
+//         } else {
+//             this.last.next = newNode;
+//             this.last = newNode;
+//         }
+
+//         this.size++;
+//     }
+
+//     // метод щоб видалити перший елемент з черги
+//     dequeue() {
+//         if (this.size === 0) return null;
+
+//         const firstNode = this.first.data;   //збергігаю обєкт
+
+//         this.first = this.first.next;
+//         this.size--;
+
+//         if (this.size === 0) {
+//             this.last = null;
+//         }
+//         return firstNode;
+//     }
+// }
+
+
+// class HospitalQueue {
+//     constructor() {
+//         this.queue = new Queue();
+//         this.nextId = 1; // Використовуй це для автоматичних номерів
+//     }
+
+//     registerPatient(name, symptom) {
+//         // 1. Створи об'єкт пацієнта, додавши йому id (this.nextId)
+//         const patient = {};
+//         patient.id = this.nextId;
+//         patient.name = name;
+//         patient.symptom = symptom;
+
+//         // 2. Додай у чергу
+//         this.queue.enqueue(patient);
+
+//         // 3. Збільш this.nextId на 1
+//         this.nextId++;
+//     }
+
+//     examineNext() {
+//         // Витягни з черги та виведи повідомлення
+//         const currPatient = this.queue.dequeue();  // обєкт
+
+//         if (currPatient === null) {
+//             console.log('Всі пацієнти здорoві, лікар відпочиває!');
+//             return;
+//         } 
+//         console.log(`Лікар приймає пацієнта №${currPatient.id} (${currPatient.name}). Скарга: ${currPatient.symptom}`);
+//     }
+
+//     showWaitingList() {
+//         // Пройдися циклом по вузлах і збери рядок з ID та іменами
+//         let current = this.queue.first;  // вузол
+//         let list = 'Чекають: ';
+
+//         while(current) {
+//             list += `№${current.data.id}-${current.data.name}`;
+//             if (current.next) {
+//                 list += ', ';  // додаємо кому лише якщо елемент не  останній (має після себе ще next)
+//             };
+//             current = current.next;
+//         }
+//         console.log(list + '.');
+//     }
+// }
+
+// // ПЕРЕВІРКА:
+// const hospital = new HospitalQueue();
+// hospital.registerPatient("Олена", "Біль у вусі");
+// hospital.registerPatient("Дмитро", "Вивих ноги");
+
+// hospital.showWaitingList(); // Чекають: №1-Олена, №2-Дмитро
+
+// hospital.examineNext(); // Лікар приймає пацієнта №1 (Олена). Скарга: Біль у вусі
+// hospital.examineNext(); // Лікар приймає пацієнта №2 (Дмитро). Скарга: Вивих ноги
+// hospital.examineNext(); // Всі пацієнти здорові!
