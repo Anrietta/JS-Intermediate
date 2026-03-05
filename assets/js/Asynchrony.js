@@ -298,3 +298,75 @@
 // let alarmId = setInterval(()=>{console.log('Дзінь');}, 1000);
 
 // setTimeout(()=>{clearInterval(alarmId); console.log('Нарешті тиша');}, 5000);
+
+
+
+
+
+
+// Практитка Stopwach
+
+// start - запустити накопичення мсек
+// reset - скинути накопичені мсек
+// stop - зупинити накопичення мсек
+
+// let time = new Date(0);  // через констурктор Date скидаємо час до 0
+// // let time = 0;
+// let intervalId = null;
+
+
+// const timeEl = document.querySelector('.time');
+// const [startBtn, stopBtn, resetBtn] = document.querySelectorAll('.btn-container > button');
+
+// updTime(time);
+
+// function startBtnHandler () {
+//     const DELAY = 10;
+//     function tick() {
+//         time.setMilliseconds(time.getMilliseconds() + DELAY);
+//         updTime(time);
+//     }
+
+//     if(!intervalId) {
+//         intervalId = setInterval(tick, DELAY);
+//     }
+// }
+
+// startBtn.onclick = startBtnHandler;
+
+// function stopBtnHandler() {
+//     clearInterval(intervalId);
+//     intervalId = null;
+// }
+
+// stopBtn.onclick = stopBtnHandler;
+
+// function resetBtnHandler() {
+//     time = new Date(0);
+//     updTime(time);
+// }
+
+// resetBtn.onclick = resetBtnHandler;
+
+// function updTime(time) {
+//     timeEl.textContent = `
+//     ${formatMinutesAndSeconds(time.getMinutes())}
+//     :
+//     ${formatMinutesAndSeconds(time.getSeconds())}
+//     .
+//     ${formatMilliseconds(time.getMilliseconds())}
+//     `;
+// }
+
+// // форматуємо час, якщо число з одної цифри додамо 0 : 5 => 05
+// function formatMinutesAndSeconds(m) {
+//     return m < 10 ? `0${m}` : m;
+// }
+
+// // форматуємо мсек, якщо число з одної цифри додамо 00 : 5 => 005
+// // якщо число з двох цифр додамо 0 :  10 => 010
+// function formatMilliseconds(ms) {
+//     return ms < 100 ? (ms < 10 ? `00${ms}` : `0${ms}`) : ms;
+// }
+
+
