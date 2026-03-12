@@ -487,3 +487,102 @@
 //     f1();
 // }
 // f();
+
+
+
+
+
+
+// ----------------------------------------------------------------------------------------------------------------------------------
+
+
+                    // JSON (JavaScript Object Notation)
+
+// https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/JSON
+// https://developer.mozilla.org/ru/docs/Learn_web_development/Core/Scripting/JSON
+// https://www.json.org/json-uk.html
+// https://uk.javascript.info/json
+
+
+
+
+// Devtools -> Network   - статус всього що підвантажуєеться на сторінку (зображення, стилі, код , ...)
+
+
+
+// кілька форматів для передачі даних :
+// xml
+// JSON - найбільш популярний для передачі даних і налаштування config-id
+// yaml  - що це ?
+
+
+// в JSON можуть бути такі типи даних:
+// Obejct (звичайний plainObject - обєкт без методів/функцій)
+// array
+// String
+// Number
+// true/false
+// null
+// числа, булеві і налл  не потрібно брати в лапки!!!
+
+// в JSON НЕ можуть бути функції/методи, undefined, Symbol, BigInt, !!
+// Функції переддавати можна в скрипті якщо треба!
+
+
+// обєкт перед відправко треба загорути в JSON і при отриманні розгорнути з JSON в обєкт.
+// для цього в JS є глобальний обєкт JSON який має два методи:
+// 1. JSON.parse() - розбирає рядки JSON і перетворює на обєкт
+// 2. JSON.stringify() - навпаки, запаковує (складає) дані з обєкта в рядки JSON
+
+
+// const obj = {
+//     number: 1, 
+//     string: 'Hello',
+//     array: [1, 'hi', [1], false, null, {oops: true}],
+//     boolean: true,
+//     null: null,
+//     plainObject: {prop: 10},
+
+//     // методи не можна передавати
+//     getNumber() {
+//         return this.number;
+//     },
+//     // undefined не можна передавати 
+//     undefined: undefined
+// };
+
+
+// obj => JSON  - серіалізаціяя
+// const objJson = JSON.stringify(obj);
+// console.group(objJson);
+// {
+//     "number":1,
+//     "string":"Hello",
+//     "array":[1,"hi",[1],false,null,{"oops":true}],
+//     "boolean":true,
+//     "null":null,
+//     "plainObject":{"prop":10}
+
+        // методу getNumber тут нема!!! Методи не можуть бути запаковані(розпаковані)!
+        // властивості undefined тут теж нема!!! Undefined не може бути запакований(розпакований)!!
+// };
+
+
+// JSON => obj - десеріалізація
+
+// const parsedObj = JSON.parse(objJson);
+// console.log(parsedObj);
+// {
+//     number: 1, 
+//     string: 'Hello',
+//     array: [1, 'hi', [1], false, null, {oops: true}],
+//     boolean: true,
+//     null: null,
+//     plainObject: {prop: 10},
+
+//     методів та undefined тут не може бути !!!
+
+// }
+
+// Щоб дані передавати по мережі, їх треба спершу перетворити на валідний JSON.
+
