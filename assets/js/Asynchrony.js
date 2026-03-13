@@ -740,3 +740,60 @@
 // parse(текст, оживлятор)
 // - Текст: дані які ми хочемо розпакувати
 // - Оживлятор: перетворює рядки назад у складні об'єкти (наприклад, Date).
+
+
+
+// Завдання :
+// у тебе є об'єкт з цінами. Напиши JSON.stringify так, щоб він збільшив всі 
+// ціни на 10% прямо під час перетворення в рядок.
+
+const productPrices = {
+    apples: 10,
+    grapes: 25,
+    bananas: 40,
+    oranges: 37,
+    pineapples: null
+}
+
+const productPricesJson = JSON.stringify(productPrices, (key, value) => {
+    if (typeof value === 'number') {
+        return value + (value * 10 / 100); // якщо знач.число то збільшити його на 10% і повернути
+    }
+    return value;  // всі інші значення поврнути в чистому вигляді
+}, 2)
+
+console.log(productPricesJson);
+
+
+// Завдання:
+// Ситуація
+// Твій сервер прислав тобі дані про замовлення в інтернет-магазині. Але є проблема:
+// Дати прийшли як звичайні рядки.
+// Ціни прийшли як рядки з валютою (наприклад, "150$"), а тобі для розрахунків потрібні чисті числа.
+// Твоє завдання
+// Напиши JSON.parse з функцією reviver, яка:
+// Перетворить поле date на справжній об'єкт new Date().
+// Перетворить поле price, прибравши знак $ і зробивши його числом (підказка: можна використати 
+//     .replace('$', '') та Number()).
+// Всі інші поля залишити без змін.
+
+const orderJson = '{"id": 505, "date": "2026-03-13T12:00:00Z", "price": "150$", "status": "shipped"}';
+
+const order = JSON.parse(orderJson, (key, value) => {
+    if (key === 'date') {
+        return new Date(value);
+    }
+    if (key === 'price') {
+        return Number(value.replace('$', ''));
+    }
+    return value;
+})
+
+console.dir(order);
+console.log(`${order.date.getDate().toString().padStart(2, '0')}.${(order.date.getMonth() + 1.).toString().padStart(2, '0')}.${order.date.getFullYear()}`);
+
+// ${order.date.getMonth() + 1} - тому що місяці в JS рахуються як індекси, від 0. Тобто січень це 0.
+// тому треба +1 щоб отримати поточний місяць (як в реальності). 
+
+// toString().padStart(2, '0') - зробить день і місяць двозначними числами, якщо число одинарне воно доповнить
+//  його 0 спереду щоб було 2 числа 
