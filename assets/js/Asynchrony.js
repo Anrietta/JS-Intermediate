@@ -747,22 +747,22 @@
 // у тебе є об'єкт з цінами. Напиши JSON.stringify так, щоб він збільшив всі 
 // ціни на 10% прямо під час перетворення в рядок.
 
-const productPrices = {
-    apples: 10,
-    grapes: 25,
-    bananas: 40,
-    oranges: 37,
-    pineapples: null
-}
+// const productPrices = {
+//     apples: 10,
+//     grapes: 25,
+//     bananas: 40,
+//     oranges: 37,
+//     pineapples: null
+// }
 
-const productPricesJson = JSON.stringify(productPrices, (key, value) => {
-    if (typeof value === 'number') {
-        return value + (value * 10 / 100); // якщо знач.число то збільшити його на 10% і повернути
-    }
-    return value;  // всі інші значення поврнути в чистому вигляді
-}, 2)
+// const productPricesJson = JSON.stringify(productPrices, (key, value) => {
+//     if (typeof value === 'number') {
+//         return value + (value * 10 / 100); // якщо знач.число то збільшити його на 10% і повернути
+//     }
+//     return value;  // всі інші значення поврнути в чистому вигляді
+// }, 2)
 
-console.log(productPricesJson);
+// console.log(productPricesJson);
 
 
 // Завдання:
@@ -1179,3 +1179,51 @@ console.log(productPricesJson);
 
 
 
+
+
+// Приклад-практика : підвантаження погоди
+
+const weatherUrl1 = 'https://api.open-meteo.com/v1/forecast?latitude=48.6242&longitude=22.2947&current=apparent_temperature,is_day,rain,wind_speed_10m&timezone=GMT&wind_speed_unit=ms';
+const weatherUrl2 = 'https://api.open-meteo.com/v1/forecast?latitude=48.6242&longitude=22.2947&current=apparent_temperature,is_day,rain,wind_speed_10m&timezone=GMT&temperature_unit=fahrenheit';
+// у fetch схема роботи завжди приблизно однакова
+fetch(weatherUrl1)
+    .then((response) => response.json())  // розпарсити(десереалізувати) отриманий Response (у випадку resolved)
+    .then(data => createWeather(data))  // використати розпарсені(десеріалізовані) дані - передамо їх у функцію
+    .catch(err => console.log('error:', err));  // перехопити помилку у випадку rejected
+
+// отримані дані(розпарсений json) ми будем використовувати, тому виведемо їх на сторінку, для цього
+// відобразимо на сторінці поточну температуру з од.вим.
+// відобразити температуру відємну синім кольором, 0 чорним, додатні до 40 - зеленим, додатню вище 40 - червоним
+
+// згенеруємо розмітку динамічно
+
+// ця функція викликається в fetch then де ми отримали розпарсені дані,я кі передаємо зразу в цю функцію,
+//  інакше ми не зможемо отримати дані з обєкту data - нема як їх взяти
+function createWeather({
+    // деструктруємо обєкт data + деструктуруємо кожну потрібну властивість щоб отримати їх apparent_temperature та wind_speed
+    // і щоб не було по дві однакові назви,останні apparent_temperature та wind_speed перейменовуємо в tempUnit та windSpeedUnit 
+    current:{apparent_temperature, wind_speed_10m},
+    current_units:{apparent_temperature:tempUnit, wind_speed_10m: windSpeedUnit}
+}) {   
+    // apparent_temperature = -40;  // перевизначаємо знач темп щоб протестити розгалуження у функції calcTemperatureColor
+    const currentTemperatureEl = document.createElement('div');
+    currentTemperatureEl.textContent = `${apparent_temperature} ${tempUnit}`;
+    currentTemperatureEl.style.color = calcTemperatureColor(apparent_temperature);
+
+    const currentWindSpeedEl = document.createElement('div');
+    currentWindSpeedEl.textContent = `${wind_speed_10m} ${windSpeedUnit}`;
+
+    document.body.append(currentTemperatureEl, currentWindSpeedEl);
+}
+
+function calcTemperatureColor (temperature) {
+    if (temperature < 0) {
+        return 'blue';
+    } else if (temperature === 0) {
+        return 'black';
+    } else if (temperature > 0 && temperature < 40) {
+        return 'green';
+    } else {
+        return 'red';
+    }
+}
