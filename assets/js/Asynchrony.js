@@ -1183,39 +1183,119 @@
 
 // Приклад-практика : підвантаження погоди
 
-const weatherUrl1 = 'https://api.open-meteo.com/v1/forecast?latitude=48.6242&longitude=22.2947&current=apparent_temperature,is_day,rain,wind_speed_10m&timezone=GMT&wind_speed_unit=ms';
-const weatherUrl2 = 'https://api.open-meteo.com/v1/forecast?latitude=48.6242&longitude=22.2947&current=apparent_temperature,is_day,rain,wind_speed_10m&timezone=GMT&temperature_unit=fahrenheit';
-// у fetch схема роботи завжди приблизно однакова
-fetch(weatherUrl1)
-    .then((response) => response.json())  // розпарсити(десереалізувати) отриманий Response (у випадку resolved)
-    .then(data => createWeather(data))  // використати розпарсені(десеріалізовані) дані - передамо їх у функцію
-    .catch(err => console.log('error:', err));  // перехопити помилку у випадку rejected
+// const weatherUrl1 = 'https://api.open-meteo.com/v1/forecast?latitude=48.6242&longitude=22.2947&current=apparent_temperature,is_day,rain,wind_speed_10m&timezone=GMT&wind_speed_unit=ms';
+// const weatherUrl2 = 'https://api.open-meteo.com/v1/forecast?latitude=48.6242&longitude=22.2947&current=apparent_temperature,is_day,rain,wind_speed_10m&timezone=GMT&temperature_unit=fahrenheit';
+// // у fetch схема роботи завжди приблизно однакова
+// fetch(weatherUrl1)
+//     .then((response) => response.json())  // розпарсити(десереалізувати) отриманий Response (у випадку resolved)
+//     .then(data => createWeather(data))  // використати розпарсені(десеріалізовані) дані - передамо їх у функцію
+//     .catch(err => console.log('error:', err));  // перехопити помилку у випадку rejected
 
-// отримані дані(розпарсений json) ми будем використовувати, тому виведемо їх на сторінку, для цього
-// відобразимо на сторінці поточну температуру з од.вим.
-// відобразити температуру відємну синім кольором, 0 чорним, додатні до 40 - зеленим, додатню вище 40 - червоним
+// // отримані дані(розпарсений json) ми будем використовувати, тому виведемо їх на сторінку, для цього
+// // відобразимо на сторінці поточну температуру з од.вим.
+// // відобразити температуру відємну синім кольором, 0 чорним, додатні до 40 - зеленим, додатню вище 40 - червоним
 
-// згенеруємо розмітку динамічно
+// // згенеруємо розмітку динамічно
 
-// ця функція викликається в fetch then де ми отримали розпарсені дані,я кі передаємо зразу в цю функцію,
+// // ця функція викликається в fetch then де ми отримали розпарсені дані,я кі передаємо зразу в цю функцію,
+// //  інакше ми не зможемо отримати дані з обєкту data - нема як їх взяти
+// function createWeather({
+//     // деструктруємо обєкт data + деструктуруємо кожну потрібну властивість щоб отримати їх apparent_temperature та wind_speed
+//     // і щоб не було по дві однакові назви,останні apparent_temperature та wind_speed перейменовуємо в tempUnit та windSpeedUnit 
+//     current:{apparent_temperature, wind_speed_10m},
+//     current_units:{apparent_temperature:tempUnit, wind_speed_10m: windSpeedUnit}
+// }) {   
+//     // apparent_temperature = -40;  // перевизначаємо знач темп щоб протестити розгалуження у функції calcTemperatureColor
+//     const currentTemperatureEl = document.createElement('div');
+//     currentTemperatureEl.textContent = `${apparent_temperature} ${tempUnit}`;
+//     currentTemperatureEl.style.color = calcTemperatureColor(apparent_temperature);
+
+//     const currentWindSpeedEl = document.createElement('div');
+//     currentWindSpeedEl.textContent = `${wind_speed_10m} ${windSpeedUnit}`;
+
+//     document.body.append(currentTemperatureEl, currentWindSpeedEl);
+// }
+
+// function calcTemperatureColor (temperature) {
+//     if (temperature < 0) {
+//         return 'blue';
+//     } else if (temperature === 0) {
+//         return 'black';
+//     } else if (temperature > 0 && temperature < 40) {
+//         return 'green';
+//     } else {
+//         return 'red';
+//     }
+// }
+
+
+
+// Приклад-практика : підвантаження погоди ->  Кнопка перемикач + рефакторинг
+
+// прапорець, від нього залежить одиниця виміру температури - єдине джерело істини
+let isCelsiiDegree = true;
+
+// отримуємо кнопку з html
+const temperatureBtn = document.querySelector('#temperatureUnitBtn');
+// рендерим одразу на сторінку дані в залежності від стану isCelsiiDegree
+updateData();
+// навішуємо оброник на клік на кнопку-перемикач
+temperatureBtn.onclick = switchTemperatureUnit;
+//обробник : 
+function switchTemperatureUnit() {
+    // поміняти знач прапорця на протилежний
+    isCelsiiDegree = !isCelsiiDegree;
+    // перерендерити сторінку бо відбувся клік на кнопку-перемикач (isCelsiiDegree = false)
+    updateData();
+}
+
+// функція для перерендера
+function updateData() {
+    // кнопка-перемикач - змінює текст в залежності від isCelsiiDegree
+    // якщо зараз цельсій то на кнопкі напис перемкнутись на Фаренгейт,
+    // якщо зарах Фаренгейт то на кнопкі написа перемкнутись на цельсій
+    temperatureBtn.textContent = `Switch to ${isCelsiiDegree ? 'F' : 'C'}`;
+
+    // перше посилання на цельсій, другий на фаренгейт
+    const weatherUrl1 = 'https://api.open-meteo.com/v1/forecast?latitude=48.6242&longitude=22.2947&current=apparent_temperature,is_day,rain,wind_speed_10m&timezone=GMT&wind_speed_unit=ms';
+    const weatherUrl2 = 'https://api.open-meteo.com/v1/forecast?latitude=48.6242&longitude=22.2947&current=apparent_temperature,is_day,rain,wind_speed_10m&timezone=GMT&wind_speed_unit=ms&temperature_unit=fahrenheit';
+
+    // при першому завантаженні сторінки і при настисканні кнопки перемикача отримуєм 
+    // свіжі дані за вказаними посиланнями (у fetch схема роботи завжди приблизно однакова)
+    fetch(`${isCelsiiDegree ? weatherUrl1 : weatherUrl2}`)
+        .then((response) => response.json())  // розпарсити(десереалізувати) отриманий Response (у випадку resolved)
+        .then(data => createWeather(data))  // використати розпарсені(десеріалізовані) дані - передамо їх у функцію
+        .catch(err => console.log('error:', err));  // перехопити помилку у випадку rejected
+    
+    // отримані дані(розпарсений json) ми будем використовувати, через фукцію createWeather
+    // відобразити температуру відємну синім кольором, 0 чорним, додатні до 40 - зеленим, додатню вище 40 - червоним
+}
+
+// згенеруємо розмітку в html а дані (контент) динамічно
+
+// ця функція викликається в fetch then де ми отримали розпарсені дані,які передаємо зразу в цю функцію,
 //  інакше ми не зможемо отримати дані з обєкту data - нема як їх взяти
 function createWeather({
     // деструктруємо обєкт data + деструктуруємо кожну потрібну властивість щоб отримати їх apparent_temperature та wind_speed
     // і щоб не було по дві однакові назви,останні apparent_temperature та wind_speed перейменовуємо в tempUnit та windSpeedUnit 
     current:{apparent_temperature, wind_speed_10m},
     current_units:{apparent_temperature:tempUnit, wind_speed_10m: windSpeedUnit}
-}) {   
-    // apparent_temperature = -40;  // перевизначаємо знач темп щоб протестити розгалуження у функції calcTemperatureColor
-    const currentTemperatureEl = document.createElement('div');
+}) {
+    // отримую елемент div html
+    const currentTemperatureEl = document.querySelector('div.temperature');
+    // встановлюю контент з розпарсеного обєкта data
     currentTemperatureEl.textContent = `${apparent_temperature} ${tempUnit}`;
+    // викликаю функцію задання кольору в залежності від градусів
     currentTemperatureEl.style.color = calcTemperatureColor(apparent_temperature);
-
-    const currentWindSpeedEl = document.createElement('div');
+    
+    // отримую елемент div html
+    const currentWindSpeedEl = document.querySelector('div.windSpeed');
+    // встановлюю контент з розпарсеного обєкта data
     currentWindSpeedEl.textContent = `${wind_speed_10m} ${windSpeedUnit}`;
 
-    document.body.append(currentTemperatureEl, currentWindSpeedEl);
 }
 
+// функція що викликається з фунцкії createWeather для задання кольору в залежності від градусів
 function calcTemperatureColor (temperature) {
     if (temperature < 0) {
         return 'blue';
