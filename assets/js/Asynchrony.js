@@ -1233,75 +1233,146 @@
 // Приклад-практика : підвантаження погоди ->  Кнопка перемикач + рефакторинг
 
 // прапорець, від нього залежить одиниця виміру температури - єдине джерело істини
-let isCelsiiDegree = true;
+// let isCelsiiDegree = true;
 
-// отримуємо кнопку з html
-const temperatureBtn = document.querySelector('#temperatureUnitBtn');
-// рендерим одразу на сторінку дані в залежності від стану isCelsiiDegree
+// // отримуємо кнопку з html
+// const temperatureBtn = document.querySelector('#temperatureUnitBtn');
+// // рендерим одразу на сторінку дані в залежності від стану isCelsiiDegree
+// updateData();
+// // навішуємо оброник на клік на кнопку-перемикач
+// temperatureBtn.onclick = switchTemperatureUnit;
+// //обробник : 
+// function switchTemperatureUnit() {
+//     // поміняти знач прапорця на протилежний
+//     isCelsiiDegree = !isCelsiiDegree;
+//     // перерендерити сторінку бо відбувся клік на кнопку-перемикач (isCelsiiDegree = false)
+//     updateData();
+// }
+
+// // функція для перерендера
+// function updateData() {
+//     // кнопка-перемикач - змінює текст в залежності від isCelsiiDegree
+//     // якщо зараз цельсій то на кнопкі напис перемкнутись на Фаренгейт,
+//     // якщо зарах Фаренгейт то на кнопкі написа перемкнутись на цельсій
+//     temperatureBtn.textContent = `Switch to ${isCelsiiDegree ? 'F' : 'C'}`;
+
+//     // перше посилання на цельсій, другий на фаренгейт
+//     const weatherUrl1 = 'https://api.open-meteo.com/v1/forecast?latitude=48.6242&longitude=22.2947&current=apparent_temperature,is_day,rain,wind_speed_10m&timezone=GMT&wind_speed_unit=ms';
+//     const weatherUrl2 = 'https://api.open-meteo.com/v1/forecast?latitude=48.6242&longitude=22.2947&current=apparent_temperature,is_day,rain,wind_speed_10m&timezone=GMT&wind_speed_unit=ms&temperature_unit=fahrenheit';
+
+//     // при першому завантаженні сторінки і при настисканні кнопки перемикача отримуєм 
+//     // свіжі дані за вказаними посиланнями (у fetch схема роботи завжди приблизно однакова)
+//     fetch(`${isCelsiiDegree ? weatherUrl1 : weatherUrl2}`)
+//         .then((response) => response.json())  // розпарсити(десереалізувати) отриманий Response (у випадку resolved)
+//         .then(data => createWeather(data))  // використати розпарсені(десеріалізовані) дані - передамо їх у функцію
+//         .catch(err => console.log('error:', err));  // перехопити помилку у випадку rejected
+    
+//     // отримані дані(розпарсений json) ми будем використовувати, через фукцію createWeather
+//     // відобразити температуру відємну синім кольором, 0 чорним, додатні до 40 - зеленим, додатню вище 40 - червоним
+// }
+
+// // згенеруємо розмітку в html а дані (контент) динамічно
+
+// // ця функція викликається в fetch then де ми отримали розпарсені дані,які передаємо зразу в цю функцію,
+// //  інакше ми не зможемо отримати дані з обєкту data - нема як їх взяти
+// function createWeather({
+//     // деструктруємо обєкт data + деструктуруємо кожну потрібну властивість щоб отримати їх apparent_temperature та wind_speed
+//     // і щоб не було по дві однакові назви,останні apparent_temperature та wind_speed перейменовуємо в tempUnit та windSpeedUnit 
+//     current:{apparent_temperature, wind_speed_10m},
+//     current_units:{apparent_temperature:tempUnit, wind_speed_10m: windSpeedUnit}
+// }) {
+//     // отримую елемент div html
+//     const currentTemperatureEl = document.querySelector('div.temperature');
+//     // встановлюю контент з розпарсеного обєкта data
+//     currentTemperatureEl.textContent = `${apparent_temperature} ${tempUnit}`;
+//     // викликаю функцію задання кольору в залежності від градусів
+//     currentTemperatureEl.style.color = calcTemperatureColor(apparent_temperature);
+    
+//     // отримую елемент div html
+//     const currentWindSpeedEl = document.querySelector('div.windSpeed');
+//     // встановлюю контент з розпарсеного обєкта data
+//     currentWindSpeedEl.textContent = `${wind_speed_10m} ${windSpeedUnit}`;
+
+// }
+
+// // функція що викликається з фунцкії createWeather для задання кольору в залежності від градусів
+// function calcTemperatureColor (temperature) {
+//     if (temperature < 0) {
+//         return 'blue';
+//     } else if (temperature === 0) {
+//         return 'black';
+//     } else if (temperature > 0 && temperature < 40) {
+//         return 'green';
+//     } else {
+//         return 'red';
+//     }
+// }
+
+
+
+// Приклад-практика : підвантаження погоди -> Кнопка перемикач + changeColor for F
+
+let isCelsiiDegree = true;
+const tempUnitBtn = document.querySelector('#temperatureUnitBtn');
+tempUnitBtn.onclick = switchTemperature;
 updateData();
-// навішуємо оброник на клік на кнопку-перемикач
-temperatureBtn.onclick = switchTemperatureUnit;
-//обробник : 
-function switchTemperatureUnit() {
-    // поміняти знач прапорця на протилежний
+
+function switchTemperature () {
     isCelsiiDegree = !isCelsiiDegree;
-    // перерендерити сторінку бо відбувся клік на кнопку-перемикач (isCelsiiDegree = false)
     updateData();
 }
 
-// функція для перерендера
-function updateData() {
-    // кнопка-перемикач - змінює текст в залежності від isCelsiiDegree
-    // якщо зараз цельсій то на кнопкі напис перемкнутись на Фаренгейт,
-    // якщо зарах Фаренгейт то на кнопкі написа перемкнутись на цельсій
-    temperatureBtn.textContent = `Switch to ${isCelsiiDegree ? 'F' : 'C'}`;
 
-    // перше посилання на цельсій, другий на фаренгейт
+function updateData() {
+    tempUnitBtn.textContent = `Switch to ${isCelsiiDegree ? 'F' : 'C'}`;
+
     const weatherUrl1 = 'https://api.open-meteo.com/v1/forecast?latitude=48.6242&longitude=22.2947&current=apparent_temperature,is_day,rain,wind_speed_10m&timezone=GMT&wind_speed_unit=ms';
     const weatherUrl2 = 'https://api.open-meteo.com/v1/forecast?latitude=48.6242&longitude=22.2947&current=apparent_temperature,is_day,rain,wind_speed_10m&timezone=GMT&wind_speed_unit=ms&temperature_unit=fahrenheit';
 
-    // при першому завантаженні сторінки і при настисканні кнопки перемикача отримуєм 
-    // свіжі дані за вказаними посиланнями (у fetch схема роботи завжди приблизно однакова)
-    fetch(`${isCelsiiDegree ? weatherUrl1 : weatherUrl2}`)
-        .then((response) => response.json())  // розпарсити(десереалізувати) отриманий Response (у випадку resolved)
-        .then(data => createWeather(data))  // використати розпарсені(десеріалізовані) дані - передамо їх у функцію
-        .catch(err => console.log('error:', err));  // перехопити помилку у випадку rejected
-    
-    // отримані дані(розпарсений json) ми будем використовувати, через фукцію createWeather
-    // відобразити температуру відємну синім кольором, 0 чорним, додатні до 40 - зеленим, додатню вище 40 - червоним
+    fetch(isCelsiiDegree ? weatherUrl1 : weatherUrl2)
+        .then(response => response.json())
+        .then(data => createWeather(data))
+        .catch(error => console.log(`Error: ${error.message}`));
 }
 
-// згенеруємо розмітку в html а дані (контент) динамічно
-
-// ця функція викликається в fetch then де ми отримали розпарсені дані,які передаємо зразу в цю функцію,
-//  інакше ми не зможемо отримати дані з обєкту data - нема як їх взяти
 function createWeather({
-    // деструктруємо обєкт data + деструктуруємо кожну потрібну властивість щоб отримати їх apparent_temperature та wind_speed
-    // і щоб не було по дві однакові назви,останні apparent_temperature та wind_speed перейменовуємо в tempUnit та windSpeedUnit 
     current:{apparent_temperature, wind_speed_10m},
     current_units:{apparent_temperature:tempUnit, wind_speed_10m: windSpeedUnit}
 }) {
-    // отримую елемент div html
-    const currentTemperatureEl = document.querySelector('div.temperature');
-    // встановлюю контент з розпарсеного обєкта data
-    currentTemperatureEl.textContent = `${apparent_temperature} ${tempUnit}`;
-    // викликаю функцію задання кольору в залежності від градусів
-    currentTemperatureEl.style.color = calcTemperatureColor(apparent_temperature);
-    
-    // отримую елемент div html
-    const currentWindSpeedEl = document.querySelector('div.windSpeed');
-    // встановлюю контент з розпарсеного обєкта data
-    currentWindSpeedEl.textContent = `${wind_speed_10m} ${windSpeedUnit}`;
+
+    const temperatureEl = document.querySelector('div.temperature');
+    temperatureEl.textContent = `${apparent_temperature} ${tempUnit}`;
+    temperatureEl.style.color = calcTemperatureColor(apparent_temperature);
+
+    const windSpeedEl = document.querySelector('div.windSpeed');
+    windSpeedEl.textContent = `${wind_speed_10m} ${windSpeedUnit}`;
 
 }
 
-// функція що викликається з фунцкії createWeather для задання кольору в залежності від градусів
-function calcTemperatureColor (temperature) {
+function calcTemperatureColor(temperature) {
+    return isCelsiiDegree ? calcTemperatureColorC(temperature) : calcTemperatureColorF(temperature);
+}
+
+function calcTemperatureColorC(temperature) {
     if (temperature < 0) {
         return 'blue';
     } else if (temperature === 0) {
         return 'black';
-    } else if (temperature > 0 && temperature < 40) {
+    } else if (temperature > 0 && temperature <= 40) {
+        return 'green';
+    } else {
+        return 'red';
+    }
+}
+
+// C перевести у F :  C * 2  + 30
+// F перевести у C: (F - 30) / 2
+function calcTemperatureColorF(temperature) {
+    if (temperature < 30) {
+        return 'blue';
+    } else if (temperature === 30) {
+        return 'black';
+    } else if (temperature > 30 && temperature <= 110) {
         return 'green';
     } else {
         return 'red';
