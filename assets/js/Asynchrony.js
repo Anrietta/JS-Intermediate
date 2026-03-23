@@ -1312,69 +1312,126 @@
 
 // Приклад-практика : підвантаження погоди -> Кнопка перемикач + changeColor for F
 
-let isCelsiiDegree = true;
-const tempUnitBtn = document.querySelector('#temperatureUnitBtn');
-tempUnitBtn.onclick = switchTemperature;
-updateData();
+// let isCelsiiDegree = true;
+// const tempUnitBtn = document.querySelector('#temperatureUnitBtn');
+// tempUnitBtn.onclick = switchTemperature;
+// updateData();
 
-function switchTemperature () {
-    isCelsiiDegree = !isCelsiiDegree;
-    updateData();
-}
+// function switchTemperature () {
+//     isCelsiiDegree = !isCelsiiDegree;
+//     updateData();
+// }
 
 
-function updateData() {
-    tempUnitBtn.textContent = `Switch to ${isCelsiiDegree ? 'F' : 'C'}`;
+// function updateData() {
+//     tempUnitBtn.textContent = `Switch to ${isCelsiiDegree ? 'F' : 'C'}`;
 
-    const weatherUrl1 = 'https://api.open-meteo.com/v1/forecast?latitude=48.6242&longitude=22.2947&current=apparent_temperature,is_day,rain,wind_speed_10m&timezone=GMT&wind_speed_unit=ms';
-    const weatherUrl2 = 'https://api.open-meteo.com/v1/forecast?latitude=48.6242&longitude=22.2947&current=apparent_temperature,is_day,rain,wind_speed_10m&timezone=GMT&wind_speed_unit=ms&temperature_unit=fahrenheit';
+//     const weatherUrl1 = 'https://api.open-meteo.com/v1/forecast?latitude=48.6242&longitude=22.2947&current=apparent_temperature,is_day,rain,wind_speed_10m&timezone=GMT&wind_speed_unit=ms';
+//     const weatherUrl2 = 'https://api.open-meteo.com/v1/forecast?latitude=48.6242&longitude=22.2947&current=apparent_temperature,is_day,rain,wind_speed_10m&timezone=GMT&wind_speed_unit=ms&temperature_unit=fahrenheit';
 
-    fetch(isCelsiiDegree ? weatherUrl1 : weatherUrl2)
-        .then(response => response.json())
-        .then(data => createWeather(data))
-        .catch(error => console.log(`Error: ${error.message}`));
-}
+//     fetch(isCelsiiDegree ? weatherUrl1 : weatherUrl2)
+//         .then(response => response.json())
+//         .then(data => createWeather(data))
+//         .catch(error => console.log(`Error: ${error.message}`));
+// }
 
-function createWeather({
-    current:{apparent_temperature, wind_speed_10m},
-    current_units:{apparent_temperature:tempUnit, wind_speed_10m: windSpeedUnit}
-}) {
+// function createWeather({
+//     current:{apparent_temperature, wind_speed_10m},
+//     current_units:{apparent_temperature:tempUnit, wind_speed_10m: windSpeedUnit}
+// }) {
 
-    const temperatureEl = document.querySelector('div.temperature');
-    temperatureEl.textContent = `${apparent_temperature} ${tempUnit}`;
-    temperatureEl.style.color = calcTemperatureColor(apparent_temperature);
+//     const temperatureEl = document.querySelector('div.temperature');
+//     temperatureEl.textContent = `${apparent_temperature} ${tempUnit}`;
+//     temperatureEl.style.color = calcTemperatureColor(apparent_temperature);
 
-    const windSpeedEl = document.querySelector('div.windSpeed');
-    windSpeedEl.textContent = `${wind_speed_10m} ${windSpeedUnit}`;
+//     const windSpeedEl = document.querySelector('div.windSpeed');
+//     windSpeedEl.textContent = `${wind_speed_10m} ${windSpeedUnit}`;
 
-}
+// }
 
-function calcTemperatureColor(temperature) {
-    return isCelsiiDegree ? calcTemperatureColorC(temperature) : calcTemperatureColorF(temperature);
-}
+// function calcTemperatureColor(temperature) {
+//     return isCelsiiDegree ? calcTemperatureColorC(temperature) : calcTemperatureColorF(temperature);
+// }
 
-function calcTemperatureColorC(temperature) {
-    if (temperature < 0) {
-        return 'blue';
-    } else if (temperature === 0) {
-        return 'black';
-    } else if (temperature > 0 && temperature <= 40) {
-        return 'green';
-    } else {
-        return 'red';
-    }
-}
+// function calcTemperatureColorC(temperature) {
+//     if (temperature < 0) {
+//         return 'blue';
+//     } else if (temperature === 0) {
+//         return 'black';
+//     } else if (temperature > 0 && temperature <= 40) {
+//         return 'green';
+//     } else {
+//         return 'red';
+//     }
+// }
 
-// C перевести у F :  C * 2  + 30
-// F перевести у C: (F - 30) / 2
-function calcTemperatureColorF(temperature) {
-    if (temperature < 30) {
-        return 'blue';
-    } else if (temperature === 30) {
-        return 'black';
-    } else if (temperature > 30 && temperature <= 110) {
-        return 'green';
-    } else {
-        return 'red';
-    }
-}
+// // C перевести у F :  C * 2  + 30
+// // F перевести у C: (F - 30) / 2
+// function calcTemperatureColorF(temperature) {
+//     if (temperature < 30) {
+//         return 'blue';
+//     } else if (temperature === 30) {
+//         return 'black';
+//     } else if (temperature > 30 && temperature <= 110) {
+//         return 'green';
+//     } else {
+//         return 'red';
+//     }
+// }
+
+
+// Приклад-практика : підвантаження погоди -> Кнопка перемикач + changeColor for F + SwitchCase
+
+// let isCelsiiDegree = true;
+
+// const tempUnitBtn = document.querySelector('#temperatureUnitBtn');
+
+// updateData();
+
+// tempUnitBtn.onclick = switchDegree;
+
+// function switchDegree() {
+//     isCelsiiDegree = !isCelsiiDegree;
+//     updateData();
+// }
+
+// function updateData() {
+//     tempUnitBtn.textContent = `Swicth to ${isCelsiiDegree ? 'F' : 'C'}`;
+
+//     const weatherUrl1 = 'https://api.open-meteo.com/v1/forecast?latitude=48.6242&longitude=22.2947&current=apparent_temperature,is_day,rain,wind_speed_10m&timezone=GMT&wind_speed_unit=ms';
+//     const weatherUrl2 = 'https://api.open-meteo.com/v1/forecast?latitude=48.6242&longitude=22.2947&current=apparent_temperature,is_day,rain,wind_speed_10m&timezone=GMT&wind_speed_unit=ms&temperature_unit=fahrenheit';
+
+//     fetch(isCelsiiDegree ? weatherUrl1 : weatherUrl2)
+//         .then(response => response.json())
+//         .then(data => createWeather(data))
+//         .catch(error => console.log(`Error: ${error.message}`));
+
+// }
+
+// function createWeather({
+//     current:{apparent_temperature, wind_speed_10m},
+//     current_units:{apparent_temperature: temperatureUnit, wind_speed_10m: windSpeedUnit}
+// }) {
+
+//     const temperatureEl = document.querySelector('div.temperature');
+//     temperatureEl.textContent = `${apparent_temperature} ${temperatureUnit}`;
+//     temperatureEl.style.color = calcTempColor(apparent_temperature);
+
+//     const windSpeedEl = document.querySelector('div.windSpeed');
+//     windSpeedEl.textContent = `${wind_speed_10m} ${windSpeedUnit}`;
+// }
+
+// function calcTempColor(temperature) {
+//     const scaleDegree = isCelsiiDegree ? {cold: 0, hot: 40} : {cold: 30, hot: 110};
+
+//     switch(true) {
+//         case (temperature < scaleDegree.cold) : 
+//             return 'blue';
+//         case (temperature === scaleDegree.cold) :
+//             return 'black';
+//         case (temperature > scaleDegree.cold && temperature < scaleDegree.hot):
+//             return 'green';
+//         default: 
+//             return 'red';
+//     } 
+// }
