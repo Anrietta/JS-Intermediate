@@ -1435,3 +1435,157 @@
 //             return 'red';
 //     } 
 // }
+
+
+
+
+                    // new Promise() - Промісифікація
+
+
+
+// Promise - це обєкт-конструктор в JS (V8)
+// setTimeout, setInterval, fetch - це функції WebAPI, в яких під капотом використ. контсруктор Promise
+
+// Promise і використати його API
+
+// Якщо ми хочемо самостійно створити Promise то ми можемо зробити це через спеціальний конструктор
+// new Promise
+
+// const myPromise = new Promise(function(resolve, reject) {
+//     // код що поверне результат
+// });
+
+// Promise має три стани : pending, fullfiled, rejected (як у fetch)
+// Але якщо ми пишемо Promise самі, нам потрібно визначити як привести його в стан fullfilled або rejected
+// для цього нам надають наступний спосіб : Promise повинен мати callback - це функція-виконавець
+// Цей callback-виконавець теж повинен мати два callback : 1 на fullfiled(resolved), 2 на rejected(reject)
+// Щоб просигналізувати що все завершилось успіхом - викликаємо resolve
+// Щоб повідомити що все завершилось невдачею - викликаємо reject
+
+// function promiseCB (resolve, reject) {
+//     // тут відбуваються якісь дії
+//     // resolve('success result');
+
+//     reject(new Error('something went wrong'));
+// }
+
+// const promise = new Promise (promiseCB);
+
+// promise.then(data => console.log(data)).catch(e => console.log(e));
+
+// ось ці параметри в promiseCB це є статичні методи Promise. Тобто ми приймаємо як параетри і 
+// викликаємо потрібний МЕТОД Promise.
+// Для перевірок чи тестування до них можна звертатись напряму через сам конструктор і перехопити його за
+//  допомогою then(resolve) або catch(reject):
+// Promise.resolve([{user: 'Test'}]).then(data => {
+//     console.log(data);
+// })
+// Promise.reject().catch();
+
+
+// Статичні методи Promise та методи інстанса  - почитати!!!!!!!!!!!!!!!!!
+
+// проміс - кіт Шредінгера
+// Завдання створити свій проміс
+
+// 2 прописуємо обробник проміса, який приймає два колбека - методи обєкта Promise
+// const executor = function (resolve, reject) {
+//     // рандомно обираючи число обробляємо на успіх або неуспіх відповідно і викликаємо методи Promise
+//     if (Math.random() < 0.5) {
+//         resolve('cat is alive');
+//     } else {
+//         reject(new Error('cat is not alive'))
+//     }
+// }
+// const shredCat = new Promise(executor);  // 1 створюємо проміс ч/з конструктор і передаємо callback - executor (обробник проміса)
+
+// // 3 Обробляємо отриманий результат за допомогою then або catch
+// shredCat.then(data => console.log(data)).catch(e => console.log(e))
+
+
+// Промісифікація - це перероблення чогось таким чином щоб працювати з ним на основі синтаксиса Promise
+
+// Завдання
+// з setTimeout(який працює на колбеках зробити схожий вигляд)
+// setTimeout(cb, 1000)
+// delay(1000).then(cb)
+
+// 1 створ.функцію яка поверне проміс (як парам приймає час відкладки)
+// function delay(ms) {
+
+//     // 3 створ.функцію-виконавця/обробник який приймає як параметри методи обєкту Проміс
+//     const executor1 = function(res, rej) {
+//         // перевіримо на помилки перед тим як викликати колбек на успіх
+//         if (typeof ms !== 'number') {
+//             rej(new TypeError('ms must be a number'));
+//         }
+//         if (ms < 0 || !Number.isInteger(ms)) {
+//             rej(new RangeError('ms must be a positive integer'));
+//         }
+
+//         // в середині функції-виконавця запускаємо setTimeout, яка виконає resolve через час,
+//         // що приймає функція
+//         setTimeout(res, ms);
+//     }
+
+//     // 2 сворюємо проміс і одразу його повертаємо для then (як параметр отримує функцію-виконавця/обробник)
+//     return new Promise(executor1);
+// }
+
+// // 4 до функції що повертає проміс, застосовуємо метод Promise then для обробки успіху
+// delay(1000).then(() => console.log('setTimeout resolved')).catch(e => console.log(e))
+
+
+// Приклад завантаження картинки і рендер в синтаксисі проміса
+// берем реальний лінк на картинку
+// const src = 'https://dettext.com/wp-content/uploads/2024/02/400261-dettext_com-Mini-kartinki-dlia-srisovki-milye-i-legkie.jpg'
+
+// // до фукції loadImage (яка повертатиме порміс) застосовуємо then...catch
+// loadImage(src)
+//     .then(img => {
+//         // якщо resolved то додати картинку на сторінку
+//         document.body.append(img);
+//     })
+//     // якщо rejected то викинути помилку
+//     .catch(e => console.log(e));
+
+// // функція loadImage яка завантажує картинку за посиланням і повертає Проміс для обробки в then.catch
+// function loadImage(src) {
+//     // створюємо інстанс проміса (як парам приймає методи resolve, reject)
+//     return new Promise((res, rej) => {
+//         // створюємо картинку
+//         const img = document.createElement('img');
+//         img.src = src;  // додаємо атрибут src з посиланням на картинку
+//         // вішаємо на картинку обробника на завантаження (DOM WebAPI), який виконає колбек одразу
+//         //  після завершення завантаження (тобто викличе метод resolve, якого перехопить thens і 
+//         // додасть елемент на сторінку)
+//         img.onload = () => {
+//             res(img);
+//         };
+//         // вішаємо на картинку обробник на помилку під час завантаж(DOM WebAPI)б який виконає колбек
+//         // у випадку виникнення помилки (тобто викличе метод reject, якого перехопить catch)
+//         img.onerror = () => {
+//             rej(new Error('Image was not loaded'));
+//         };
+//     });
+// }
+
+
+// Зазираємо в середину проміса і перевіряємо state та result:
+// Створимо проміс, який виконається через 10 секунд
+// const myObservedPromise = new Promise((res) => {
+//     setTimeout(() => res({ message: "Я всередині!" }), 10000);
+// });
+
+// console.log("Ось він спочатку:", myObservedPromise);
+// // [[PromiseState]]: "pending"
+// // [[PromiseResult]]: undefined
+
+
+// // Через 11 секунд подивимось на нього знову
+// setTimeout(() => {
+//     console.log("А ось він з даними:", myObservedPromise);
+// }, 11000);
+// // [[PromiseState]]: "fulfilled"
+// // [[PromiseResult]]: Object
+// // message: "Я всередині!"
