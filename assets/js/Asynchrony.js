@@ -1846,3 +1846,346 @@
 //     .catch(error => console.error(error));
 
 
+
+// Завдання №4: "Промісифікація будильника"
+// У нас є стара функція setOldAlarm, яка працює тільки через колбеки. 
+// Вона вже написана (уяви це). Тобі треба написати нову функцію-обгортку.
+// Твоя задача:
+// Напиши функцію alarmPromise(time).
+// Вона має повертати новий Promise.
+// Всередині вона має використовувати звичайний setTimeout.
+// Якщо time менше 0 — відразу reject("Час не може бути від'ємним").
+// Через кількість мілісекунд, що дорівнює time, проміс має виконатися (resolve)
+//  з текстом "Пора вставати! ⏰".
+
+
+// function alarmPromise(time) {
+//     return new Promise((res, rej) => {
+//             if (time < 0 || !time) {
+//                 rej("Час не може бути від'ємним або відсутнім");
+//                 return;
+//             }
+//             setTimeout(() => {
+//                 res('Пора вставати! ⏰');
+//             }, time)
+
+//     })
+// }
+
+// alarmPromise(2000)
+//     .then(message => console.log(message))
+//     .catch(err => console.error(err));
+
+
+// Завдання №5: "Промісифікація завантаження скрипта"
+// Це класична задача з реального життя. Уяви, що тобі треба додати на сторінку сторонній
+//  скрипт (наприклад, плеєр YouTube або карту Google). У браузері для цього використовується 
+//  об'єкт document.createElement('script').
+// Твоя задача: Написати функцію loadScript(url).
+// Умови:
+// Функція повертає новий Promise.
+// Всередині створюється елемент: const script = document.createElement('script');.
+// Встановлюється адреса: script.src = url;.
+// Важливо: У скриптів є дві події (колбеки), які нам треба "промісифікувати":
+// script.onload — спрацьовує, якщо скрипт завантажився успішно. Тут треба викликати resolve.
+// script.onerror — спрацьовує, якщо сталася помилка (наприклад, 404). Тут треба викликати reject.
+// Після налаштування подій скрипт треба додати на сторінку: document.head.append(script);.
+// Чому це важливо? Це реальна промісифікація "старих" подій браузера. Спробуй написати це сама.
+// Підказка:
+// JavaScript
+// script.onload = () => resolve("Скрипт завантажено!");
+// script.onerror = () => reject("Помилка завантаження");
+
+// function loadScript(url) {
+//     return new Promise((resolve, reject) => {
+//         const script = document.createElement('script');
+//         script.src = url;
+
+//         script.onload = () => resolve('Скрипт завантажено!');
+//         script.onerror = () => reject(new Error('Помилка завантаження'));
+
+//         document.head.append(script);
+//     })
+// }
+
+// loadScript('https://code.jquery.com/jquery-3.7.1.min.js')
+//     .then(message => console.log(message))
+//     .catch(error => console.error(error));
+
+
+
+
+// Завдання №6: "Послідовні дії"
+// Напиши функцію delay(ms), яка просто повертає проміс, що виконується через ms мілісекунд. 
+// (Ми це вже робили, це просто "пауза").
+// А тепер спробуй поєднати це:
+// Завантаж картинку (використай свою функцію loadImage, яку ми писали раніше).
+// ПІСЛЯ того, як картинка завантажиться (у .then), почекай 3 секунди (використай delay).
+// І тільки ПІСЛЯ цієї паузи додай картинку в document.body.
+// Підказка: щоб зробити паузу всередині .then, треба написати return delay(3000); і додати наступний .then.
+
+
+// function loadImage(url) {
+
+//     return new Promise((res, rej) => {
+
+//         const img = new Image();
+//         img.src = url;
+    
+//         img.onload = () => res(img);
+//         img.onerror = () => rej(new Error('Помилка завантаження'));
+
+        
+//     }) 
+
+// }
+
+// function delay(ms) {
+//     return new Promise((res) => {
+//         setTimeout(()=> res(), ms);
+
+//     })
+// }
+
+// loadImage('https://wallpaper.forfun.com/fetch/20/2032496c8644d978861803bee90e18c0.jpeg')
+//     .then((img) => {return delay(5000).then(() => img)})
+//     .then((img) => document.body.append(img))
+//     .catch(error => console.error(error));
+
+
+// Маленький виклик для тебе (Завдання №7):
+// Спробуй змінити цей ланцюжок так, щоб спочатку йшла пауза delay(2000),
+//  а вже потім починалося завантаження картинки.
+// Це покаже тобі, що з промісами ти можеш комбінувати дії як завгодно, як кубики LEGO.
+
+// delay(2000)
+//     .then(() => {return loadImage('https://wallpaper.forfun.com/fetch/20/2032496c8644d978861803bee90e18c0.jpeg')})
+//     .then((img) => document.body.append(img))
+//     .catch(error => console.error(error));
+
+
+// Завдання №8: «Послідовне фотополювання»
+// Тобі потрібно написати ланцюжок, який працює за наступним сценарієм:
+// Крок 1: Завантаж першу картинку (використовуй loadImage(url1)).
+// Крок 2: Як тільки вона завантажиться, виведи в консоль: "Перша готова, чекаю 3 секунди...".
+// Крок 3: Зроби паузу на 3 секунди (використовуй delay(3000)).
+// Крок 4: Тільки після паузи почни завантажувати другу картинку (loadImage(url2)).
+// Крок 5: Коли завантажиться і друга, виведи в консоль: "Обидві картинки завантажено!" 
+// та додай обидві картинки на сторінку (document.body.append).
+// 💡 Дві маленькі підказки для успіху:
+// Про «пастку» з return: Щоб другий крок чекав на перший, а третій на другий — не забувай писати 
+// return перед delay та перед другим loadImage.
+// Як не загубити першу картинку: Коли завантажиться друга, тобі захочеться додати в body і першу теж. 
+// Ти можеш або створити змінну let img1 зовні ланцюжка, щоб "запам'ятати" її, або спробувати передати
+//  її крізь ланцюжок (як ми робили з "сендвічем" return delay(5000).then(() => img)).
+// Ось тобі два посилання для роботи:
+// URL 1: https://wallpaper.forfun.com/fetch/20/2032496c8644d978861803bee90e18c0.jpeg
+// URL 2: https://images.pexels.com/photos/45201/kitty-cat-baby-status-45201.jpeg
+
+// const url1 = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTBRXPiXLor0uK712a-VpFyvNI4ppqDP3r5ew&s';
+// const url2 = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQhb2CFhB8FIMxvTkVr25gGh1McXEMhBkpgoA&s';
+
+// function loadImage(url) {
+//     return new Promise((res, rej) => {
+//         const newImg = document.createElement('img');
+//         newImg.src = url;
+
+//         newImg.onload = () => {res(newImg)};
+//         newImg.onerror = () => {rej(new Error('Something went wrong'))};
+//     })
+// }
+
+// function delay(ms) {
+//     return new Promise((res)=> {
+//         setTimeout(()=>{res()}, ms);
+//     })
+// }
+
+// loadImage(url1)
+//     .then((img1) => {
+//         console.log('Перша готова, чекаю 3 секунди...'); 
+//         return delay(3000).then(()=> img1);
+//     })
+//     .then((img1) => {
+//         return loadImage(url2).then((img2)=>[img1, img2]);
+//     })
+//     .then((imgs) => {
+//         console.log('Обидві картинки завантажено!'); 
+//         document.body.append(...imgs);
+//     })
+//     .catch((err)=> console.error(err));
+
+
+
+// 🏆 Завдання №9: "Поступовий вхід"
+// Уяви, що ти робиш систему авторизації для сайту.
+// Тобі потрібно імітувати процес перевірки користувача. У тебе є три етапи, які мають відбутися суворо
+//  один за одним:
+// Крок 1: Перевірка логіна. Виклич delay(1500). Після паузи виведи в консоль: "Логін перевірено".
+// Крок 2: Отримання профілю. Завантаж картинку-аватар (використовуй loadImage(url1)).
+// Крок 3: Завантаження налаштувань. Виклич delay(2000). Після паузи виведи в консоль: 
+// "Налаштування завантажено".
+// Фінал: Тільки коли все пройшло успішно, додай картинку-аватар на сторінку і напиши в консоль: 
+// "Ласкаво просимо, користувач!".
+// ⚠️ Умови "із зірочкою":
+// Використовуй ланцюжок .then().
+// Не забувай про return, щоб кожен наступний крок чекав на попередній.
+// Передай об'єкт картинки (img) крізь увесь ланцюжок до самого кінця, щоб додати її в body лише 
+// на фінальному етапі. (Пам'ятаєш наш "сендвіч" return delay(...).then(() => img)? 
+// Він тут дуже знадобиться!).
+// Посилання на аватар:
+// https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg
+
+// const url1 = 'https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg';
+
+// function loadImg(url) {
+//     return new Promise((res, rej) => {
+//         const img = new Image();
+//         img.src = url;
+
+//         img.onload = ()=>{res(img)};
+//         img.onerror = ()=>{new Error('Something went wrong')};
+//     })
+// }
+
+// function delay(ms) {
+//     return new Promise((res) => {
+//         setTimeout(()=> res(), ms);
+//     })
+// }
+
+// delay(1500)
+//     .then(()=> {
+//         console.log('Логін перевірено'); 
+//         return loadImg(url1);
+//     })
+//     .then((img) => {
+//         return delay(2000).then(() => img);
+//     })
+//     .then((img) => {
+//         console.log('Налаштування завантажено');
+//         document.body.append(img);
+//         console.log('Ласкаво просимо, користувач!');
+//     })
+//     .catch((err) => console.error(err));
+
+
+// Завдання №10: "Запуск Гри"
+// Тобі потрібно реалізувати ланцюжок, де кожен крок залежить від попереднього:
+// Крок 1: Підключення до сервера. Виклич delay(1000). Після цього виведи: "Підключено до сервера".
+// Крок 2: Завантаження карти. Завантаж першу картинку (це буде наша локація).
+// Крок 3: Рендеринг оточення. Коли карта завантажиться, почекай ще delay(2000). 
+// Після паузи виведи: "Оточення готове".
+// Крок 4: Завантаження персонажа. Тільки після того, як оточення готове, завантаж другу картинку (персонажа).
+// Фінал: Коли персонаж теж завантажиться, виведи: "Гру розпочато!" і додай обидві картинки на сторінку.
+// ⚠️ Твої інструменти:
+// Два URL (карта та персонаж).
+// Сендвічі (щоб не загубити першу картинку, поки вантажиться друга).
+// Масив (щоб передати обидві картинки у фінальний .then).
+// Посилання для гри:
+// Карта (url1): https://images.pexels.com/photos/235621/pexels-photo-235621.jpeg
+// Персонаж (url2): https://images.pexels.com/photos/45201/kitty-cat-baby-status-45201.jpeg
+// Підказка: У другому .then, де ти вантажиш персонажа, тобі треба буде зробити щось на кшталт:
+// return loadImg(url2).then(charImg => [mapImg, charImg]).
+
+// const url1 = 'https://images.pexels.com/photos/235621/pexels-photo-235621.jpeg';
+// const url2 = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQdybqOjbYxICNg56VFFkI7VX7Wesb5RY6YZQ&s';
+
+// function loadImg(url) {
+//     return new Promise((res, rej) => {
+//         const img = new Image();
+//         img.src = url;
+
+//         img.onload = () => res(img);
+//         img.onerror = () => rej(new Error('Failed to load image'));
+//     })
+// }
+
+// function delay(ms) {
+//     return new Promise(res => {
+//         setTimeout(()=>{res()}, ms);
+//     })
+// }
+
+// delay(1000)
+//     .then(() => {
+//         console.log('пІдключено до сервера');
+//         return loadImg(url1);
+//     })
+//     .then((mapImg) => {
+//         return delay(2000).then(()=> mapImg);
+//     })
+//     .then((mapImg) => {
+//         console.log('Оточення готове');
+//         return loadImg(url2).then((charImg) => [mapImg, charImg]);
+//     })
+//     .then((imgs) => {
+//         console.log('Гру розпочато!');
+//         document.body.append(...imgs);
+//     })
+//     .catch(err => console.error(err));
+
+
+
+
+// 🏆 Завдання №11: "Публікація поста"
+// Сценарій "Завантаження медіа-поста" (як у Instagram чи Facebook). Тобі треба завантажити картинку, 
+// отримати текст опису та дочекатися "лайків".
+// Тобі потрібно реалізувати ланцюжок, використовуючи зовнішні змінні, щоб код був максимально 
+// лінійним (без вкладених .then).
+// Твій план дій:
+// Створи дві змінні зверху (наприклад, let postImage та let postText).
+// Крок 1: Завантаж картинку (loadImg(url1)). Збережи результат у postImage і поверни delay(1000).
+// Крок 2: Після паузи виведи в консоль: "Картинку завантажено". Поверни delay(2000).
+// Крок 3: Після цієї паузи імітуй отримання тексту: запиши в змінну postText = 
+// "Це мій найкращий день у горах!" і поверни ще один delay(1000).
+// Фінал: Виведи в консоль: "Пост готовий до публікації!". Додай картинку postImage на 
+// сторінку, а під нею (або в консоль) виведи текст postText.
+// ⚠️ Правила гри:
+// Жодних .then(...) всередині інших .then(...).
+// Тільки один довгий ланцюжок, де кожен крок іде суворо під попереднім.
+// Використовуй return тільки для пауз (delay).
+// Посилання для поста:
+// https://images.pexels.com/photos/417074/pexels-photo-417074.jpeg
+
+
+// let postImg;
+// let postText;
+
+// function loadImg(url) {
+//     return new Promise((res, rej) => {
+//         const img = new Image();
+//         img.src = url;
+
+//         img.onload = () => res(img);
+//         img.onerror = () => rej(new Error('Failed to load image'))
+//     })
+// }
+
+// function delay(ms) {
+//     return new Promise(res => {
+//         setTimeout(() => res(), ms)
+//     })
+// }
+
+// loadImg('https://images.pexels.com/photos/417074/pexels-photo-417074.jpeg')
+//     .then((img) => {
+//         postImg = img;
+//         return delay(1000);
+//     })
+//     .then(() => {
+//         console.log('Картинку завантажено');
+//         return delay(2000);
+//     })
+//     .then(() => {
+//         postText = 'Це мій найкращий день у горах!';
+//         return delay(1000)
+//     })
+//     .then(() => {
+//         console.log('Пост готовий до публікації!');
+        
+//         const text = document.createElement('div');
+//         text.textContent = postText;
+//         document.body.append(postImg, text);
+//     })
+//     .catch(err => console.error(err));
