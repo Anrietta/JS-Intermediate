@@ -2189,3 +2189,594 @@
 //         document.body.append(postImg, text);
 //     })
 //     .catch(err => console.error(err));
+
+
+
+
+                    // Async / await
+                    
+// Мікро-таск
+// Спробуй тепер переписати ту функцію wakeUp, але обов'язково додавши async там, де він має бути.
+
+// function delay(ms) {
+//     return new Promise((res => {
+//         setTimeout(()=> res(), ms);
+//     }))
+// }
+
+// // версія Проміс + then:
+// // function wakeUp() {
+// //     return delay(1000).then(() => {
+// //         console.log("Прокинулась!");
+// //         return delay(500).then(() => {
+// //             console.log("П'ю каву");
+// //         });
+// //     });
+// // }
+
+// // версія async/await
+// async function wakeUp() {
+//     await delay(3000);
+//     console.log('Прокинулась');
+//     await delay(2000);
+//     console.log("П'ю каву");
+
+// }
+
+// wakeUp();
+
+
+// Завдання №12: "Реінкарнація Гір" 🏔️📸
+// Перепиши свій код публікації поста (Завдання №11), використовуючи async/await.
+// Твій алгоритм всередині async function publishPost():
+// Створи змінну const img = await loadImg(url1);
+// Почекай await delay(1000); і виведи "Картинку завантажено".
+// Почекай await delay(2000);.
+// Створи змінну const text = "Це мій найкращий день у горах!";.
+// Почекай await delay(1000);.
+// Виведи фінальний результат на сторінку.
+// Використай try...catch щоб перехопити випадок rejected
+
+// const url1 = 'https://images.pexels.com/photos/417074/pexels-photo-4170741.jpeg';
+
+// function loadImg(url) {
+//     return new Promise ((res, rej) => {
+//         const img = new Image();
+//         img.src = url;
+
+//         img.onload = () => res(img);
+//         img.onerror = () => rej(new Error("Failed to load image"));
+//     })
+// }
+
+// function delay(ms) {
+//     return new Promise(res => {
+//         setTimeout(()=> res(), ms);
+//     })
+// }
+
+// async function publishPost() {
+//     try {
+//          // тут loadImg повертає нам Проміс в Result якого лежить картинка, 
+//          // а await дістає цю картинку з PromiseResult і віддає її в змінну img
+//         const img = await loadImg(url1);
+//         await delay(1000);
+//         console.log('Картинку завантажено');
+//         await delay(2000);
+//         const text = 'Це мій найкращий день в горах!';
+//         console.log('Текст завантажено');
+//         await delay(1000);
+
+//         document.body.append(img, text);
+//         await delay(1000);
+//         console.log('Пост опубліковано!');
+//     } catch(err) {
+//         console.error("Ой! Щось пішло не так під час публікації:", err);
+//     }
+// }
+
+// publishPost();
+
+
+// Твоє фінальне випробування (якщо не боїшся):
+// Уяви, що ти пишеш код для іспанського готелю (пам'ятаєш "mañana"?).
+// Тобі треба:
+// Завантажити список вільних номерів (await).
+// Завантажити ціни (await).
+// АЛЕ! Якщо ціни не завантажились, ти не повинна зупиняти все. Ти маєш просто вивести: 
+// "Ціни уточнюйте у адміністратора".
+// Чи зможеш ти придумати, як оформити try...catch так, щоб помилка в цінах не "вбила" 
+// показ списку номерів?
+
+
+// async function getRooms() {
+//     const rooms = ['Standard', 'Luxury', 'Penthouse'];
+//     return rooms;
+// }
+
+// async function getPrices() {
+//     const prices = {
+//         standart: 2500, 
+//         Luxury: 3000,
+//         Penthouse: 5000
+//     }
+//     return price;  // навмисно повертаю неіснуючу змінну для імітації помилки завантаження щоб спрацював catch
+// }
+
+// async function showHotelInfo() {
+//     // await кидатиме зауваження await' has no effect on the type of this expression якщо функція,
+//     //  яку він викликає не повертає Проміс (або через async або через new Promise)
+//     const rooms = await getRooms();
+//     const prices = await getPrices().catch(e => {
+//         console.error('Помилка завантаження цін');
+//         return 'Ціну уточняйте в адміністратора!'
+//     })
+//     console.log(rooms, prices);
+// }
+
+// showHotelInfo();
+
+
+// Завдання: "Інформаційне табло аеропорту"
+// Уяви, що ти розробляєш систему для табло в аеропорту "Бориспіль". 
+// Тобі потрібно вивести інформацію про рейс.
+// Твої умови:
+// Запит №1: Отримати дані про рейс (номер рейсу, місто призначення).
+// Запит №2: Отримати статус погоди в місті призначення (щоб пасажири знали, чи брати парасольку).
+// Твоя логіка в коді:
+// Обидва запити мають запускатися одночасно (паралельно), щоб не змушувати пасажирів чекати.
+// Використовуй try...catch для всього процесу.
+// АЛЕ: Якщо погода не завантажилася (помилка), табло має все одно показати рейс, 
+// а замість погоди написати: "Прогноз тимчасово недоступний".
+// Якщо ж не завантажився сам рейс — тоді виводь загальну помилку: "Вибачте, розклад рейсів недоступний".
+// 💡 Підказка:
+// Тобі знадобиться Promise.all, але щоб один проміс не "вбив" інший, згадай, як ми додавали .catch() 
+// прямо до виклику функції в минулому завданні.
+// 🛠 Твій "конструктор" :
+
+// // Імітація запиту до API рейсів
+// async function fetchFlight() {
+//     // Тут може бути помилка, якщо сервер "впав"
+//     return { id: 'PS-777', destination: 'Madrid' };
+// }
+
+// // Імітація запиту до API погоди
+// async function fetchWeather(city) {
+//     // Спробуй навмисно викликати тут помилку для перевірки!
+//     return "☀️ +25°C";
+
+//     // Щоб catch побачив помилку, нам треба або зробити throw, або (якщо ми в new Promise) зробити rej().
+//     // throw new Error("Сервер погоди спить...");
+
+// }
+
+// async function showBoard() {
+//     try {
+//         const flightInfo = fetchFlight();
+//         // Щоб catch побачив помилку, нам треба або зробити throw, або (якщо ми в new Promise) зробити rej().
+//         const weatherInfo = fetchWeather('Madrid').catch(e => {
+//             console.error('Помилка завантаження погоди:', e.message);
+//             return 'Прогноз тимчасово недоступний';
+//         });
+
+//         const [flight, weather] = await Promise.all([flightInfo, weatherInfo]);
+//         document.body.append(`${flight.id} ${flight.destination} `, weather);
+
+//     } catch (e) {
+//         document.body.innerText = 'Вибачте, розклад рейсів недоступний';
+//         console.error(e.message);
+//     }
+// }
+
+// showBoard();
+
+
+// Реальне завдання: "Стрічка новин"
+// Твоя мета — створити функцію, яка завантажує дані про користувача та його пости, і виводить їх на сторінку.
+// Умови:
+// URL для користувача: https://jsonplaceholder.typicode.com/users/1
+// URL для постів: https://jsonplaceholder.typicode.com/posts?userId=1
+// Логіка:
+// Спочатку завантаж дані про користувача.
+// Потім, використовуючи його ім'я, завантаж його пости.
+// Виведи на сторінку заголовок: "Пости користувача [Ім'я]".
+// Нижче виведи список заголовків його постів (перші 3-5 штук).
+// Обробка помилок:
+// Використовуй try...catch.
+// Обов'язково перевіряй res.ok після кожного fetch. Якщо сервер повернув помилку (наприклад, 404), 
+// викидай new Error().
+// 💡 Підказка:
+// Зверни увагу, що userRes.json() повертає об'єкт, у якого є поле id та name. Тобі знадобиться user.id, 
+// щоб сформувати правильний запит до постів.
+// Це завдання максимально наближене до того, що роблять Front-end розробники щодня: отримують дані, 
+// перевіряють їх і "малюють" на екрані.
+// 🛠 Твій стартовий шаблон:
+
+// async function renderNewsFeed() {
+//     try {
+//         // 1. Завантажуємо користувача
+//         const userRes = await fetch('https://jsonplaceholder.typicode.com/users/1');
+//         if (!userRes.ok) throw new Error('Користувача не знайдено');
+//         const user = await userRes.json();
+
+//         // 2. Тепер завантажуємо його пости (використовуй userId з об'єкта user)
+//         const userResPosts = await fetch(`https://jsonplaceholder.typicode.com/posts?userId=${user.id}`);
+//         if (!userResPosts.ok) throw new Error('Пости користувача не знайдено')
+//         const userPosts = await userResPosts.json();
+        
+//         // 3. Виведи результат у DOM (наприклад, через innerHTML або append)
+//         const title = document.createElement('h2');
+//         title.textContent = `Пости користувача ${user.name}`;
+//         document.body.append(title);
+
+//         // варіант 1
+//         // userPosts.slice(0, 5).forEach(post => {
+//         //     let item = document.createElement('div');
+//         //     item.textContent = post.title;
+//         //     document.body.append(item);
+//         // });
+
+//         // варіант 2
+//         userPosts.forEach(post => { if (userPosts.indexOf(post) < 5) {
+
+//             let item = document.createElement('div');
+//             item.textContent = post.title;
+//             document.body.append(item);
+
+//         }})
+
+
+//     } catch (error) {
+//         console.error("Сталася помилка:", error.message);
+//         document.body.innerText = "Упс! Не вдалося завантажити стрічку новин.";
+//     }
+// }
+
+// renderNewsFeed();
+
+
+
+// Завдання: "Валютний інформатор НБУ"
+// Національний банк України (НБУ) має чудове відкрите API, яке не потребує реєстрації чи ключів. 
+// Твоя мета:
+// Створити функцію, яка завантажує актуальний курс Долара (USD) та Євро (EUR) стосовно гривні та 
+// виводить їх на екран.
+// Твої інструменти (API НБУ):
+// URL для всіх валют: https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?json
+// Цей запит повертає масив об'єктів. Кожен об'єкт виглядає приблизно так:
+// { "txt": "Долар США", "rate": 39.5, "cc": "USD" }
+// Що треба зробити:
+// Зробити fetch за вказаним посиланням.
+// Перевірити res.ok.
+// Отримати масив даних через .json().
+// Відфільтрувати цей масив (метод .filter() або .find()), 
+// щоб знайти об'єкти, де cc === 'USD' та cc === 'EUR'.
+// Вивести їх на сторінку в такому вигляді:
+// Курс валют на сьогодні:
+// 🇺🇸 USD: [значення rate] грн
+// 🇪🇺 EUR: [значення rate] грн
+// Додати try...catch для обробки помилок (наприклад, якщо пропав інтернет).
+// 🛠 Маленька підказка щодо фільтрації:
+// Оскільки даних прийде багато (всі валюти світу), тобі треба буде знайти потрібні. Наприклад:
+// const usd = data.find(item => item.cc === 'USD');
+// console.log(usd.rate);
+
+// async function getNbuUsdEurExchangeRates() {
+//     try {
+//         const result = await fetch('https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?json');
+//         if (!result.ok) throw new Error('Проблема завантажеення курсів валют');
+//         const exchangeRatesAll = await result.json();
+        
+
+//         const specificExchangeRates = exchangeRatesAll.filter(specificRate => {
+//             specificRate.cc === 'USD' || specificRate.cc === 'EUR';
+//         })
+
+//         return specificExchangeRates;
+//     } catch (e) {
+//         console.error('Щось пішло не так: ', e.message);
+//     }
+// }
+
+
+// async function appendNbuUsdEurExchangeRates() {
+//     // викор await тому що getNbuUsdEurExchangeRates поверне Проміс, а await дістане з нього результат
+//     // також для того щоб дочекатись поки getNbuUsdEurExchangeRates поверне результат і не виконувати без
+//     // нього код нижче
+//     const exchangeRates = await getNbuUsdEurExchangeRates();
+
+//     const title = document.createElement('h3');
+//     title.textContent = 'Курс валют на сьогодні :';
+//     document.body.append(title);
+
+//     const list = document.createElement('ul');
+//     document.body.append(list);
+
+//     if (!exchangeRates) {
+//         console.error('Проблема відображення курсів валют');
+//         const listItem = document.createElement('li');
+//         listItem.textContent = `Curr: 00.00 грн.`;
+//         list.append(listItem);
+//         return;
+        
+//     }
+
+//     exchangeRates.forEach(rate => {
+//         const listItem = document.createElement('li');
+//         listItem.textContent = `${rate.cc}: ${rate.rate} грн.`;
+//         list.append(listItem)
+//     })
+// }
+
+// appendNbuUsdEurExchangeRates();
+
+
+
+
+// Нове завдання: "Конвертер для поїздок"
+// Уяви, що ти збираєшся в подорож.
+// Завантаж курс EUR з того ж API НБУ.
+// Уяви, що в тебе в кишені є 1000 грн.
+// Обчисли, скільки євро ти зможеш купити (1000 / курс).
+// Виведи на сторінку: "За 1000 грн ти купиш [результат] EUR".
+// Округли результат до 2 знаків після коми (використовуй .toFixed(2)).
+// Це навчить тебе не просто показувати цифри, а використовувати їх у логіці! Готова до математики? 😉💸🇪🇺
+
+// async function getExchangeRate(rate) {
+//     try {
+//         const exchangeRatesResult = await fetch('https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?json');
+//         if (!exchangeRatesResult.ok) throw new Error('Failed to load exchange rates');
+//         const exchangeRates = await exchangeRatesResult.json();
+
+//          return exchangeRates.find(item => item.cc === rate);
+//     } catch (err) {
+//         console.error('Щось пішло не так: ', err.message);
+//     }
+
+// }
+
+// async function createExchangeOperation(sum, rate) {
+//     const exchangeRate = await getExchangeRate(rate);
+
+//     const paragraph = document.createElement('p');
+//     if (!exchangeRate) {
+//         paragraph.textContent = `За 0 грн ти купиш 0 ${rate}`;
+//         document.body.append(paragraph);
+//         return;
+//     }
+
+//     const exchangeResult = (sum / exchangeRate.rate).toFixed(2);
+
+//     paragraph.textContent = `За ${sum} грн ти купиш ${exchangeResult} ${rate}`;
+//     document.body.append(paragraph);
+
+// }
+
+// createExchangeOperation(1000, 'HUF');
+
+
+// Твоє нове випробування (Challenge):
+// Спробуй переписати свій код так, щоб:
+// Була функція fetchAllData(), яка тільки робить fetch і повертає масив.
+// Була функція showAllCalculations(), яка один раз викликає fetchAllData, отримує масив, і 
+// за допомогою цього масиву виводить на екран розрахунки для USD, EUR та PLN (злоті).
+// Я хочу, щоб ти змінила логіку так, щоб мережевий запит став "одноразовим актом", 
+// а розрахунки — "масовим виробництвом".
+// Ось покроковий план, що має відбуватися всередині showAllCalculations():
+// Один єдиний await: Ти викликаєш fetchAllData() і отримуєш один великий масив усіх валют. 
+// Все, інтернет нам більше не потрібен.
+// Локальна робота: Далі, маючи цей масив "на руках", ти використовуєш його тричі (або десять разів), 
+// щоб знайти курс долара, євро та злотого.
+// Миттєвий результат: Ти виводиш на екран відразу всі три результати (наприклад, три параграфи або 
+//     один список).
+// 🏗 Структура, яку я від тебе чекаю (схематично):
+// Функція А (fetchAllData):
+// Просто йде в НБУ.
+// Повертає масив.
+// Більше нічого не знає і нікуди нічого не "апендить".
+// Функція Б (наприклад, calculateOne):
+// Не асинхронна!
+// Приймає суму, код валюти та той самий масив, який ми завантажили раніше.
+// Просто повертає цифру (результат).
+// Функція В (showAllCalculations):
+// Це "диригент".
+// Вона викликає Функцію А (чекає результат).
+// Потім вона тричі викликає Функцію Б, передаючи їй завантажений масив.
+// В кінці вона виводить все це "добро" в DOM.
+// Суть завдання: Зробити так, щоб програма "сходила в магазин" (в інтернет) один раз, купила велику 
+// пачку продуктів (масив валют) і вже вдома приготувала з них три різні страви (курси USD, EUR, PLN),
+//  не вибігаючи за кожним інгредієнтом окремо.
+
+// функція для завантаження та розпаковування даних з сервера, повертає отримані дані (arr, obj)
+// викличеться один раз з головної функції щоб при кожній операції не звертатись до сервера
+// async function fetchAllData() {
+//     const result = await fetch('https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?json');
+
+//     // Примусово роблю помилку 404 щоб перевірити чи відпрцює мій throw
+//     // const result = {ok: false, status: 404};
+//     // console.log("Статус відповіді:", result.status, "Чи все ОК:", result.ok);
+
+//     if (!result.ok) throw new Error('Помилка завантаження даних');
+//     const allData = await result.json();
+
+//     return allData;
+// }
+
+// ця функція використовувалась би клієнтом який тицяє валюти на екрані
+// // синхронна функція яка порсто робить розрахунок з тих параметрів які отримала і повертає число
+// function calculateOne(sum, curr, data) {
+//     const rate = data.find(item => item.cc === curr);
+
+//     return rate ? (sum / rate.rate).toFixed(2) : 'N/A';
+// }
+
+// ця функція запуститься один раз при завантаженні сторінки, клієнт її не тицяє
+// // головна функція - вона один раз завантажує дані з сервера а потім отриманий масив передає в функцію
+// // калькулятор і рендерить отримані розрахунки
+// async function showAllCalculations() {
+//     try {
+//         const dataArr = await fetchAllData();
+
+//         const usd = calculateOne(1000, 'USD', dataArr);
+//         const eur = calculateOne(1000, 'EUR', dataArr);
+//         const pln = calculateOne(1000, 'PLN', dataArr);
+//         const mars = calculateOne(1000, 'MARS', dataArr);  // неіснуюча валюта  має вивести N/A а не зламати код
+
+//         document.body.append(usd, eur, pln, mars);
+//     } catch (e) {
+//         console.error('Щось пішло не так: ', e.message);
+//         document.body.innerText = "Вибачте, сервіс тимчасово недоступний (помилка мережі).";
+//     }
+
+// }
+
+// showAllCalculations();
+
+
+// Завдання: "Розумний фільтр бібліотеки"
+// Уяви, що ми отримуємо з сервера список книг. Але нам не потрібні всі — ми хочемо знайти тільки 
+// "перлини" для твоєї паперової полиці.
+// Твоя мета:
+// Написати async функцію fetchBooks(), яка імітує запит до сервера (ми використаємо фейковий масив).
+// Написати функцію filterBestBooks(books), яка знайде книги за двома критеріями:
+// Жанр — "Romance".
+// Рейтинг — більше 4.5.
+// Вивести результат на сторінку у вигляді гарного списку.
+// Ось твій "фейковий" сервер (скопіюй це в fetchBooks):
+// const mockBooks = [
+//     { title: "Beach Read", author: "Emily Henry", genre: "Romance", rating: 4.8 },
+//     { title: "The Love Hypothesis", author: "Ali Hazelwood", genre: "Romance", rating: 4.7 },
+//     { title: "Project Hail Mary", author: "Andy Weir", genre: "Sci-Fi", rating: 4.9 },
+//     { title: "The Spanish Love Deception", author: "Elena Armas", genre: "Romance", rating: 4.2 },
+//     { title: "Normal People", author: "Sally Rooney", genre: "Drama", rating: 4.0 }
+// ];
+// 🏗 Структура коду (Challenge):
+// fetchBooks(): Має повертати Promise з масивом mockBooks (можеш використати return mockBooks; 
+//     всередині async функції).
+// renderBooks(): "Диригент". Викликає завантаження, потім фільтрує масив (використовуй .filter()) 
+// і малює в DOM тільки ті книги, що підійшли.
+// Чому це важливо?
+// Це навчить тебе не просто шукати один елемент (як ми робили з find для валют), а вибирати групу 
+// елементів за складними умовами.
+
+
+// async function fetchBooks() {
+
+    // const mockBooks = [
+    //     { title: "Beach Read", author: "Emily Henry", genre: "Romance", rating: 4.8 },
+    //     { title: "The Love Hypothesis", author: "Ali Hazelwood", genre: "Romance", rating: 4.7 },
+    //     { title: "Project Hail Mary", author: "Andy Weir", genre: "Sci-Fi", rating: 4.9 },
+    //     { title: "The Spanish Love Deception", author: "Elena Armas", genre: "Romance", rating: 4.2 },
+    //     { title: "Normal People", author: "Sally Rooney", genre: "Drama", rating: 4.0 }
+    // ];
+//     if (!mockBooks) throw new Error('Помилка завантаження книжок');
+//     return mockBooks;
+// }
+
+// function filterBestBooks(books) {
+//     const bestBooks = books.filter(book => book.genre === 'Romance' && book.rating > 4.5);
+//     if (!bestBooks || bestBooks.length === 0) throw new Error('Не знайдено відповідної книжки');
+//     return bestBooks;
+
+// }
+
+
+// async function renderBooks() {
+//     try {
+//         const books = await fetchBooks();
+//         const filteredBooks = filterBestBooks(books);
+
+//         const title = document.createElement('h3');
+//         title.textContent = `Книги жанру ${filteredBooks[0].genre} з найвищим рейтингом:`;
+
+//         const list = document.createElement('ol');
+
+//         document.body.append(title, list);
+
+//         filteredBooks.forEach(({title, author, rating}) => {
+//             const item = document.createElement('li');
+//             item.textContent = `Книга ${title} автора ${author} (рейтинг: ${rating})`;
+//             list.append(item);
+
+//         })
+        
+
+//     } catch (e) {
+//         console.log('Щось пішло не так:', e.message);
+//         document.body.innerText = 'Запитуваних книжок не знайдено !'
+//     }
+
+// }
+
+// renderBooks();
+
+
+// Кольорове завдання: "Розумна бібліотека"
+// Твоя мета — зробити так, щоб список книг сам "підказував" користувачу, що варто читати,
+//  а що ні, за допомогою кольорів та тексту.
+// 1. Підготовка даних (fetchBooks):
+// Використовуй той самий масив mockBooks, що й минулого разу (Emily Henry, Ali Hazelwood тощо).
+// 2. Логіка відображення (renderBooks):
+// Замість того, щоб видаляти "погані" книги через filter, виведи всі книги з масиву, 
+// але застосуй до них правила:
+// Якщо рейтинг < 4.5:
+// Колір тексту має стати сірим (item.style.color = 'gray').
+// В кінці назви додай текст: (Мало зірок ⭐️).
+// Якщо рейтинг >= 4.5:
+// Зроби текст жирним (item.style.fontWeight = 'bold').
+// (Опціонально) Можеш додати колір, наприклад, темно-зелений.
+// 3. Обробка "Порожньої полиці":
+// Перед тим як малювати список, перевір: чи не порожній масив?
+// Якщо в масиві 0 елементів — не викидай помилку через throw, а просто виведи на екран напис: 
+// "На жаль, бібліотека порожня ☕".
+
+
+// async function fetchBooks() {
+//     const mockBooks = [
+//         { title: "Beach Read", author: "Emily Henry", genre: "Romance", rating: 4.8 },
+//         { title: "The Love Hypothesis", author: "Ali Hazelwood", genre: "Romance", rating: 4.7 },
+//         { title: "Project Hail Mary", author: "Andy Weir", genre: "Sci-Fi", rating: 4.9 },
+//         { title: "The Spanish Love Deception", author: "Elena Armas", genre: "Romance", rating: 4.2 },
+//         { title: "Normal People", author: "Sally Rooney", genre: "Drama", rating: 4.0 }
+//     ];
+
+//     if (!mockBooks) throw new Error('Не вдалось завантажити книги');
+//     return mockBooks;
+// }
+
+
+// async function renderBooks() {
+//     try {
+//         const books = await fetchBooks();
+
+//         if (!books || books.length === 0) {
+//             const emptyMessage = document.createElement('div');
+//             emptyMessage.textContent = 'На жаль, бібліотека порожня ☕';
+//             document.body.append(emptyMessage);
+//             return;
+//         }
+
+//         const booksList = document.createElement('ol');
+//         document.body.append(booksList);
+
+//         books.forEach(({title, author, rating}) => {
+//             const listItem = document.createElement('li');
+//             listItem.textContent = `Книга ${title} автора ${author} з рейтингом: ${rating.toFixed(1)}`;
+//             if (rating >= 4.5) {
+//                 listItem.style.fontWeight = 'bold';
+//                 listItem.style.color = 'darkGreen';
+//             } else {
+//                 listItem.style.color = 'gray';
+//                 listItem.textContent += ' (Мало зірок ⭐️)';
+//             }
+//             booksList.append(listItem);
+
+//         })
+//     } catch (e) {
+//         console.error('Щось пішло не так: ', e.message);
+//         document.body.innerText = 'Щось пішло не так! Спробуйте ще раз.'
+//     }
+
+// }
+
+// renderBooks();
