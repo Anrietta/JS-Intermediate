@@ -1,0 +1,14 @@
+/* Практитка Stopwach */
+
+body {
+    font-size: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+.time {
+    margin: 10px;
+}
