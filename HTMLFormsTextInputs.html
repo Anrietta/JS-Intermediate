@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML Forms</title>
+</head>
+<body>
+    <form action="" method="post">
+        <!-- <fieldset>
+            <legend>String(Text) inputs</legend>
+            <label for="firstName">Name</label>
+            <input id="firstName" type="text" pattern="[A-Z][a-z]{1,19}">
+            <br>
+
+            <label for="">Last Name
+                <input type="text" name="lastName" placeholder="Enter your last name" autofocus required>
+            </label>
+            <br>
+            <label for="">Email
+                <input type="email" name="email">
+            </label>
+            <br>
+            <label for="">Password
+                <input type="password" name="password">
+            </label>
+            <br>
+            <label for="">URL
+                <input type="url" name="url">
+            </label>
+            <br>
+            <label for="">Phone
+                <input type="tel" name="phone" maxlength="13">
+            </label>
+            <br>
+            <label for="">Search
+                <input type="search" name="search-str">
+            </label>
+        </fieldset> -->
+
+        <!-- <fieldset>
+            <legend>Number inputs</legend>
+            <label for=""> Quantity
+                <input type="number" name="quantity" min="0" max="10" step="2">
+            </label>
+            <br>
+            <label for=""> Range
+                <input type="range" name="range">
+            </label>
+            <br>
+        </fieldset> -->
+
+        <!-- <fieldset>
+            <legend>Date inputs</legend>
+            <label for=""> Date
+                <input type="date" name="date">
+            </label>
+            <br>
+            <label for=""> Datetime
+                <input type="datetime-local" name="datetime">
+            </label>
+            <br>
+            <label for=""> Time
+                <input type="time" name="time">
+            </label>
+            <br>
+            <label for=""> Month
+                <input type="month" name="month">
+            </label>
+            <br>
+            <label for=""> Week
+                <input type="week" name="week">
+            </label>
+        </fieldset> -->
+
+        <label for=""> 
+            <legend>File input</legend>
+            <input type="file" name="user-photo" multiple>
+        </label>
+        <br>
+
+        <label for="">
+            <legend>Color input</legend>
+            <input type="color" name="color">
+        </label>
+        <br>
+
+        <label for="">
+            <legend>Hidden</legend>
+            <input type="hidden" value="Ukraine" name="country">
+        </label>
+        <br>
+
+        <input type="button" value="Button">
+        <input type="image" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkhc7Acg-F8Wxk5BgHJjDiUp6ZjujU1_RrsQ&s" alt="send">
+        <br>
+
+        <fieldset>
+            <legend>Radio-btn (choose gender)</legend>
+            <label>Male<input type="radio" name="gender" value="Male" checked></label>
+            <label>Female<input type="radio" name="gender" value="Female"></label>
+            <label>Other<input type="radio" name="gender" value="Other"></label>
+        </fieldset>
+
+        <fieldset>
+            <legend>Check-box(preferences:)</legend>
+            <label><input type="checkbox" name="prefs" value="pets">Pets</label>
+            <label><input type="checkbox" name="prefs" value="cars">Cars</label>
+            <label><input type="checkbox" name="prefs" value="tech">Tech</label>
+        </fieldset>
+
+        <fieldset>
+            <legend>Select(fruits):</legend>
+            <select name="fruits">
+                <option value="banana">banana</option>
+                <option value="apple" selected>apple</option>
+                <option value="orange">orange</option>
+            </select>
+        </fieldset>
+
+        <fieldset>
+            <legend>Select optgroup (Regions)</legend>
+            <select>
+                <optgroup label="Закарпатська">
+                    <option>Ужгород</option>
+                    <option>Мукачево</option>
+                </optgroup>
+            </select>
+        </fieldset>
+
+        <label>
+            <textarea name="comment" rows="4" cols="50" placeholder="Введіть текст тут">лллл</textarea>
+        </label>
+
+        <button type="submit">Send</button>
+        <button type="reset">Reset</button>
+    </form>
+    
+    <script src="./assets/js/HTMLFormsTextInputs.js"></script>
+</body>
+</html>
