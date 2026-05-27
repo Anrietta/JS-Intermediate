@@ -1,0 +1,55 @@
+* {
+    box-sizing: border-box;
+    font-size: 20px;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+h2 {
+    text-align: center;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    min-width: 320px;
+    width: 100%;
+    max-width: 800px;
+}
+
+label {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 10px;
+}
+
+input {
+    width: 50%;
+    outline: none;   /*outline це чорний бордер коли інпут в фокусі*/
+}
+
+/*в html додаладля кожного input атрибут tabindex з нумерацією, для того щоб надати їм пріоритет - це впливає на перехід від елемента до елемента за допоиогою tab*/
+/*додаємо підсвітку бордерів в момент введення даних в інпуті*/
+/* input:valid {
+    border: 1px solid green;
+}
+
+input:invalid {
+    border: 1px solid red;
+} */
+
+/*те саме що вище лише для JS валідації замість валідації через CSS*/
+.valid {
+    border: 1px solid green;
+}
+
+.invalid {
+    border: 1px solid red;
+}
