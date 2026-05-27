@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form Practice</title>
+    <link rel="stylesheet" href="./styles/reset.css">
+    <link rel="stylesheet" href="./styles/RegistrationFormPractice.css">
+    <script defer src="./assets/js/RegistrationFormPractice.js"></script>
+</head>
+<body>
+    <main>
+        <h2>Registration Form</h2>
+        <form action="">
+            <label for="">
+                <span>First Name:</span>
+                <input 
+                    type="text" 
+                    name="first-name" 
+                    placeholder="Enter your name" 
+                    autocomplete="name"
+                    autofocus
+                    recuired
+                    tabindex="1"
+                    >    
+                    <!-- pattern="[A-Z][a-z]{2,19}(-[A-Z][a-z]{2,19})?"  - це не застосовую, тому що передаю валідацію в JS -->
+            </label>
+            <label for="">
+                <span>Last Name:</span>
+                <input 
+                    type="text" 
+                    name="last-name" 
+                    placeholder="Enter your last name" 
+                    tabindex="2">
+                    <!-- pattern="[A-Z][a-z]{2,19}(-[A-Z][a-z]{2,19})?" - це не застосовую, тому що передаю валідацію в JS -->
+                </label>
+            <label for="">
+                <span>Email:</span>
+                <input 
+                    type="email"
+                    name="email"
+                    placeholder="Enter your@email"
+                    autocomplete="email"
+                    recuired
+                    tabindex="3">
+            </label>
+            <label for="">
+                <span>Phone:</span>
+                <input 
+                    type="tel" 
+                    name="phone-number"
+                    autocomplete="tel"
+                    placeholder="+380501122333"
+                    tabindex="4">
+                    <!-- pattern="\+380\d{9}" - це не застосовую, тому що передаю валідацію в JS -->
+                </label>
+            <label for="">
+                <span>Password:</span>
+                <input 
+                    type="password"
+                    name="password"
+                    required
+                    tabindex="5">
+                    <!-- pattern="(?=.*[A-Z].*)(?=.*[a-z].*)(?=.*\d.*)(?=.*[!@#$%^&*_].*).{8,32}" - це не застосовую, тому що передаю валідацію в JS -->
+            </label>
+            <label for="">
+                <span>Password confirmation:</span>
+                <input 
+                    type="password"
+                    name="password-confirmation"
+                    required
+                    tabindex="6">
+                    <!-- pattern="(?=.*[A-Z].*)(?=.*[a-z].*)(?=.*\d.*)(?=.*[!@#$%^&*_].*).{8,32}" - це не застосовую, тому що передаю валідацію в JS -->
+            </label>
+            <button type="submit">Register</button>
+        </form>
+    </main>
+
+</body>
+</html>
