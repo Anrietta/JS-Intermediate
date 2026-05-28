@@ -1,0 +1,12 @@
+.valid {
+    background-color: lightblue;
+}
+
+.invalid {
+    background-color: lightcoral;
+}
+
+.doneTask {
+    text-decoration: 1px line-through lightgray;
+    color: grey;
+}
